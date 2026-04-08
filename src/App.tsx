@@ -129,7 +129,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 2.5, ease: "easeOut" }}
-                className="absolute left-[11%] md:left-[18%] w-12 md:w-auto"
+                className="absolute left-[8%] md:left-[18%] w-12 md:w-auto"
               >
                 <AssetImage src="/drip-one.png" fallback="DRIP ONE" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -140,7 +140,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
-                className="absolute left-[66%] md:left-[80%] w-12 md:w-auto"
+                className="absolute left-[64%] md:left-[80%] w-12 md:w-auto"
               >
                 <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -151,7 +151,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
-                className="absolute left-[88%] w-12 md:w-auto"
+                className="absolute left-[80%] md:left-[88%] w-12 md:w-auto"
               >
                 <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
               </motion.div>
