@@ -63,7 +63,7 @@ export default function App() {
             onClick={() => handleSectionChange(Section.INTRO)}
             className="hover:opacity-70 transition-opacity"
           >
-            <AssetImage src="/jakegalm.jpg" fallback="Jake Galm" className="h-8 md:h-10" />
+            <AssetImage src="/jakegalm.jpg" fallback="Jake Galm" className="h-6 md:h-8" />
           </button>
         </div>
         <nav className="flex space-x-6 md:space-x-12">
