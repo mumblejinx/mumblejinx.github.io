@@ -116,43 +116,46 @@ export default function App() {
             ease: "easeInOut" 
           }}
         >
-          {/* Two Green Lines - Light on top, Dark on bottom */}
-          <div className="h-1 bg-[#8bc34a] w-full"></div>
-          <div className="h-1 bg-[#2e7d32] w-full"></div>
-          
-          <div className="relative h-16">
-            {/* Drip One */}
-            <motion.div 
-              key={`drip-one-${animKey}`}
-              initial={{ y: -100 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 2.5, ease: "easeOut" }}
-              className="absolute left-[10%] md:left-[10%] w-12 md:w-auto"
-            >
-              <AssetImage src="/drip-one.png" fallback="DRIP" textClassName="text-[#8bc34a]" />
-            </motion.div>
+          <div className="relative">
+            {/* Two Green Lines - Light on top, Dark on bottom - both 10px */}
+            <div className="h-[10px] bg-[#8bc34a] w-full relative z-20"></div>
+            <div className="h-[10px] bg-[#2e7d32] w-full relative z-20"></div>
             
-            {/* Drip Two */}
-            <motion.div 
-              key={`drip-two-${animKey}`}
-              initial={{ y: -100 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
-              className="absolute left-[75%] md:left-[75%] w-12 md:w-auto"
-            >
-              <AssetImage src="/drip-two.png" fallback="DRIP" textClassName="text-[#8bc34a]" />
-            </motion.div>
-            
-            {/* Drip Three */}
-            <motion.div 
-              key={`drip-three-${animKey}`}
-              initial={{ y: -100 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
-              className="absolute left-[85%] md:left-[85%] w-12 md:w-auto"
-            >
-              <AssetImage src="/drip-three.png" fallback="DRIP" textClassName="text-[#8bc34a]" />
-            </motion.div>
+            {/* Drips Container - Positioned at the top of the light green bar */}
+            <div className="absolute top-0 inset-x-0 h-16 z-10">
+              {/* Drip One */}
+              <motion.div 
+                key={`drip-one-${animKey}`}
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 2.5, ease: "easeOut" }}
+                className="absolute left-[18%] w-12 md:w-auto"
+              >
+                <AssetImage src="/drip-one.png" fallback="DRIP ONE" textClassName="text-[#8bc34a]" />
+              </motion.div>
+              
+              {/* Drip Two */}
+              <motion.div 
+                key={`drip-two-${animKey}`}
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
+                className="absolute left-[80%] w-12 md:w-auto"
+              >
+                <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
+              </motion.div>
+              
+              {/* Drip Three */}
+              <motion.div 
+                key={`drip-three-${animKey}`}
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
+                className="absolute left-[88%] w-12 md:w-auto"
+              >
+                <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
+              </motion.div>
+            </div>
           </div>
         </motion.div>
 
