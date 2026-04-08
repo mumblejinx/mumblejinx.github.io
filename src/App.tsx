@@ -118,11 +118,11 @@ export default function App() {
         >
           <div className="relative">
             {/* Two Green Lines - Light on top, Dark on bottom - both 10px */}
-            <div className="h-[10px] bg-[#8bc34a] w-full relative z-20"></div>
-            <div className="h-[10px] bg-[#2e7d32] w-full relative z-20"></div>
+            <div className="h-[10px] bg-[#8bc34a] w-full relative z-10"></div>
+            <div className="h-[10px] bg-[#2e7d32] w-full relative z-10"></div>
             
             {/* Drips Container - Positioned at the top of the light green bar */}
-            <div className="absolute top-0 inset-x-0 h-16 z-10">
+            <div className="absolute top-0 inset-x-0 h-16 z-20">
               {/* Drip One */}
               <motion.div 
                 key={`drip-one-${animKey}`}
