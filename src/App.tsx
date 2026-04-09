@@ -25,7 +25,6 @@ export default function App() {
   const [section, setSection] = useState<Section>(Section.INTRO);
   const [subsection, setSubsection] = useState<Subsection>(null);
   const [animKey, setAnimKey] = useState(0);
-  const [isExitingToIntro, setIsExitingToIntro] = useState(false);
 
   // Reset subsection when section changes
   useEffect(() => {
@@ -39,18 +38,7 @@ export default function App() {
   }, [section]);
 
   const handleSectionChange = (newSection: Section) => {
-    if (newSection === Section.INTRO && section !== Section.INTRO) {
-      // On mobile, if we're in WORK (which has a larger footer), delay the transition
-      // to allow the footer to shrink first.
-      if (window.innerWidth < 768 && section === Section.WORK) {
-        setIsExitingToIntro(true);
-        setTimeout(() => {
-          setSection(Section.INTRO);
-          setIsExitingToIntro(false);
-          setAnimKey(prev => prev + 1);
-        }, 400); // Match footer shrink duration
-        return;
-      }
+    if (newSection === Section.INTRO) {
       setAnimKey(prev => prev + 1);
     }
     setSection(newSection);
@@ -113,7 +101,7 @@ export default function App() {
             height: section === Section.INTRO ? '0%' : 'calc(100% - 120px)' 
           }}
           transition={{ 
-            duration: section === Section.INTRO ? 0.8 : 1.5, 
+            duration: section === Section.INTRO ? 0 : 1.5, 
             ease: "easeInOut"
           }}
         />
@@ -126,7 +114,7 @@ export default function App() {
             top: section === Section.INTRO ? '0%' : 'calc(100% - 120px)' 
           }}
           transition={{ 
-            duration: section === Section.INTRO ? 0.8 : 1.5, 
+            duration: section === Section.INTRO ? 0 : 1.5, 
             ease: "easeInOut" 
           }}
         >
@@ -210,15 +198,15 @@ export default function App() {
           {/* Bottom Menu Bar - Always visible */}
           <motion.footer 
             layout
-            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
             className={`bg-black flex flex-wrap justify-center gap-2 md:gap-8 z-50 h-auto items-center border-gray-800 transition-colors ${
-              section === Section.INTRO || isExitingToIntro
+              section === Section.INTRO 
                 ? 'p-4 min-h-16 border-t md:h-0 md:min-h-0 md:p-0 md:border-t-0' 
                 : 'p-4 min-h-16 md:h-20 border-t'
             }`}
           >
             <AnimatePresence mode="wait">
-              {section !== Section.INTRO && !isExitingToIntro && (
+              {section !== Section.INTRO && (
                 <motion.div 
                   key="footer-content"
                   initial={{ opacity: 0 }}
