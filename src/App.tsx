@@ -65,7 +65,7 @@ export default function App() {
           >
             <AssetImage src="/jakegalm.jpg" fallback="Jake Galm" className="h-5 md:h-8" />
           </button>
-          <nav className="flex justify-between items-center flex-grow md:flex-grow-0 md:space-x-12 ml-4 md:ml-0">
+          <nav className="flex justify-center items-center gap-x-8 flex-grow md:flex-grow-0 md:space-x-12 ml-4 md:ml-0">
             <button onClick={() => handleSectionChange(Section.WORK)} className="hover:opacity-70 transition-opacity flex-shrink">
               <AssetImage src="/work.jpg" fallback="Work" className="h-5 md:h-8" />
             </button>
