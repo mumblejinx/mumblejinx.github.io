@@ -214,7 +214,7 @@ export default function App() {
             transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
             className={`bg-black flex flex-wrap justify-center gap-2 md:gap-8 z-50 h-auto items-center border-gray-800 transition-colors ${
               section === Section.INTRO 
-                ? 'p-4 min-h-16 border-t md:h-0 md:min-h-0 md:p-0 md:border-t-0' 
+                ? 'p-4 min-h-16 border-t md:h-20' 
                 : 'p-4 min-h-16 md:h-20 border-t'
             }`}
           >
