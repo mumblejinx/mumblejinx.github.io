@@ -57,26 +57,26 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden">
       {/* Top Menu Bar */}
-      <header className="bg-black text-white p-4 relative flex items-center justify-center z-50 h-auto md:h-20">
-        <div className="absolute left-4 md:left-8">
+      <header className="bg-black text-white p-4 z-50 h-auto md:h-20 flex items-center">
+        <div className="w-full flex justify-between items-center md:justify-center md:relative">
           <button 
             onClick={() => handleSectionChange(Section.INTRO)}
-            className="hover:opacity-70 transition-opacity"
+            className="hover:opacity-70 transition-opacity md:absolute md:left-8"
           >
-            <AssetImage src="/jakegalm.jpg" fallback="Jake Galm" className="h-6 md:h-8" />
+            <AssetImage src="/jakegalm.jpg" fallback="Jake Galm" className="h-5 md:h-8" />
           </button>
+          <nav className="flex justify-between items-center flex-grow md:flex-grow-0 md:space-x-12 ml-4 md:ml-0">
+            <button onClick={() => handleSectionChange(Section.WORK)} className="hover:opacity-70 transition-opacity flex-shrink">
+              <AssetImage src="/work.jpg" fallback="Work" className="h-5 md:h-8" />
+            </button>
+            <button onClick={() => handleSectionChange(Section.ABOUT)} className="hover:opacity-70 transition-opacity flex-shrink">
+              <AssetImage src="/about.jpg" fallback="About" className="h-5 md:h-8" />
+            </button>
+            <button onClick={() => handleSectionChange(Section.SUPPORT)} className="hover:opacity-70 transition-opacity flex-shrink">
+              <AssetImage src="/support.jpg" fallback="Support" className="h-5 md:h-8" />
+            </button>
+          </nav>
         </div>
-        <nav className="flex space-x-3 md:space-x-12 items-center">
-          <button onClick={() => handleSectionChange(Section.WORK)} className="hover:opacity-70 transition-opacity flex-shrink">
-            <AssetImage src="/work.jpg" fallback="Work" className="h-5 md:h-8" />
-          </button>
-          <button onClick={() => handleSectionChange(Section.ABOUT)} className="hover:opacity-70 transition-opacity flex-shrink">
-            <AssetImage src="/about.jpg" fallback="About" className="h-5 md:h-8" />
-          </button>
-          <button onClick={() => handleSectionChange(Section.SUPPORT)} className="hover:opacity-70 transition-opacity flex-shrink">
-            <AssetImage src="/support.jpg" fallback="Support" className="h-5 md:h-8" />
-          </button>
-        </nav>
       </header>
 
       {/* Main Container */}
