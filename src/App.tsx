@@ -206,16 +206,29 @@ export default function App() {
                   className="flex flex-wrap justify-center gap-2 md:gap-8 w-full"
                 >
                   {section === Section.WORK && (
-                    <div className="grid grid-cols-3 gap-y-4 gap-x-2 md:flex md:flex-wrap md:justify-center md:gap-8 w-full justify-items-center">
-                      {Object.values(WorkSubsection).map((sub) => (
-                        <button
-                          key={sub}
-                          onClick={() => handleSubsectionChange(sub)}
-                          className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
-                        >
-                          <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
-                        </button>
-                      ))}
+                    <div className="flex flex-col items-center gap-y-1 md:flex-row md:flex-wrap md:justify-center md:gap-8 w-full">
+                      <div className="flex justify-center gap-x-4 md:contents">
+                        {Object.values(WorkSubsection).slice(0, 3).map((sub) => (
+                          <button
+                            key={sub}
+                            onClick={() => handleSubsectionChange(sub)}
+                            className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
+                          >
+                            <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
+                          </button>
+                        ))}
+                      </div>
+                      <div className="flex justify-center gap-x-4 md:contents">
+                        {Object.values(WorkSubsection).slice(3, 6).map((sub) => (
+                          <button
+                            key={sub}
+                            onClick={() => handleSubsectionChange(sub)}
+                            className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
+                          >
+                            <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   )}
                   {section === Section.ABOUT && (
