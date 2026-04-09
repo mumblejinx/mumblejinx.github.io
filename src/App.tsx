@@ -206,7 +206,7 @@ export default function App() {
                   className="flex flex-wrap justify-center gap-2 md:gap-8 w-full"
                 >
                   {section === Section.WORK && (
-                    <>
+                    <div className="grid grid-cols-3 gap-y-4 gap-x-2 md:flex md:flex-wrap md:justify-center md:gap-8 w-full justify-items-center">
                       {Object.values(WorkSubsection).map((sub) => (
                         <button
                           key={sub}
@@ -216,10 +216,10 @@ export default function App() {
                           <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
                         </button>
                       ))}
-                    </>
+                    </div>
                   )}
                   {section === Section.ABOUT && (
-                    <>
+                    <div className="flex flex-wrap justify-center gap-2 md:gap-8 w-full">
                       {Object.values(AboutSubsection).map((sub) => (
                         <button
                           key={sub}
@@ -229,7 +229,7 @@ export default function App() {
                           <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
                         </button>
                       ))}
-                    </>
+                    </div>
                   )}
                 </motion.div>
               )}
