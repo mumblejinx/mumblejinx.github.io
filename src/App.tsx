@@ -196,15 +196,19 @@ export default function App() {
           </main>
 
           {/* Bottom Menu Bar - Always visible */}
-          <footer className="bg-black p-4 flex flex-wrap justify-center gap-2 md:gap-8 z-50 h-auto min-h-16 md:h-20 items-center border-t border-gray-800">
-            <AnimatePresence>
+          <motion.footer 
+            layout
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+            className="bg-black p-4 flex flex-wrap justify-center gap-2 md:gap-8 z-50 h-auto min-h-16 md:h-20 items-center border-t border-gray-800"
+          >
+            <AnimatePresence mode="wait">
               {section !== Section.INTRO && (
                 <motion.div 
                   key="footer-content"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ delay: 1.5, duration: 0.3 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
                   className="flex flex-wrap justify-center gap-2 md:gap-8 w-full"
                 >
                   {section === Section.WORK && (
@@ -249,7 +253,7 @@ export default function App() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </footer>
+          </motion.footer>
         </div>
       </div>
     </div>
