@@ -66,15 +66,15 @@ export default function App() {
             <AssetImage src="/jakegalm.jpg" fallback="Jake Galm" className="h-6 md:h-8" />
           </button>
         </div>
-        <nav className="flex space-x-6 md:space-x-12">
-          <button onClick={() => handleSectionChange(Section.WORK)} className="hover:opacity-70 transition-opacity">
-            <AssetImage src="/work.jpg" fallback="Work" className="h-6 md:h-8" />
+        <nav className="flex space-x-3 md:space-x-12 items-center">
+          <button onClick={() => handleSectionChange(Section.WORK)} className="hover:opacity-70 transition-opacity flex-shrink">
+            <AssetImage src="/work.jpg" fallback="Work" className="h-5 md:h-8" />
           </button>
-          <button onClick={() => handleSectionChange(Section.ABOUT)} className="hover:opacity-70 transition-opacity">
-            <AssetImage src="/about.jpg" fallback="About" className="h-6 md:h-8" />
+          <button onClick={() => handleSectionChange(Section.ABOUT)} className="hover:opacity-70 transition-opacity flex-shrink">
+            <AssetImage src="/about.jpg" fallback="About" className="h-5 md:h-8" />
           </button>
-          <button onClick={() => handleSectionChange(Section.SUPPORT)} className="hover:opacity-70 transition-opacity">
-            <AssetImage src="/support.jpg" fallback="Support" className="h-6 md:h-8" />
+          <button onClick={() => handleSectionChange(Section.SUPPORT)} className="hover:opacity-70 transition-opacity flex-shrink">
+            <AssetImage src="/support.jpg" fallback="Support" className="h-5 md:h-8" />
           </button>
         </nav>
       </header>
@@ -129,7 +129,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 2.5, ease: "easeOut" }}
-                className="absolute left-[8%] md:left-[18%] w-12 md:w-auto"
+                className="absolute left-[8%] md:left-[11%] w-12 md:w-auto"
               >
                 <AssetImage src="/drip-one.png" fallback="DRIP ONE" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -140,7 +140,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
-                className="absolute left-[64%] md:left-[80%] w-12 md:w-auto"
+                className="absolute left-[65%] md:left-[80%] w-12 md:w-auto"
               >
                 <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -151,7 +151,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
-                className="absolute left-[80%] md:left-[88%] w-12 md:w-auto"
+                className="absolute left-[82%] md:left-[88%] w-12 md:w-auto"
               >
                 <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
               </motion.div>
