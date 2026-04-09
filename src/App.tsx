@@ -25,6 +25,7 @@ export default function App() {
   const [section, setSection] = useState<Section>(Section.INTRO);
   const [subsection, setSubsection] = useState<Subsection>(null);
   const [animKey, setAnimKey] = useState(0);
+  const [isExitingToIntro, setIsExitingToIntro] = useState(false);
 
   // Reset subsection when section changes
   useEffect(() => {
@@ -38,6 +39,16 @@ export default function App() {
   }, [section]);
 
   const handleSectionChange = (newSection: Section) => {
+    if (newSection === Section.INTRO && section === Section.WORK && window.innerWidth < 768) {
+      setIsExitingToIntro(true);
+      setTimeout(() => {
+        setSection(Section.INTRO);
+        setIsExitingToIntro(false);
+        setAnimKey(prev => prev + 1);
+      }, 500);
+      return;
+    }
+
     if (newSection === Section.INTRO) {
       setAnimKey(prev => prev + 1);
     }
@@ -206,7 +217,7 @@ export default function App() {
             }`}
           >
             <AnimatePresence mode="wait">
-              {section !== Section.INTRO && (
+              {section !== Section.INTRO && !isExitingToIntro && (
                 <motion.div 
                   key="footer-content"
                   initial={{ opacity: 0 }}
