@@ -194,7 +194,7 @@ export default function App() {
           </main>
 
           {/* Bottom Menu Bar - Always visible */}
-          <footer className="bg-black p-4 flex flex-wrap justify-center gap-4 md:gap-8 z-50 h-16 md:h-20 items-center border-t border-gray-800">
+          <footer className="bg-black p-4 flex flex-wrap justify-center gap-2 md:gap-8 z-50 h-auto min-h-16 md:h-20 items-center border-t border-gray-800">
             <AnimatePresence>
               {section !== Section.INTRO && (
                 <motion.div 
@@ -203,7 +203,7 @@ export default function App() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: 1.5, duration: 0.3 }}
-                  className="flex flex-wrap justify-center gap-4 md:gap-8 w-full"
+                  className="flex flex-wrap justify-center gap-2 md:gap-8 w-full"
                 >
                   {section === Section.WORK && (
                     <>
@@ -213,7 +213,7 @@ export default function App() {
                           onClick={() => handleSubsectionChange(sub)}
                           className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
                         >
-                          <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-6 md:h-8" />
+                          <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
                         </button>
                       ))}
                     </>
@@ -226,7 +226,7 @@ export default function App() {
                           onClick={() => handleSubsectionChange(sub)}
                           className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
                         >
-                          <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-6 md:h-8" />
+                          <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
                         </button>
                       ))}
                     </>
