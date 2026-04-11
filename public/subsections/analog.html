@@ -259,7 +259,11 @@
         });
 
         // Initialize on load
-        window.onload = init;
+        // BEFORE (waits for CDN to finish)
+           window.onload = init;
+
+        // AFTER (runs immediately when script is parsed)
+           init();
     </script>
 </body>
 </html>
