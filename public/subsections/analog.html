@@ -136,18 +136,20 @@
             <p>The layout is designed to showcase 21 pieces of work in a clean, professional grid on desktop and a smooth scrolling experience on mobile.</p>
             <p>Easily swap these images by updating the array in the script section of this file.</p>
         `;
-            
+
+        // Array of 21 images. 
+        // thumb: The small image shown in the grid.
+        // full: The large image shown in the pop-up.
+        const images = Array.from({ length: 21 }, (_, i) => {
             // Vary aspect ratios for testing
             let width = 1200;
             let height = 1600; // Default vertical
             if (i % 3 === 1) { width = 1600; height = 1200; } // Horizontal
             if (i % 3 === 2) { width = 1200; height = 1200; } // Square
-        
-            return {
 
-                thumb: `/subsections/analog/analog_thumb-${i}/300/400`,
-                full: `/subsections/analog/analog_full-${i}/${width}/${height}`
-                
+            return {
+                thumb: `https://picsum.photos/seed/analog-${i}/300/400`,
+                full: `https://picsum.photos/seed/analog-${i}/${width}/${height}`
             };
         });
 
@@ -259,11 +261,7 @@
         });
 
         // Initialize on load
-        // BEFORE (waits for CDN to finish)
-           window.onload = init;
-
-        // AFTER (runs immediately when script is parsed)
-           init();
+        window.onload = init;
     </script>
 </body>
 </html>
