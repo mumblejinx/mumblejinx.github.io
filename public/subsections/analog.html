@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog - Work Template</title>
+    <!-- Tailwind CSS for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        /* Floating Scroll Animation */
+        @keyframes bounce-scroll {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-scroll {
+            animation: bounce-scroll 2s infinite ease-in-out;
+        }
+
+        /* Lightbox transitions */
+        .lightbox-enter { opacity: 0; }
+        .lightbox-enter-active { opacity: 1; transition: opacity 0.3s ease; }
+    </style>
+</head>
+<body class="bg-black">
+
+    <!-- 
+        ================================================================
+        INSTRUCTIONS FOR EDITING:
+        1. IMAGES: Scroll down to the <script> section at the bottom.
+           Update the 'images' array with your actual image URLs.
+        2. TEXT: Update the 'title' and 'description' variables in the script.
+        3. DUPLICATING: Save this file as 'digital.html' or 'street.html' 
+           and just change the data in the script section.
+        ================================================================
+    -->
+
+    <!-- DESKTOP & TABLET LAYOUT (Horizontal) -->
+    <div id="desktop-layout" class="hidden md:flex flex-row h-screen p-8 gap-8">
+        <!-- Left Side: Thumbnails Grid -->
+        <div class="w-2/3 overflow-y-auto pr-4">
+            <div id="thumbnail-grid" class="grid grid-cols-7 gap-2">
+                <!-- Thumbnails will be injected here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Right Side: Description -->
+        <div class="w-1/3 flex flex-col justify-start pt-4">
+            <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
+            <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4">
+                <!-- Description will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE LAYOUT (Vertical) -->
+    <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
+        <!-- Vertical Image Stack -->
+        <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12">
+            <!-- Images will be injected here by JavaScript -->
+        </div>
+
+        <!-- Mobile Description (at the bottom) -->
+        <div class="mt-8 border-t border-gray-800 pt-8">
+            <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
+            <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4">
+                <!-- Description will be injected here -->
+            </div>
+        </div>
+
+        <!-- Floating Scroll Indicator (Lower Left) -->
+        <div id="scroll-indicator" class="fixed bottom-24 left-6 z-40 pointer-events-none">
+            <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
+                <span>▼ SCROLL</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX (Pop-up Window) -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center">
+        <!-- Close Button -->
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-[#8bc34a] transition-colors z-[110]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+
+        <!-- Navigation Buttons -->
+        <button onclick="prevImage()" class="absolute left-6 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button onclick="nextImage()" class="absolute right-6 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+        <!-- Image Container -->
+        <div class="relative max-w-[90vw] max-h-[85vh] flex items-center justify-center">
+            <img id="lightbox-img" src="" alt="Full size" class="max-w-full max-h-[85vh] object-contain shadow-2xl">
+            <!-- Image Counter -->
+            <div id="image-counter" class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-gray-500 text-sm font-mono tracking-widest"></div>
+        </div>
+    </div>
+
+    <script>
+        // =================================================================
+        // DATA SECTION - EDIT THIS PART
+        // =================================================================
+        
+        const title = "ANALOG";
+        
+        const description = `
+            <p>This is the ANALOG subsection. Placeholder content for analog photography and art.</p>
+            <p>The layout is designed to showcase 21 pieces of work in a clean, professional grid on desktop and a smooth scrolling experience on mobile.</p>
+            <p>Easily swap these images by updating the array in the script section of this file.</p>
+        `;
+
+        // Array of 21 images. 
+        // thumb: The small image shown in the grid.
+        // full: The large image shown in the pop-up.
+        const images = Array.from({ length: 21 }, (_, i) => {
+            // Vary aspect ratios for testing
+            let width = 1200;
+            let height = 1600; // Default vertical
+            if (i % 3 === 1) { width = 1600; height = 1200; } // Horizontal
+            if (i % 3 === 2) { width = 1200; height = 1200; } // Square
+
+            return {
+                thumb: `analog/analog_thumb/analog-${i}/300/400`,
+                full: `analog/analog_full/analog-${i}/${width}/${height}`
+            };
+        });
+
+        // =================================================================
+        // LOGIC SECTION - DO NOT EDIT UNLESS NECESSARY
+        // =================================================================
+
+        let currentImageIndex = 0;
+
+        function init() {
+            // Set Titles
+            document.getElementById('desktop-title').innerText = title;
+            document.getElementById('mobile-title').innerText = title;
+            
+            // Set Descriptions
+            document.getElementById('desktop-description').innerHTML = description;
+            document.getElementById('mobile-description').innerHTML = description;
+
+            // Render Desktop Thumbnails
+            const grid = document.getElementById('thumbnail-grid');
+            images.forEach((img, index) => {
+                const thumbDiv = document.createElement('div');
+                thumbDiv.className = "aspect-[3/4] bg-gray-900 cursor-pointer overflow-hidden group border border-transparent hover:border-[#8bc34a] transition-all";
+                thumbDiv.onclick = () => openLightbox(index);
+                
+                const image = document.createElement('img');
+                image.src = img.thumb;
+                image.alt = `Thumbnail ${index + 1}`;
+                image.className = "w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100";
+                image.referrerPolicy = "no-referrer";
+                
+                thumbDiv.appendChild(image);
+                grid.appendChild(thumbDiv);
+            });
+
+            // Render Mobile Stack
+            const stack = document.getElementById('mobile-image-stack');
+            images.forEach((img, index) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = "w-full bg-gray-900 overflow-hidden";
+                
+                const image = document.createElement('img');
+                image.src = img.full; 
+                image.alt = `Work ${index + 1}`;
+                image.className = "w-full h-auto block"; // Allow natural height
+                image.referrerPolicy = "no-referrer";
+                
+                imgContainer.appendChild(image);
+                stack.appendChild(imgContainer);
+            });
+
+            // Handle Scroll Indicator Visibility
+            window.addEventListener('scroll', () => {
+                const indicator = document.getElementById('scroll-indicator');
+                if (window.scrollY > 100) {
+                    indicator.style.opacity = '0';
+                    indicator.style.transition = 'opacity 0.5s ease';
+                } else {
+                    indicator.style.opacity = '1';
+                }
+            });
+        }
+
+        // Lightbox Functions
+        function openLightbox(index) {
+            currentImageIndex = index;
+            updateLightboxImage();
+            document.getElementById('lightbox').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateLightboxImage() {
+            const img = document.getElementById('lightbox-img');
+            const counter = document.getElementById('image-counter');
+            
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = images[currentImageIndex].full;
+                img.style.opacity = '1';
+                img.style.transition = 'opacity 0.3s ease';
+            }, 50);
+            
+            counter.innerText = `${currentImageIndex + 1} / ${images.length}`;
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateLightboxImage();
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateLightboxImage();
+        }
+
+        // Keyboard Navigation for Lightbox
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.classList.contains('hidden')) return;
+
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+        // Initialize on load
+        window.onload = init;
+    </script>
+</body>
+</html>
