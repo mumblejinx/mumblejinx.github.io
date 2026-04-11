@@ -108,10 +108,10 @@ export default function App() {
 
         {/* Layer 2: Black Content Background (Grows from top down) */}
         <motion.div 
-          className="absolute inset-x-0 top-0 bg-black z-20"
+          className="absolute inset-x-0 top-[20px] bg-black z-20"
           initial={false}
           animate={{ 
-            height: section === Section.INTRO ? '0%' : 'calc(100% - 120px)' 
+            height: section === Section.INTRO ? '0%' : 'calc(100% - 60px)' 
           }}
           transition={{ 
             duration: section === Section.INTRO ? 0 : 1.5, 
@@ -124,7 +124,7 @@ export default function App() {
           className="absolute inset-x-0 z-40"
           initial={false}
           animate={{ 
-            top: section === Section.INTRO ? '0%' : 'calc(100% - 120px)' 
+            top: section === Section.INTRO ? '0%' : 'calc(100% - 20px)' 
           }}
           transition={{ 
             duration: section === Section.INTRO ? 0 : 1.5, 
@@ -176,7 +176,7 @@ export default function App() {
 
         {/* Layer 4: Content Layer */}
         <div className="flex-grow flex flex-col relative z-30">
-          <main className="flex-grow relative overflow-hidden">
+          <main className="flex-grow relative overflow-hidden mt-[20px]">
             <AnimatePresence mode="wait">
               {section !== Section.INTRO && (
                 <motion.div
@@ -202,7 +202,7 @@ export default function App() {
                     )}
                   </div>
                   {/* Space for the drip bar and the white gap below it */}
-                  <div className="h-[120px]" />
+                  <div className="h-[40px]" />
                 </motion.div>
               )}
             </AnimatePresence>
