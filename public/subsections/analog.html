@@ -137,12 +137,17 @@
             <p>Easily swap these images by updating the array in the script section of this file.</p>
         `;
             
-            const num = String(i + 1).padStart(2, '0'); 
+            // Vary aspect ratios for testing
+            let width = 1200;
+            let height = 1600; // Default vertical
+            if (i % 3 === 1) { width = 1600; height = 1200; } // Horizontal
+            if (i % 3 === 2) { width = 1200; height = 1200; } // Square
         
             return {
-            
-                thumb: `/subsections/analog/analog_thumb/analog${num}.jpg`,
-                full: `/subsections/analog/analog_full/analog${num}.jpg`
+
+                thumb: `/subsections/analog/analog_thumb-${i}/300/400`,
+                full: `/subsections/analog/analog_full-${i}/${width}/${height}`
+                
             };
         });
 
