@@ -167,12 +167,14 @@
             // Render Desktop Thumbnails
             const grid = document.getElementById('thumbnail-grid');
             
-            // Add Empty Column 1
-            const emptyStart = document.createElement('div');
-            emptyStart.className = "aspect-[3/4]";
-            grid.appendChild(emptyStart);
-
             images.forEach((img, index) => {
+                // At the start of every row (every 7 images), add an empty spacer
+                if (index % 7 === 0) {
+                    const emptyStart = document.createElement('div');
+                    emptyStart.className = "aspect-[3/4]";
+                    grid.appendChild(emptyStart);
+                }
+
                 const thumbDiv = document.createElement('div');
                 thumbDiv.className = "aspect-[3/4] bg-gray-900 cursor-pointer overflow-hidden group border border-transparent hover:border-[#8bc34a] transition-all";
                 thumbDiv.onclick = () => openLightbox(index);
@@ -185,12 +187,14 @@
                 
                 thumbDiv.appendChild(image);
                 grid.appendChild(thumbDiv);
-            });
 
-            // Add Empty Column 9
-            const emptyEnd = document.createElement('div');
-            emptyEnd.className = "aspect-[3/4]";
-            grid.appendChild(emptyEnd);
+                // At the end of every row (every 7 images), add an empty spacer
+                if (index % 7 === 6 || index === images.length - 1) {
+                    const emptyEnd = document.createElement('div');
+                    emptyEnd.className = "aspect-[3/4]";
+                    grid.appendChild(emptyEnd);
+                }
+            });
 
             // Render Mobile Stack
             const stack = document.getElementById('mobile-image-stack');
