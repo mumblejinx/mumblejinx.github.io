@@ -101,29 +101,6 @@
         </div>
     </div>
 
-    <!-- LIGHTBOX (Pop-up Window) -->
-    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center">
-        <!-- Close Button -->
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-[#8bc34a] transition-colors z-[110]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-
-        <!-- Navigation Buttons -->
-        <button onclick="prevImage()" class="absolute left-6 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <button onclick="nextImage()" class="absolute right-6 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-
-        <!-- Image Container -->
-        <div class="relative max-w-[90vw] max-h-[85vh] flex items-center justify-center">
-            <img id="lightbox-img" src="" alt="Full size" class="max-w-full max-h-[85vh] object-contain shadow-2xl">
-            <!-- Image Counter -->
-            <div id="image-counter" class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-gray-500 text-sm font-mono tracking-widest"></div>
-        </div>
-    </div>
-
     <script>
         // =================================================================
         // DATA SECTION - EDIT THIS PART
@@ -140,20 +117,18 @@
         // Array of 21 images. 
         // thumb: The small image shown in the grid.
         // full: The large image shown in the pop-up.
+        // description: The text shown next to the full image.
         const images = Array.from({ length: 21 }, (_, i) => {
-            // This assumes your files are named analog-0.jpg, analog-1.jpg, etc.
-            // and stored in the folders you specified.
             return {
                 thumb: `/subsections/analog/analog_thumb/analog-${i}.jpg`,
-                full: `/subsections/analog/analog_full/analog-${i}.jpg`
+                full: `/subsections/analog/analog_full/analog-${i}.jpg`,
+                description: `This is a detailed description for Analog piece #${i + 1}. You can customize this text for each individual image in the gallery.`
             };
         });
 
         // =================================================================
         // LOGIC SECTION - DO NOT EDIT UNLESS NECESSARY
         // =================================================================
-
-        let currentImageIndex = 0;
 
         function init() {
             // Set Titles
@@ -224,52 +199,14 @@
             });
         }
 
-        // Lightbox Functions
+        // Send message to parent to open global lightbox
         function openLightbox(index) {
-            currentImageIndex = index;
-            updateLightboxImage();
-            document.getElementById('lightbox').classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            window.parent.postMessage({
+                type: 'OPEN_LIGHTBOX',
+                images: images,
+                index: index
+            }, '*');
         }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function updateLightboxImage() {
-            const img = document.getElementById('lightbox-img');
-            const counter = document.getElementById('image-counter');
-            
-            img.style.opacity = '0';
-            setTimeout(() => {
-                img.src = images[currentImageIndex].full;
-                img.style.opacity = '1';
-                img.style.transition = 'opacity 0.3s ease';
-            }, 50);
-            
-            counter.innerText = `${currentImageIndex + 1} / ${images.length}`;
-        }
-
-        function nextImage() {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            updateLightboxImage();
-        }
-
-        function prevImage() {
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            updateLightboxImage();
-        }
-
-        // Keyboard Navigation for Lightbox
-        document.addEventListener('keydown', (e) => {
-            const lightbox = document.getElementById('lightbox');
-            if (lightbox.classList.contains('hidden')) return;
-
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowRight') nextImage();
-            if (e.key === 'ArrowLeft') prevImage();
-        });
 
         // Initialize on load
         window.onload = init;
