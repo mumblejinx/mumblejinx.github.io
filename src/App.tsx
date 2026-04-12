@@ -106,12 +106,12 @@ export default function App() {
       <div className="h-screen w-full flex flex-col relative">
         {/* Layer 1: Intro Background (Static, always at the bottom) */}
         <div className="absolute inset-0 bg-white z-10 flex justify-center p-4">
-          <div className="relative top-[50%] lg:top-[40%] -translate-y-1/2 h-fit">
+          <div className="relative top-[55%] -translate-y-1/2 h-fit">
             <div className="hidden md:block">
-              <AssetImage src="/computer_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[70vh]" />
+              <AssetImage src="/computer_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[60vh]" />
             </div>
             <div className="md:hidden">
-              <AssetImage src="/phone_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[70vh]" />
+              <AssetImage src="/phone_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[60vh]" />
             </div>
           </div>
         </div>
