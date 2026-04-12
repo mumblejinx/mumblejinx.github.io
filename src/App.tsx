@@ -111,7 +111,7 @@ export default function App() {
           className="absolute inset-x-0 top-0 bg-black z-20"
           initial={false}
           animate={{ 
-            height: section === Section.INTRO ? '0%' : 'calc(100% - 120px)' 
+            height: section === Section.INTRO ? '0%' : 'calc(100% - 20px)' 
           }}
           transition={{ 
             duration: section === Section.INTRO ? 0 : 1.5, 
@@ -190,7 +190,7 @@ export default function App() {
                   }}
                   className="absolute inset-0 flex flex-col"
                 >
-                  <div className="flex-grow p-4 md:p-8">
+                  <div className="flex-grow px-4 md:px-8 pt-2 pb-0">
                     {getSubsectionFile() ? (
                       <iframe
                         src={getSubsectionFile()!}
@@ -202,7 +202,7 @@ export default function App() {
                     )}
                   </div>
                   {/* Space for the drip bar and the white gap below it */}
-                  <div className="h-[120px]" />
+                  <div className="h-[20px]" />
                 </motion.div>
               )}
             </AnimatePresence>
