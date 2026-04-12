@@ -124,7 +124,7 @@ export default function App() {
           className="absolute inset-x-0 z-40"
           initial={false}
           animate={{ 
-            top: section === Section.INTRO ? '0%' : 'calc(100% - 120px)' 
+            top: section === Section.INTRO ? '20px' : 'calc(100% - 120px)' 
           }}
           transition={{ 
             duration: section === Section.INTRO ? 0 : 1.5, 
@@ -190,7 +190,7 @@ export default function App() {
                   }}
                   className="absolute inset-0 flex flex-col"
                 >
-                  <div className="flex-grow p-2 pt-20 md:pt-24">
+                  <div className="flex-grow px-4 md:px-8 pt-20 md:pt-24">
                     {getSubsectionFile() ? (
                       <iframe
                         src={getSubsectionFile()!}
