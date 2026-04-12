@@ -141,17 +141,14 @@
         // thumb: The small image shown in the grid.
         // full: The large image shown in the pop-up.
         const images = Array.from({ length: 21 }, (_, i) => {
-            // Vary aspect ratios for testing
-            let width = 1200;
-            let height = 1600; // Default vertical
-            if (i % 3 === 1) { width = 1600; height = 1200; } // Horizontal
-            if (i % 3 === 2) { width = 1200; height = 1200; } // Square
-
+            // This assumes your files are named analog-0.jpg, analog-1.jpg, etc.
+            // and stored in the folders you specified.
             return {
-                thumb: `/subsections/analog/analog_thumb/analog-${i}/300/400`,
-                full: `/subsections/analog/analog_full/analog-${i}/${width}/${height}`
+                thumb: `/subsections/analog/analog_thumb/analog-${i}.jpg`,
+                full: `/subsections/analog/analog_full/analog-${i}.jpg`
             };
         });
+        
 
         // =================================================================
         // LOGIC SECTION - DO NOT EDIT UNLESS NECESSARY
