@@ -28,6 +28,21 @@ export default function App() {
   const [animKey, setAnimKey] = useState(0);
   const [isExitingToIntro, setIsExitingToIntro] = useState(false);
   const [headerHeight, setHeaderHeight] = useState('80px');
+  const [lightbox, setLightbox] = useState<{ images: any[], index: number } | null>(null);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'OPEN_LIGHTBOX') {
+        setLightbox({
+          images: event.data.images,
+          index: event.data.index
+        });
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -78,6 +93,68 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden">
+      {/* Global Lightbox */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-12"
+          >
+            {/* Close Button */}
+            <button 
+              onClick={() => setLightbox(null)}
+              className="absolute top-6 right-6 text-white hover:text-[#8bc34a] transition-colors z-[110]"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            {/* Navigation Buttons */}
+            <button 
+              onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null)}
+              className="absolute left-6 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button 
+              onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null)}
+              className="absolute right-6 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+
+            {/* Content Container */}
+            <div className="flex flex-col md:flex-row w-full max-w-7xl max-h-full gap-8 items-center md:items-start overflow-y-auto md:overflow-visible">
+              {/* Image Column */}
+              <div className="w-full md:w-3/4 flex flex-col items-center justify-center relative">
+                <motion.img 
+                  key={lightbox.images[lightbox.index].full}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  src={lightbox.images[lightbox.index].full} 
+                  alt="Full size" 
+                  className="max-w-full max-h-[70vh] md:max-h-[85vh] object-contain shadow-2xl"
+                  referrerPolicy="no-referrer"
+                />
+                {/* Image Counter */}
+                <div className="mt-4 text-gray-500 text-sm font-mono tracking-widest">
+                  {lightbox.index + 1} / {lightbox.images.length}
+                </div>
+              </div>
+
+              {/* Description Column */}
+              <div className="w-full md:w-1/4 flex flex-col text-left pt-0 md:pt-12">
+                <h2 className="text-[#8bc34a] text-xl font-bold mb-4 uppercase tracking-widest">Description</h2>
+                <div className="text-gray-300 text-sm leading-relaxed font-light">
+                  {lightbox.images[lightbox.index].description || "No description available for this piece."}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <OrientationLock />
       {/* Top Menu Bar */}
       <header className="absolute top-0 left-0 right-0 bg-black text-white p-4 z-50 h-auto md:h-20 flex items-center">
@@ -106,7 +183,7 @@ export default function App() {
       <div className="h-screen w-full flex flex-col relative">
         {/* Layer 1: Intro Background (Static, always at the bottom) */}
         <div className="absolute inset-0 bg-white z-10 flex justify-center p-4">
-          <div className="relative top-[55%] -translate-y-1/2 h-fit">
+          <div className="relative top-[45%] md:top-[40%] -translate-y-1/2 h-fit">
             <div className="hidden md:block">
               <AssetImage src="/computer_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[60vh]" />
             </div>
