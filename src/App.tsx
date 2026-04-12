@@ -70,7 +70,7 @@ export default function App() {
     <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden">
       <OrientationLock />
       {/* Top Menu Bar */}
-      <header className="bg-black text-white p-4 z-50 h-auto md:h-20 flex items-center">
+      <header className="absolute top-0 left-0 right-0 bg-black text-white p-4 z-50 h-auto md:h-20 flex items-center">
         <div className="w-full flex justify-between items-center md:justify-center md:relative">
           <button 
             onClick={() => handleSectionChange(Section.INTRO)}
@@ -93,7 +93,7 @@ export default function App() {
       </header>
 
       {/* Main Container */}
-      <div className="flex-grow flex flex-col relative">
+      <div className="h-screen w-full flex flex-col relative">
         {/* Layer 1: Intro Background (Static, always at the bottom) */}
         <div className="absolute inset-0 bg-white z-10 flex justify-center p-4">
           <div className="relative top-[40%] -translate-y-1/2 h-fit">
@@ -190,7 +190,7 @@ export default function App() {
                   }}
                   className="absolute inset-0 flex flex-col"
                 >
-                  <div className="flex-grow p-4 md:p-8">
+                  <div className="flex-grow p-2 pt-20 md:pt-24">
                     {getSubsectionFile() ? (
                       <iframe
                         src={getSubsectionFile()!}
