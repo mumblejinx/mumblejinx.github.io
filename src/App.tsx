@@ -111,8 +111,7 @@ export default function App() {
           className="absolute inset-x-0 top-0 bg-black z-20"
           initial={false}
           animate={{ 
-            height: section === Section.INTRO ? '80px' : 'calc(100% - 120px)',
-            opacity: section === Section.INTRO ? 0 : 1
+            height: section === Section.INTRO ? '80px' : 'calc(100% - 120px)'
           }}
           transition={{ 
             duration: section === Section.INTRO ? 0 : 1.5, 
