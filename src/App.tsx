@@ -124,7 +124,7 @@ export default function App() {
           className="absolute inset-x-0 z-40"
           initial={false}
           animate={{ 
-            top: section === Section.INTRO ? '20px' : 'calc(100% - 120px)' 
+            top: section === Section.INTRO ? '80px' : 'calc(100% - 120px)' 
           }}
           transition={{ 
             duration: section === Section.INTRO ? 0 : 1.5, 
