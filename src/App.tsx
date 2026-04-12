@@ -27,6 +27,16 @@ export default function App() {
   const [subsection, setSubsection] = useState<Subsection>(null);
   const [animKey, setAnimKey] = useState(0);
   const [isExitingToIntro, setIsExitingToIntro] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState('80px');
+
+  useEffect(() => {
+    const handleResize = () => {
+      setHeaderHeight(window.innerWidth < 768 ? '52px' : '80px');
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Reset subsection when section changes
   useEffect(() => {
@@ -111,7 +121,7 @@ export default function App() {
           className="absolute inset-x-0 top-0 bg-black z-20"
           initial={false}
           animate={{ 
-            height: section === Section.INTRO ? '80px' : 'calc(100% - 120px)'
+            height: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)'
           }}
           transition={{ 
             duration: section === Section.INTRO ? 0 : 1.5, 
@@ -124,7 +134,7 @@ export default function App() {
           className="absolute inset-x-0 z-40"
           initial={false}
           animate={{ 
-            top: section === Section.INTRO ? '80px' : 'calc(100% - 120px)' 
+            top: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)' 
           }}
           transition={{ 
             duration: section === Section.INTRO ? 0 : 1.5, 
