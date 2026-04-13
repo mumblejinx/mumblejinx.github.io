@@ -140,39 +140,9 @@ export default function App() {
             </button>
 
             {/* Content Container */}
-            <div className="flex flex-col md:flex-row w-fit max-w-[95vw] max-h-full gap-6 items-center md:items-center overflow-y-auto md:overflow-visible relative">
+            <div className="flex flex-col md:flex-row w-fit max-w-[95vw] max-h-full gap-8 items-center md:items-start overflow-y-auto md:overflow-visible relative">
               {/* Image Column */}
               <div className="relative flex flex-col items-center justify-center">
-                {/* Navigation Buttons - Positioned relative to image */}
-                <button 
-                  onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null)}
-                  className="absolute -left-16 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full hidden md:block"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-                <button 
-                  onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null)}
-                  className="absolute -right-16 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full hidden md:block"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
-
-                {/* Mobile Nav Buttons (Overlay) */}
-                <div className="md:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 z-[110] pointer-events-none">
-                  <button 
-                    onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null)}
-                    className="pointer-events-auto text-white p-2 bg-black/30 rounded-full"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                  </button>
-                  <button 
-                    onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null)}
-                    className="pointer-events-auto text-white p-2 bg-black/30 rounded-full"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                  </button>
-                </div>
-
                 <motion.img 
                   key={lightbox.images[lightbox.index].full}
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -189,7 +159,7 @@ export default function App() {
               </div>
 
               {/* Description Column */}
-              <div className="w-full md:w-64 flex flex-col text-left pt-0 md:pt-0 self-center">
+              <div className="w-full md:w-72 flex flex-col text-left pt-0 md:pt-0">
                 <h2 className="text-[#8bc34a] text-lg font-bold mb-3 uppercase tracking-widest">Description</h2>
                 <div className="text-gray-300 text-sm leading-relaxed font-light max-h-[30vh] md:max-h-none overflow-y-auto">
                   {lightbox.images[lightbox.index].description || "No description available for this piece."}
@@ -227,15 +197,24 @@ export default function App() {
       {/* Main Container */}
       <div className="h-screen w-full flex flex-col relative">
         {/* Layer 1: Intro Background (Static, always at the bottom) */}
-        <div className="absolute inset-0 bg-white z-10 flex justify-center p-4">
-          <div className="relative top-[45%] md:top-[40%] -translate-y-1/2 h-fit">
-            <div className="hidden md:block">
-              <AssetImage src="/computer_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[60vh]" />
-            </div>
-            <div className="md:hidden">
-              <AssetImage src="/phone_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[60vh]" />
+        <div className="absolute inset-0 bg-white z-10 flex flex-col items-center">
+          {/* Safe Zone Spacer: Header (80px) + Drip Bar Descent (120px) + Buffer */}
+          <div className="h-[220px] w-full flex-shrink-0" />
+          
+          {/* Content Area: Centers image in the remaining space */}
+          <div className="flex-grow flex items-center justify-center p-4 w-full">
+            <div className="h-fit">
+              <div className="hidden md:block">
+                <AssetImage src="/computer_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[60vh] object-contain" />
+              </div>
+              <div className="md:hidden">
+                <AssetImage src="/phone_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[60vh] object-contain" />
+              </div>
             </div>
           </div>
+
+          {/* Bottom Spacer: To balance the bottom menu bar (80px) */}
+          <div className="h-[80px] w-full flex-shrink-0" />
         </div>
 
         {/* Layer 2: Black Content Background (Grows from top down) */}
