@@ -46,29 +46,31 @@
 <body class="bg-black">
 
     <!-- DESKTOP & TABLET LAYOUT (Horizontal) -->
-    <div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-12 h-full items-start">
+    <div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-12 h-full items-center">
         <!-- Left Side: Project Image & Nav (1/2) -->
-        <div class="w-1/2 flex flex-col items-center">
-            <div id="project-image-container" class="w-full aspect-[4/3] bg-gray-900 overflow-hidden transition-all border border-transparent">
-                <img id="current-project-img" src="" alt="Project Image" class="w-full h-full object-cover transition-transform duration-500" referrerPolicy="no-referrer">
-            </div>
-            
-            <!-- Navigation Buttons -->
-            <div class="flex items-center gap-8 mt-6">
-                <button onclick="prevProject()" class="p-2 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 hover:border-[#8bc34a] transition-all rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
+        <div class="w-1/2 flex flex-col items-center justify-center">
+            <div class="w-4/5 max-w-[500px] flex flex-col items-center">
+                <div id="project-image-container" class="w-full aspect-[4/3] bg-gray-900 overflow-hidden transition-all border border-transparent">
+                    <img id="current-project-img" src="" alt="Project Image" class="w-full h-full object-cover transition-transform duration-500" referrerPolicy="no-referrer">
+                </div>
                 
-                <span id="project-counter" class="text-gray-500 font-mono text-sm tracking-widest min-w-[80px] text-center"></span>
+                <!-- Navigation Buttons -->
+                <div class="flex items-center gap-8 mt-6">
+                    <button onclick="prevProject()" class="p-2 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 hover:border-[#8bc34a] transition-all rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    
+                    <span id="project-counter" class="text-gray-500 font-mono text-sm tracking-widest min-w-[80px] text-center"></span>
 
-                <button onclick="nextProject()" class="p-2 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 hover:border-[#8bc34a] transition-all rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
+                    <button onclick="nextProject()" class="p-2 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 hover:border-[#8bc34a] transition-all rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
             </div>
         </div>
 
         <!-- Right Side: Description (1/2) -->
-        <div class="w-1/2 flex flex-col justify-start text-left">
+        <div class="w-1/2 flex flex-col justify-center text-left">
             <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
             <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4 max-w-2xl">
                 <!-- Description will be injected here -->
