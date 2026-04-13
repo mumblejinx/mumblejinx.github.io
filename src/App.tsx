@@ -45,6 +45,21 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightbox) return;
+      if (e.key === 'ArrowRight') {
+        setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null);
+      } else if (e.key === 'ArrowLeft') {
+        setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null);
+      } else if (e.key === 'Escape') {
+        setLightbox(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightbox]);
+
+  useEffect(() => {
     const handleResize = () => {
       setHeaderHeight(window.innerWidth < 768 ? '52px' : '80px');
     };
@@ -125,16 +140,46 @@ export default function App() {
             </button>
 
             {/* Content Container */}
-            <div className="flex flex-col md:flex-row w-full max-w-7xl max-h-full gap-8 items-center md:items-start overflow-y-auto md:overflow-visible">
+            <div className="flex flex-col md:flex-row w-fit max-w-[95vw] max-h-full gap-6 items-center md:items-center overflow-y-auto md:overflow-visible relative">
               {/* Image Column */}
-              <div className="w-full md:w-3/4 flex flex-col items-center justify-center relative">
+              <div className="relative flex flex-col items-center justify-center">
+                {/* Navigation Buttons - Positioned relative to image */}
+                <button 
+                  onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null)}
+                  className="absolute -left-16 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full hidden md:block"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button 
+                  onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null)}
+                  className="absolute -right-16 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full hidden md:block"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+
+                {/* Mobile Nav Buttons (Overlay) */}
+                <div className="md:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 z-[110] pointer-events-none">
+                  <button 
+                    onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null)}
+                    className="pointer-events-auto text-white p-2 bg-black/30 rounded-full"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  </button>
+                  <button 
+                    onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null)}
+                    className="pointer-events-auto text-white p-2 bg-black/30 rounded-full"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+
                 <motion.img 
                   key={lightbox.images[lightbox.index].full}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   src={lightbox.images[lightbox.index].full} 
                   alt="Full size" 
-                  className="max-w-full max-h-[70vh] md:max-h-[85vh] object-contain shadow-2xl"
+                  className="max-w-full max-h-[70vh] md:max-h-[80vh] object-contain shadow-2xl"
                   referrerPolicy="no-referrer"
                 />
                 {/* Image Counter */}
@@ -144,9 +189,9 @@ export default function App() {
               </div>
 
               {/* Description Column */}
-              <div className="w-full md:w-1/4 flex flex-col text-left pt-0 md:pt-12">
-                <h2 className="text-[#8bc34a] text-xl font-bold mb-4 uppercase tracking-widest">Description</h2>
-                <div className="text-gray-300 text-sm leading-relaxed font-light">
+              <div className="w-full md:w-64 flex flex-col text-left pt-0 md:pt-0 self-center">
+                <h2 className="text-[#8bc34a] text-lg font-bold mb-3 uppercase tracking-widest">Description</h2>
+                <div className="text-gray-300 text-sm leading-relaxed font-light max-h-[30vh] md:max-h-none overflow-y-auto">
                   {lightbox.images[lightbox.index].description || "No description available for this piece."}
                 </div>
               </div>
