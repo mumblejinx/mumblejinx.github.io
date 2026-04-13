@@ -3,15 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Work</title>
+    <title>Projects - Jake Galm</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: black; color: white; font-family: sans-serif; padding: 20px; }
-        h1 { color: #8bc34a; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        /* Floating Scroll Animation */
+        @keyframes bounce-scroll {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-scroll {
+            animation: bounce-scroll 2s infinite ease-in-out;
+        }
     </style>
 </head>
-<body>
-    <h1>PROJECTS</h1>
-    <p>This is the PROJECTS subsection of the WORK section.</p>
-    <p>Placeholder content for special projects and collaborations.</p>
+<body class="bg-black">
+
+    <!-- DESKTOP & TABLET LAYOUT (Horizontal) -->
+    <div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-12 h-full items-start">
+        <!-- Left Side: Project Image & Nav (1/3) -->
+        <div class="w-1/3 flex flex-col items-center">
+            <div id="project-image-container" class="w-full aspect-[4/3] bg-gray-900 overflow-hidden transition-all border border-transparent">
+                <img id="current-project-img" src="" alt="Project Image" class="w-full h-full object-cover transition-transform duration-500" referrerPolicy="no-referrer">
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="flex gap-4 mt-6">
+                <button onclick="prevProject()" class="p-2 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 hover:border-[#8bc34a] transition-all rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button onclick="nextProject()" class="p-2 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 hover:border-[#8bc34a] transition-all rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Side: Description (2/3) -->
+        <div class="w-2/3 flex flex-col justify-start text-left">
+            <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
+            <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4 max-w-2xl">
+                <!-- Description will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE LAYOUT (Vertical) -->
+    <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
+        <!-- Vertical Image Stack -->
+        <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12">
+            <!-- Images will be injected here by JavaScript -->
+        </div>
+
+        <!-- Mobile Description (at the bottom) -->
+        <div class="mt-8 border-t border-gray-800 pt-8">
+            <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter">PROJECTS</h1>
+            <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4">
+                <p>Scroll through a selection of featured projects. Each image represents a unique body of work or specific creative endeavor.</p>
+            </div>
+        </div>
+
+        <!-- Floating Scroll Indicator (Lower Left) -->
+        <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
+            <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
+                <span>▼ SCROLL</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =================================================================
+        // DATA SECTION
+        // =================================================================
+        
+        const projects = [
+            {
+                id: 0,
+                title: "PROJECTS OVERVIEW",
+                description: `
+                    <p>Welcome to the Projects section. This area is dedicated to long-form series and specific creative assignments.</p>
+                    <p>Use the navigation buttons on the left to browse through the different projects. Each project contains a unique set of images and a detailed narrative.</p>
+                    <p>Click on any project image (except this overview) to open a dedicated gallery for that specific project.</p>
+                `,
+                listImage: "/subsections/projects/list/overview.jpg",
+                gallery: [] // No gallery for overview
+            },
+            ...Array.from({ length: 11 }, (_, i) => ({
+                id: i + 1,
+                title: `PROJECT ${i + 1}`,
+                description: `
+                    <p>This is the detailed description for Project ${i + 1}. This project explores specific themes and visual languages developed over time.</p>
+                    <p>Click the image to the left to view the full gallery of images associated with this project.</p>
+                `,
+                listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
+                gallery: Array.from({ length: 5 }, (_, j) => ({
+                    full: `/subsections/projects/project-${i + 1}/img-${j + 1}.jpg`,
+                    description: `Project ${i + 1} - Image ${j + 1}: Detailed view of the work.`
+                }))
+            }))
+        ];
+
+        // =================================================================
+        // LOGIC SECTION
+        // =================================================================
+
+        let currentProjectIndex = 0;
+
+        function init() {
+            updateDesktopView();
+            renderMobileStack();
+
+            // Handle Scroll Indicator Visibility
+            window.addEventListener('scroll', () => {
+                const indicator = document.getElementById('scroll-indicator');
+                if (window.scrollY > 100) {
+                    indicator.style.opacity = '0';
+                    indicator.style.transition = 'opacity 0.5s ease';
+                } else {
+                    indicator.style.opacity = '1';
+                }
+            });
+        }
+
+        function updateDesktopView() {
+            const project = projects[currentProjectIndex];
+            
+            // Update Text
+            document.getElementById('desktop-title').innerText = project.title;
+            document.getElementById('desktop-description').innerHTML = project.description;
+            
+            // Update Image
+            const img = document.getElementById('current-project-img');
+            img.src = project.listImage;
+            
+            // Update Click Handler
+            const container = document.getElementById('project-image-container');
+            const imgEl = document.getElementById('current-project-img');
+            
+            if (project.id === 0) {
+                container.onclick = null;
+                container.classList.remove('cursor-pointer', 'hover:border-[#8bc34a]');
+                imgEl.classList.remove('group-hover:scale-105');
+            } else {
+                container.onclick = () => openProjectGallery(currentProjectIndex);
+                container.classList.add('cursor-pointer', 'hover:border-[#8bc34a]');
+                imgEl.classList.add('group-hover:scale-105');
+            }
+        }
+
+        function renderMobileStack() {
+            const stack = document.getElementById('mobile-image-stack');
+            projects.forEach((project, index) => {
+                if (project.id === 0) return; // Skip overview on mobile stack
+
+                const imgContainer = document.createElement('div');
+                imgContainer.className = "w-full bg-gray-900 overflow-hidden border border-gray-800";
+                
+                const image = document.createElement('img');
+                image.src = project.listImage; 
+                image.alt = project.title;
+                image.className = "w-full h-auto block";
+                image.referrerPolicy = "no-referrer";
+                
+                imgContainer.appendChild(image);
+                stack.appendChild(imgContainer);
+            });
+        }
+
+        function nextProject() {
+            currentProjectIndex = (currentProjectIndex + 1) % projects.length;
+            updateDesktopView();
+        }
+
+        function prevProject() {
+            currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
+            updateDesktopView();
+        }
+
+        function openProjectGallery(index) {
+            const project = projects[index];
+            if (project.gallery.length === 0) return;
+
+            window.parent.postMessage({
+                type: 'OPEN_LIGHTBOX',
+                images: project.gallery,
+                index: 0
+            }, '*');
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (window.innerWidth < 768) return;
+            if (e.key === 'ArrowRight') nextProject();
+            if (e.key === 'ArrowLeft') prevProject();
+        });
+
+        window.onload = init;
+    </script>
 </body>
 </html>
