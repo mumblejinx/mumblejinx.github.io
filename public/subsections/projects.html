@@ -47,25 +47,28 @@
 
     <!-- DESKTOP & TABLET LAYOUT (Horizontal) -->
     <div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-12 h-full items-start">
-        <!-- Left Side: Project Image & Nav (1/3) -->
-        <div class="w-1/3 flex flex-col items-center">
+        <!-- Left Side: Project Image & Nav (1/2) -->
+        <div class="w-1/2 flex flex-col items-center">
             <div id="project-image-container" class="w-full aspect-[4/3] bg-gray-900 overflow-hidden transition-all border border-transparent">
                 <img id="current-project-img" src="" alt="Project Image" class="w-full h-full object-cover transition-transform duration-500" referrerPolicy="no-referrer">
             </div>
             
             <!-- Navigation Buttons -->
-            <div class="flex gap-4 mt-6">
+            <div class="flex items-center gap-8 mt-6">
                 <button onclick="prevProject()" class="p-2 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 hover:border-[#8bc34a] transition-all rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
+                
+                <span id="project-counter" class="text-gray-500 font-mono text-sm tracking-widest min-w-[80px] text-center"></span>
+
                 <button onclick="nextProject()" class="p-2 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 hover:border-[#8bc34a] transition-all rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Right Side: Description (2/3) -->
-        <div class="w-2/3 flex flex-col justify-start text-left">
+        <!-- Right Side: Description (1/2) -->
+        <div class="w-1/2 flex flex-col justify-start text-left">
             <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
             <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4 max-w-2xl">
                 <!-- Description will be injected here -->
@@ -157,6 +160,14 @@
             document.getElementById('desktop-title').innerText = project.title;
             document.getElementById('desktop-description').innerHTML = project.description;
             
+            // Update Counter
+            const counter = document.getElementById('project-counter');
+            if (project.id === 0) {
+                counter.innerText = "OVERVIEW";
+            } else {
+                counter.innerText = `${project.id} / 11`;
+            }
+
             // Update Image
             const img = document.getElementById('current-project-img');
             img.src = project.listImage;
