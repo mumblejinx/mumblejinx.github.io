@@ -198,17 +198,17 @@ export default function App() {
       <div className="h-screen w-full flex flex-col relative">
         {/* Layer 1: Intro Background (Static, always at the bottom) */}
         <div className="absolute inset-0 bg-white z-10 flex flex-col items-center">
-          {/* Safe Zone Spacer: Header (80px) + Drip Bar Descent (120px) + Buffer */}
-          <div className="h-[220px] w-full flex-shrink-0" />
+          {/* Safe Zone Spacer: Header + Green Bars (52+20 mobile, 80+20 desktop) */}
+          <div className="h-[72px] md:h-[100px] w-full flex-shrink-0" />
           
           {/* Content Area: Centers image in the remaining space */}
           <div className="flex-grow flex items-center justify-center p-4 w-full">
             <div className="h-fit">
               <div className="hidden md:block">
-                <AssetImage src="/computer_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[60vh] object-contain" />
+                <AssetImage src="/computer_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[65vh] object-contain" />
               </div>
               <div className="md:hidden">
-                <AssetImage src="/phone_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[60vh] object-contain" />
+                <AssetImage src="/phone_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[65vh] object-contain" />
               </div>
             </div>
           </div>
