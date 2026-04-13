@@ -199,7 +199,7 @@ export default function App() {
         {/* Layer 1: Intro Background (Static, always at the bottom) */}
         <div className="absolute inset-0 bg-white z-10 flex flex-col items-center">
           {/* Safe Zone Spacer: Header + Green Bars (52+20 mobile, 80+20 desktop) */}
-          <div className="h-[72px] md:h-[100px] w-full flex-shrink-0" />
+          <div className="h-[72px] md:h-[85px] w-full flex-shrink-0" />
           
           {/* Content Area: Centers image in the remaining space */}
           <div className="flex-grow flex items-center justify-center p-4 w-full">
