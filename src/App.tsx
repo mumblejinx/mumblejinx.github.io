@@ -198,8 +198,8 @@ export default function App() {
       <div className="h-screen w-full flex flex-col relative">
         {/* Layer 1: Intro Background (Static, always at the bottom) */}
         <div className="absolute inset-0 bg-white z-10 flex flex-col items-center">
-          {/* Safe Zone Spacer: Header + Green Bars (65px mobile, 75px desktop) */}
-          <div className="h-[65px] md:h-[75px] w-full flex-shrink-0" />
+          {/* Safe Zone Spacer: Header + Green Bars (65px mobile, 65px desktop) */}
+          <div className="h-[65px] md:h-[65px] w-full flex-shrink-0" />
           
           {/* Content Area: Centers image in the remaining space */}
           <div className="flex-grow flex items-center justify-center p-4 w-full">
