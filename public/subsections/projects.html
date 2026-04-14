@@ -118,7 +118,7 @@
                 listImage: "/subsections/projects/list/overview.jpg",
                 gallery: [] // No gallery for overview
             },
-            ...Array.from({ length: 11 }, (_, i) => ({
+            ...Array.from({ length: 10 }, (_, i) => ({
                 id: i + 1,
                 title: `PROJECT ${i + 1}`,
                 description: `
@@ -167,7 +167,7 @@
             if (project.id === 0) {
                 counter.innerText = "OVERVIEW";
             } else {
-                counter.innerText = `${project.id} / 11`;
+                counter.innerText = `${project.id} / 10`;
             }
 
             // Update Image
@@ -192,8 +192,6 @@
         function renderMobileStack() {
             const stack = document.getElementById('mobile-image-stack');
             projects.forEach((project, index) => {
-                if (project.id === 0) return; // Skip overview on mobile stack
-
                 const imgContainer = document.createElement('div');
                 imgContainer.className = "w-full bg-gray-900 overflow-hidden border border-gray-800";
                 
