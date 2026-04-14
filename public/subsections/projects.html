@@ -70,7 +70,7 @@
         </div>
 
         <!-- Right Side: Description (1/2) -->
-        <div class="w-1/2 flex flex-col justify-start text-left pt-12">
+        <div class="w-1/2 flex flex-col justify-start text-left pt-0">
             <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
             <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4 max-w-2xl">
                 <!-- Description will be injected here -->
@@ -118,7 +118,7 @@
                 listImage: "/subsections/projects/list/overview.jpg",
                 gallery: [] // No gallery for overview
             },
-            ...Array.from({ length: 10 }, (_, i) => ({
+            ...Array.from({ length: 11 }, (_, i) => ({
                 id: i + 1,
                 title: `PROJECT ${i + 1}`,
                 description: `
@@ -167,7 +167,7 @@
             if (project.id === 0) {
                 counter.innerText = "OVERVIEW";
             } else {
-                counter.innerText = `${project.id} / 10`;
+                counter.innerText = `${project.id} / 11`;
             }
 
             // Update Image
