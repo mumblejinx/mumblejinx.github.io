@@ -20,12 +20,10 @@ body {
     transition: transform 6s ease, opacity 0.6s ease;
 }
 
-/* slow breathing motion */
 .image-active {
     transform: scale(1.03);
 }
 
-/* hover tension */
 #image-container:hover #project-img {
     transform: scale(1.06);
 }
@@ -62,7 +60,7 @@ body {
     border: 1px solid #444;
     cursor: pointer;
     opacity: 0.6;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .lightbox-arrow:hover {
@@ -72,6 +70,24 @@ body {
 
 #prev-img { left: 20px; }
 #next-img { right: 20px; }
+
+/* CLOSE BUTTON */
+#lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 18px;
+    border: 1px solid #444;
+    padding: 8px 12px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+#lightbox-close:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
 
 #lightbox-counter {
     position: absolute;
@@ -92,7 +108,7 @@ button:hover {
     transform: scale(1.08);
 }
 
-/* ===== PAGE FADE IN ===== */
+/* ===== PAGE FADE ===== */
 body {
     animation: fadeIn 1.2s ease;
 }
@@ -100,6 +116,16 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+/* ===== SCROLL INDICATOR ===== */
+@keyframes bounce-scroll {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.animate-bounce-scroll {
+    animation: bounce-scroll 2s infinite ease-in-out;
 }
 </style>
 </head>
@@ -121,16 +147,12 @@ body {
 
         <div class="flex items-center gap-8 mt-6">
 
-            <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">
-                ←
-            </button>
+            <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">←</button>
 
             <span id="counter"
                 class="text-gray-400 text-sm tracking-widest min-w-[80px] text-center"></span>
 
-            <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">
-                →
-            </button>
+            <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">→</button>
 
         </div>
     </div>
@@ -151,7 +173,6 @@ body {
 <!-- MOBILE -->
 <div class="md:hidden px-4 py-6 pb-24">
 
-    <!-- increased spacing -->
     <div id="mobile-stack" class="flex flex-col gap-20"></div>
 
     <div class="mt-16 border-t border-gray-800 pt-8">
@@ -172,6 +193,8 @@ body {
 <!-- LIGHTBOX -->
 <div id="lightbox">
 
+    <div id="lightbox-close" onclick="closeGallery()">✕</div>
+
     <div id="prev-img" class="lightbox-arrow" onclick="prevImage()">←</div>
     <div id="next-img" class="lightbox-arrow" onclick="nextImage()">→</div>
 
@@ -182,12 +205,20 @@ body {
 </div>
 
 
+<!-- SCROLL INDICATOR -->
+<div id="scroll-indicator"
+     class="fixed bottom-4 left-6 z-40 pointer-events-none md:hidden">
+
+    <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
+        <span>▼ SCROLL</span>
+    </div>
+
+</div>
+
+
 <script>
 
-/* =========================
-DATA (UNCHANGED)
-========================= */
-
+/* DATA */
 const projects = [
 {
     id: 0,
@@ -211,29 +242,14 @@ const projects = [
 }))
 ];
 
-
-/* =========================
-STATE
-========================= */
-
 let index = 0;
 let gallery = [];
 let galleryIndex = 0;
-
-
-/* =========================
-INIT
-========================= */
 
 function init() {
     updateDesktop();
     renderMobile();
 }
-
-
-/* =========================
-DESKTOP
-========================= */
 
 function updateDesktop() {
 
@@ -247,7 +263,6 @@ function updateDesktop() {
 
     const img = document.getElementById("project-img");
 
-    // cinematic transition
     img.classList.remove("image-active");
     img.style.opacity = 0;
 
@@ -257,19 +272,12 @@ function updateDesktop() {
         img.classList.add("image-active");
     }, 200);
 
-    const container = document.getElementById("image-container");
-
-    container.onclick = () => {
+    document.getElementById("image-container").onclick = () => {
         if (project.galleryCount > 0) {
             openGallery(project.id, project.galleryCount);
         }
     };
 }
-
-
-/* =========================
-NAVIGATION
-========================= */
 
 function nextProject() {
     index = (index + 1) % projects.length;
@@ -281,11 +289,7 @@ function prevProject() {
     updateDesktop();
 }
 
-
-/* =========================
-LIGHTBOX
-========================= */
-
+/* LIGHTBOX */
 function openGallery(projectId, count) {
 
     gallery = [];
@@ -334,11 +338,7 @@ document.getElementById("lightbox").addEventListener("click", (e) => {
     if (e.target.id === "lightbox") closeGallery();
 });
 
-
-/* =========================
-KEYBOARD
-========================= */
-
+/* KEYBOARD */
 document.addEventListener("keydown", (e) => {
 
     if (document.getElementById("lightbox").style.display === "flex") {
@@ -354,11 +354,7 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
-
-/* =========================
-SWIPE
-========================= */
-
+/* SWIPE */
 let startX = 0;
 
 document.addEventListener("touchstart", e => {
@@ -381,11 +377,7 @@ document.addEventListener("touchend", e => {
     }
 });
 
-
-/* =========================
-MOBILE
-========================= */
-
+/* MOBILE */
 function renderMobile() {
 
     const container = document.getElementById("mobile-stack");
@@ -404,6 +396,17 @@ function renderMobile() {
     });
 }
 
+/* SCROLL INDICATOR FADE */
+window.addEventListener('scroll', () => {
+    const indicator = document.getElementById('scroll-indicator');
+
+    if (window.scrollY > 100) {
+        indicator.style.opacity = '0';
+        indicator.style.transition = 'opacity 0.5s ease';
+    } else {
+        indicator.style.opacity = '1';
+    }
+});
 
 window.onload = init;
 
