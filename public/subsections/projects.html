@@ -98,20 +98,12 @@ body {
 }
 
 /* ===== MOBILE BOUNCE ===== */
-#scroll-indicator {
-    position: fixed;
-    bottom: 90px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: #aaa;
-    animation: bounce 1.6s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, 10px); }
+     @keyframes bounce-scroll {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-scroll {
+            animation: bounce-scroll 2s infinite ease-in-out;
 }
 
 /* ===== PAGE FADE IN ===== */
@@ -171,17 +163,23 @@ body {
 
 
 <!-- MOBILE -->
-<div class="md:hidden px-4 py-6 pb-24">
+  <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
 
-    <div id="mobile-stack" class="flex flex-col gap-20"></div>
+        <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12"></div>
 
-    <!-- ✅ SCROLL INDICATOR -->
-     <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
-     <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
-     <span>▼ SCROLL</span>
+        <div class="mt-8 border-t border-gray-800 pt-8">
+            <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
+            <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4"></div>
+        </div>
+
+        <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
+            <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
+                <span>▼ SCROLL</span>
             </div>
+        </div>
 
-</div>
+    </div>
+
 
 
 <!-- LIGHTBOX -->
