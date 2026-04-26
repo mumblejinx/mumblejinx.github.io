@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Projects - Jake Galm</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -15,59 +16,60 @@ body {
     overflow-x: hidden;
 }
 
-/* Smooth scroll feel */
-html {
-    scroll-behavior: smooth;
+/* LIGHTBOX */
+#lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
+
+#lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+}
+
 </style>
 </head>
 
 <body>
 
 <!-- ========================= -->
-<!-- DESKTOP + TABLET LAYOUT -->
+<!-- DESKTOP / TABLET -->
 <!-- ========================= -->
-<div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
+<div id="desktop" class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
 
-    <!-- LEFT: IMAGE + NAV -->
+    <!-- LEFT -->
     <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
 
-        <!-- IMAGE -->
         <div id="image-container"
-             class="w-full flex items-center justify-center max-h-[70vh] bg-gray-900 overflow-hidden">
+             class="w-full flex items-center justify-center max-h-[70vh] bg-gray-900 cursor-pointer">
 
             <img id="project-img"
-                 class="max-w-full max-h-full object-contain transition-all duration-500"
+                 class="max-w-full max-h-full object-contain"
                  src="">
         </div>
 
-        <!-- NAV -->
         <div class="flex items-center gap-8 mt-6">
 
-            <button onclick="prevProject()"
-                class="p-3 rounded-full border border-gray-700 hover:border-[#8bc34a] transition">
-                ←
-            </button>
+            <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">←</button>
 
-            <span id="counter"
-                class="text-gray-400 text-sm tracking-widest min-w-[80px] text-center"></span>
+            <span id="counter" class="text-gray-400 text-sm tracking-widest"></span>
 
-            <button onclick="nextProject()"
-                class="p-3 rounded-full border border-gray-700 hover:border-[#8bc34a] transition">
-                →
-            </button>
+            <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">→</button>
 
         </div>
     </div>
 
-    <!-- RIGHT: TEXT -->
-    <div class="w-1/2 flex flex-col justify-start max-h-[85vh] overflow-y-auto pr-4">
+    <!-- RIGHT -->
+    <div class="w-1/2 overflow-y-auto max-h-[85vh] pr-4">
 
-        <h1 id="title"
-            class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase"></h1>
-
-        <div id="description"
-             class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
+        <h1 id="title" class="text-[#8bc34a] text-4xl mb-6"></h1>
+        <div id="description" class="text-gray-300 space-y-4"></div>
 
     </div>
 
@@ -75,27 +77,21 @@ html {
 
 
 <!-- ========================= -->
-<!-- MOBILE LAYOUT -->
+<!-- MOBILE -->
 <!-- ========================= -->
 <div class="md:hidden px-4 py-6 pb-24">
 
-    <!-- IMAGE STACK -->
-    <div id="mobile-stack" class="flex flex-col gap-12">
-        <!-- Images injected -->
-    </div>
+    <div id="mobile-stack" class="flex flex-col gap-16"></div>
 
-    <!-- DESCRIPTION -->
-    <div class="mt-16 border-t border-gray-800 pt-8">
+</div>
 
-        <h1 class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase">
-            Projects
-        </h1>
 
-        <p class="text-gray-400 leading-relaxed">
-            Scroll through a selection of projects. Each image represents a body of work.
-        </p>
+<!-- ========================= -->
+<!-- LIGHTBOX -->
+<!-- ========================= -->
+<div id="lightbox" onclick="closeLightbox()">
 
-    </div>
+    <img id="lightbox-img">
 
 </div>
 
@@ -103,40 +99,40 @@ html {
 <script>
 
 /* =========================
-   DATA
+DATA
 ========================= */
 
 const projects = [
 {
     id: 0,
     title: "PROJECTS OVERVIEW",
-    description: `
-        <p>Welcome to the Projects section.</p>
-        <p>Use navigation arrows to explore different bodies of work.</p>
-    `,
+    description: `<p>Welcome to the Projects section.</p>`,
     listImage: "/subsections/projects/list/overview.jpg",
+    gallery: []
 },
 ...Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
     title: `PROJECT ${i + 1}`,
-    description: `
-        <p>This is Project ${i + 1}.</p>
-        <p>Click image to view full gallery.</p>
-    `,
+    description: `<p>Project ${i + 1}</p>`,
     listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
+    gallery: Array.from({ length: 5 }, (_, j) => ({
+        full: `/subsections/projects/project-${i + 1}/img-${j + 1}.jpg`
+    }))
 }))
 ];
 
 
 /* =========================
-   STATE
+STATE
 ========================= */
 
 let index = 0;
+let lightboxIndex = 0;
+let activeGallery = [];
 
 
 /* =========================
-   INIT
+INIT
 ========================= */
 
 function init() {
@@ -146,26 +142,29 @@ function init() {
 
 
 /* =========================
-   DESKTOP
+DESKTOP VIEW
 ========================= */
 
 function updateDesktop() {
 
     const project = projects[index];
 
-    document.getElementById("title").innerHTML = project.title;
-    document.getElementById("description").innerHTML = project.description;
+    title.innerHTML = project.title;
+    description.innerHTML = project.description;
 
-    const counter = document.getElementById("counter");
-    counter.innerText = project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
+    counter.innerText =
+        project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
 
-    const img = document.getElementById("project-img");
-    img.src = project.listImage;
+    projectImg.src = project.listImage;
+
+    imageContainer.onclick = () => {
+        if (project.gallery.length) openLightbox(project.gallery);
+    };
 }
 
 
 /* =========================
-   NAVIGATION
+NAV
 ========================= */
 
 function nextProject() {
@@ -180,7 +179,78 @@ function prevProject() {
 
 
 /* =========================
-   MOBILE
+LIGHTBOX
+========================= */
+
+function openLightbox(gallery) {
+    activeGallery = gallery;
+    lightboxIndex = 0;
+
+    lightbox.style.display = "flex";
+    updateLightbox();
+}
+
+function updateLightbox() {
+    lightboxImg.src = activeGallery[lightboxIndex].full;
+}
+
+function closeLightbox() {
+    lightbox.style.display = "none";
+}
+
+function nextImage() {
+    lightboxIndex = (lightboxIndex + 1) % activeGallery.length;
+    updateLightbox();
+}
+
+function prevImage() {
+    lightboxIndex = (lightboxIndex - 1 + activeGallery.length) % activeGallery.length;
+    updateLightbox();
+}
+
+
+/* =========================
+KEYBOARD
+========================= */
+
+document.addEventListener("keydown", (e) => {
+
+    if (lightbox.style.display === "flex") {
+        if (e.key === "ArrowRight") nextImage();
+        if (e.key === "ArrowLeft") prevImage();
+        if (e.key === "Escape") closeLightbox();
+        return;
+    }
+
+    if (window.innerWidth >= 768) {
+        if (e.key === "ArrowRight") nextProject();
+        if (e.key === "ArrowLeft") prevProject();
+    }
+});
+
+
+/* =========================
+SWIPE (TABLET)
+========================= */
+
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+
+    if (Math.abs(startX - endX) > 50) {
+        if (startX > endX) nextProject();
+        else prevProject();
+    }
+});
+
+
+/* =========================
+MOBILE
 ========================= */
 
 function renderMobile() {
@@ -189,31 +259,17 @@ function renderMobile() {
 
     projects.forEach(project => {
 
-        const wrapper = document.createElement("div");
-
-        wrapper.className = "w-full";
+        const div = document.createElement("div");
 
         const img = document.createElement("img");
 
         img.src = project.listImage;
-        img.className = "w-full h-auto block";
+        img.className = "w-full h-auto";
 
-        wrapper.appendChild(img);
-        container.appendChild(wrapper);
+        div.appendChild(img);
+        container.appendChild(div);
     });
 }
-
-
-/* =========================
-   KEYBOARD NAV
-========================= */
-
-document.addEventListener("keydown", (e) => {
-    if (window.innerWidth < 768) return;
-
-    if (e.key === "ArrowRight") nextProject();
-    if (e.key === "ArrowLeft") prevProject();
-});
 
 
 window.onload = init;
