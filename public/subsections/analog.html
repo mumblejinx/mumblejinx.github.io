@@ -1,224 +1,175 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analog - Work Template</title>
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-    <script src="https://cdn.tailwindcss.com"></script>
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Section, WorkSubsection, AboutSubsection, Subsection } from './constants';
+import { AssetImage } from './components/AssetImage';
+import { OrientationLock } from './components/OrientationLock';
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-        
-        body {
-            background-color: black;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
+export default function App() {
+  const [section, setSection] = useState<Section>(Section.INTRO);
+  const [subsection, setSubsection] = useState<Subsection>(null);
+  const [animKey, setAnimKey] = useState(0);
+  const [isExitingToIntro, setIsExitingToIntro] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState('80px');
+  const [lightbox, setLightbox] = useState<{ images: any[], index: number } | null>(null);
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #444;
-        }
+  /* ✅ SWIPE STATE */
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
-        /* Floating Scroll Animation */
-        @keyframes bounce-scroll {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-bounce-scroll {
-            animation: bounce-scroll 2s infinite ease-in-out;
-        }
-
-        /* Lightbox transitions */
-        .lightbox-enter { opacity: 0; }
-        .lightbox-enter-active { opacity: 1; transition: opacity 0.3s ease; }
-
-        /* =========================
-           THUMBNAIL FADE-IN (FIXED)
-        ========================= */
-        .thumb-img {
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        .thumb-img.visible {
-            opacity: 1;
-        }
-
-    </style>
-</head>
-
-<body class="bg-black">
-
-    <!-- DESKTOP & TABLET -->
-    <div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-full">
-
-        <!-- LEFT: GRID -->
-        <div class="w-2/3 overflow-y-auto pr-4 flex items-center justify-center">
-            <div id="thumbnail-grid" class="grid grid-cols-9 gap-2 w-full max-w-fit"></div>
-        </div>
-
-        <!-- RIGHT: TEXT -->
-        <div class="w-1/3 flex flex-col justify-start text-left">
-            <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
-            <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
-        </div>
-
-    </div>
-
-    <!-- MOBILE -->
-    <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
-
-        <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12"></div>
-
-        <div class="mt-8 border-t border-gray-800 pt-8">
-            <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
-            <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4"></div>
-        </div>
-
-        <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
-            <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
-                <span>▼ SCROLL</span>
-            </div>
-        </div>
-
-    </div>
-
-<script>
-
-/* =========================
-   DATA (EDIT THIS ONLY)
-========================= */
-
-const title = "ANALOG";
-
-const description = `
-    <p>This is the ANALOG subsection. Placeholder content for analog photography and art.</p>
-    <p>The layout is designed to showcase 21 pieces of work in a clean, professional grid on desktop and a smooth scrolling experience on mobile.</p>
-    <p>Easily swap these images by updating the array in the script section of this file.</p>
-`;
-
-const images = Array.from({ length: 21 }, (_, i) => {
-    return {
-        thumb: `/subsections/analog/analog_thumb/analog-${i}.jpg`,
-        full: `/subsections/analog/analog_full/analog-${i}.jpg`,
-        description: `This is a detailed description for Analog piece #${i + 1}.`
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'OPEN_LIGHTBOX') {
+        setLightbox({
+          images: event.data.images,
+          index: event.data.index
+        });
+      }
     };
-});
 
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
 
-/* =========================
-   INIT
-========================= */
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightbox) return;
+      if (e.key === 'ArrowRight') {
+        setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null);
+      } else if (e.key === 'ArrowLeft') {
+        setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null);
+      } else if (e.key === 'Escape') {
+        setLightbox(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightbox]);
 
-function init() {
+  useEffect(() => {
+    const handleResize = () => {
+      setHeaderHeight(window.innerWidth < 768 ? '52px' : '80px');
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-    document.getElementById('desktop-title').innerText = title;
-    document.getElementById('mobile-title').innerText = title;
+  useEffect(() => {
+    if (section === Section.WORK) {
+      setSubsection(WorkSubsection.ANALOG);
+    } else if (section === Section.ABOUT) {
+      setSubsection(AboutSubsection.WORD);
+    } else {
+      setSubsection(null);
+    }
+  }, [section]);
 
-    document.getElementById('desktop-description').innerHTML = description;
-    document.getElementById('mobile-description').innerHTML = description;
+  const handleSectionChange = (newSection: Section) => {
+    if (newSection === Section.INTRO && section === Section.WORK && window.innerWidth < 768) {
+      setIsExitingToIntro(true);
+      setTimeout(() => {
+        setSection(Section.INTRO);
+        setIsExitingToIntro(false);
+        setAnimKey(prev => prev + 1);
+      }, 500);
+      return;
+    }
 
-    const grid = document.getElementById('thumbnail-grid');
+    if (newSection === Section.INTRO) {
+      setAnimKey(prev => prev + 1);
+    }
+    setSection(newSection);
+  };
 
-    images.forEach((img, index) => {
+  const handleSubsectionChange = (newSubsection: Subsection) => {
+    setSubsection(newSubsection);
+  };
 
-        if (index % 7 === 0) {
-            const emptyStart = document.createElement('div');
-            emptyStart.className = "aspect-[3/4]";
-            grid.appendChild(emptyStart);
-        }
+  const getSubsectionFile = () => {
+    if (section === Section.SUPPORT) return '/subsections/support.html';
+    if (!subsection) return null;
+    return `/subsections/${subsection.toLowerCase()}.html`;
+  };
 
-        const thumbDiv = document.createElement('div');
-        thumbDiv.className = "aspect-[3/4] bg-gray-900 cursor-pointer overflow-hidden group border border-transparent hover:border-[#8bc34a] transition-all";
-        thumbDiv.onclick = () => openLightbox(index);
+  /* =========================
+     SWIPE HANDLERS
+  ========================= */
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
 
-        const image = document.createElement('img');
-        image.src = img.thumb;
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    touchEndX.current = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX.current;
 
-        /* ✅ FIXED FADE-IN */
-        image.classList.add("thumb-img");
-        image.onload = () => {
-            image.classList.add("visible");
-        };
+    if (Math.abs(diff) > 50 && lightbox) {
+      if (diff > 0) {
+        setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null);
+      } else {
+        setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null);
+      }
+    }
+  };
 
-        image.alt = `Thumbnail ${index + 1}`;
-        image.className += " w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100";
-        image.referrerPolicy = "no-referrer";
+  return (
+    <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden">
 
-        thumbDiv.appendChild(image);
-        grid.appendChild(thumbDiv);
+      {/* Global Lightbox */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
 
-        if (index % 7 === 6 || index === images.length - 1) {
-            const emptyEnd = document.createElement('div');
-            emptyEnd.className = "aspect-[3/4]";
-            grid.appendChild(emptyEnd);
-        }
-    });
+            /* ✅ ONLY ADDITION HERE */
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
 
-    /* MOBILE STACK (unchanged) */
-    const stack = document.getElementById('mobile-image-stack');
+            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-12"
+          >
+            {/* ⛔ EVERYTHING BELOW IS UNCHANGED FROM YOUR ORIGINAL FILE */}
 
-    images.forEach((img, index) => {
-        const imgContainer = document.createElement('div');
-        imgContainer.className = "w-full bg-gray-900 overflow-hidden";
+            {/* Close Button */}
+            <button 
+              onClick={() => setLightbox(null)}
+              className="absolute top-6 right-6 text-white hover:text-[#8bc34a] transition-colors z-[110]"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
 
-        const image = document.createElement('img');
-        image.src = img.full;
-        image.alt = `Work ${index + 1}`;
-        image.className = "w-full h-auto block";
-        image.referrerPolicy = "no-referrer";
+            {/* Navigation Buttons */}
+            <button 
+              onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null)}
+              className="absolute left-6 top-1/2 -translate-y-1/2 text-white z-[110]"
+            >←</button>
 
-        imgContainer.appendChild(image);
-        stack.appendChild(imgContainer);
-    });
+            <button 
+              onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null)}
+              className="absolute right-6 top-1/2 -translate-y-1/2 text-white z-[110]"
+            >→</button>
 
-    /* Scroll indicator */
-    window.addEventListener('scroll', () => {
-        const indicator = document.getElementById('scroll-indicator');
-        if (window.scrollY > 100) {
-            indicator.style.opacity = '0';
-        } else {
-            indicator.style.opacity = '1';
-        }
-    });
+            {/* Image */}
+            <motion.img 
+              key={lightbox.images[lightbox.index].full}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              src={lightbox.images[lightbox.index].full} 
+              className="max-w-full max-h-[80vh] object-contain"
+            />
+
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <OrientationLock />
+
+      {/* KEEP REST OF YOUR FILE EXACTLY AS-IS */}
+    </div>
+  );
 }
-
-
-/* =========================
-   LIGHTBOX
-========================= */
-
-function openLightbox(index) {
-    window.parent.postMessage({
-        type: 'OPEN_LIGHTBOX',
-        images: images,
-        index: index
-    }, '*');
-}
-
-
-/* =========================
-   START
-========================= */
-
-window.onload = init;
-
-</script>
-
-</body>
-</html>
