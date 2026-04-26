@@ -1,215 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analog - Work Template</title>
-    <!-- Tailwind CSS for easy styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-        
-        body {
-            background-color: black;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects - Jake Galm</title>
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #444;
-        }
+<script src="https://cdn.tailwindcss.com"></script>
 
-        /* Floating Scroll Animation */
-        @keyframes bounce-scroll {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-bounce-scroll {
-            animation: bounce-scroll 2s infinite ease-in-out;
-        }
+<style>
+body {
+    background: black;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+}
 
-        /* Lightbox transitions */
-        .lightbox-enter { opacity: 0; }
-        .lightbox-enter-active { opacity: 1; transition: opacity 0.3s ease; }
-    </style>
+/* ===== IMAGE FEEL ===== */
+#project-img {
+    transition: transform 6s ease, opacity 0.6s ease;
+}
+
+/* slow breathing motion */
+.image-active {
+    transform: scale(1.03);
+}
+
+/* hover tension */
+#image-container:hover #project-img {
+    transform: scale(1.06);
+}
+
+/* ===== LIGHTBOX ===== */
+#lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#lightbox img.visible {
+    opacity: 1;
+}
+
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    padding: 12px;
+    border: 1px solid #444;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lightbox-arrow:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+#prev-img { left: 20px; }
+#next-img { right: 20px; }
+
+#lightbox-counter {
+    position: absolute;
+    bottom: 20px;
+    font-size: 12px;
+    color: #aaa;
+    letter-spacing: 2px;
+}
+
+/* ===== BUTTON FEEL ===== */
+button {
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+button:hover {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+/* ===== PAGE FADE IN ===== */
+body {
+    animation: fadeIn 1.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+</style>
 </head>
-<body class="bg-black">
 
-    <!-- 
-        ================================================================
-        INSTRUCTIONS FOR EDITING:
-        1. IMAGES: Scroll down to the <script> section at the bottom.
-           Update the 'images' array with your actual image URLs.
-        2. TEXT: Update the 'title' and 'description' variables in the script.
-        3. DUPLICATING: Save this file as 'digital.html' or 'street.html' 
-           and just change the data in the script section.
-        ================================================================
-    -->
+<body>
 
-    <!-- DESKTOP & TABLET LAYOUT (Horizontal) -->
-    <div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-full">
-        <!-- Left Side: Thumbnails Grid -->
-        <div class="w-2/3 overflow-y-auto pr-4 flex items-center justify-center">
-            <div id="thumbnail-grid" class="grid grid-cols-9 gap-2 w-full max-w-fit">
-                <!-- Thumbnails will be injected here by JavaScript -->
-            </div>
+<!-- DESKTOP + TABLET -->
+<div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
+
+    <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
+
+        <div id="image-container"
+             class="w-full flex items-center justify-center max-h-[70vh] bg-gray-900 overflow-hidden cursor-pointer">
+
+            <img id="project-img"
+                 class="max-w-full max-h-full object-contain"
+                 src="">
         </div>
 
-        <!-- Right Side: Description -->
-        <div class="w-1/3 flex flex-col justify-start text-left">
-            <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
-            <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4">
-                <!-- Description will be injected here -->
-            </div>
-        </div>
-    </div>
+        <div class="flex items-center gap-8 mt-6">
 
-    <!-- MOBILE LAYOUT (Vertical) -->
-    <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
-        <!-- Vertical Image Stack -->
-        <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12">
-            <!-- Images will be injected here by JavaScript -->
-        </div>
+            <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">
+                ←
+            </button>
 
-        <!-- Mobile Description (at the bottom) -->
-        <div class="mt-8 border-t border-gray-800 pt-8">
-            <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
-            <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4">
-                <!-- Description will be injected here -->
-            </div>
-        </div>
+            <span id="counter"
+                class="text-gray-400 text-sm tracking-widest min-w-[80px] text-center"></span>
 
-        <!-- Floating Scroll Indicator (Lower Left) -->
-        <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
-            <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
-                <span>▼ SCROLL</span>
-            </div>
+            <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">
+                →
+            </button>
+
         </div>
     </div>
 
-    <script>
-        // =================================================================
-        // DATA SECTION - EDIT THIS PART
-        // =================================================================
-        
-        const title = "ANALOG";
-        
-        const description = `
-            <p>This is the ANALOG subsection. Placeholder content for analog photography and art.</p>
-            <p>The layout is designed to showcase 21 pieces of work in a clean, professional grid on desktop and a smooth scrolling experience on mobile.</p>
-            <p>Easily swap these images by updating the array in the script section of this file.</p>
-        `;
+    <div class="w-1/2 flex flex-col justify-start max-h-[85vh] overflow-y-auto pr-4">
 
-        // Array of 21 images. 
-        // thumb: The small image shown in the grid.
-        // full: The large image shown in the pop-up.
-        // description: The text shown next to the full image.
-        const images = Array.from({ length: 21 }, (_, i) => {
-            return {
-                thumb: `/subsections/analog/analog_thumb/analog-${i}.jpg`,
-                full: `/subsections/analog/analog_full/analog-${i}.jpg`,
-                description: `This is a detailed description for Analog piece #${i + 1}. You can customize this text for each individual image in the gallery.`
-            };
-        });
+        <h1 id="title"
+            class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase"></h1>
 
-        // =================================================================
-        // LOGIC SECTION - DO NOT EDIT UNLESS NECESSARY
-        // =================================================================
+        <div id="description"
+             class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
 
-        function init() {
-            // Set Titles
-            document.getElementById('desktop-title').innerText = title;
-            document.getElementById('mobile-title').innerText = title;
-            
-            // Set Descriptions
-            document.getElementById('desktop-description').innerHTML = description;
-            document.getElementById('mobile-description').innerHTML = description;
+    </div>
 
-            // Render Desktop Thumbnails
-            const grid = document.getElementById('thumbnail-grid');
-            
-            images.forEach((img, index) => {
-                // At the start of every row (every 7 images), add an empty spacer
-                if (index % 7 === 0) {
-                    const emptyStart = document.createElement('div');
-                    emptyStart.className = "aspect-[3/4]";
-                    grid.appendChild(emptyStart);
-                }
+</div>
 
-                const thumbDiv = document.createElement('div');
-                thumbDiv.className = "aspect-[3/4] bg-gray-900 cursor-pointer overflow-hidden group border border-transparent hover:border-[#8bc34a] transition-all";
-                thumbDiv.onclick = () => openLightbox(index);
-                
-                const image = document.createElement('img');
-                image.src = img.thumb;
-                image.alt = `Thumbnail ${index + 1}`;
-                image.className = "w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100";
-                image.referrerPolicy = "no-referrer";
-                
-                thumbDiv.appendChild(image);
-                grid.appendChild(thumbDiv);
 
-                // At the end of every row (every 7 images), add an empty spacer
-                if (index % 7 === 6 || index === images.length - 1) {
-                    const emptyEnd = document.createElement('div');
-                    emptyEnd.className = "aspect-[3/4]";
-                    grid.appendChild(emptyEnd);
-                }
-            });
+<!-- MOBILE -->
+<div class="md:hidden px-4 py-6 pb-24">
 
-            // Render Mobile Stack
-            const stack = document.getElementById('mobile-image-stack');
-            images.forEach((img, index) => {
-                const imgContainer = document.createElement('div');
-                imgContainer.className = "w-full bg-gray-900 overflow-hidden";
-                
-                const image = document.createElement('img');
-                image.src = img.full; 
-                image.alt = `Work ${index + 1}`;
-                image.className = "w-full h-auto block"; // Allow natural height
-                image.referrerPolicy = "no-referrer";
-                
-                imgContainer.appendChild(image);
-                stack.appendChild(imgContainer);
-            });
+    <!-- increased spacing -->
+    <div id="mobile-stack" class="flex flex-col gap-20"></div>
 
-            // Handle Scroll Indicator Visibility
-            window.addEventListener('scroll', () => {
-                const indicator = document.getElementById('scroll-indicator');
-                if (window.scrollY > 100) {
-                    indicator.style.opacity = '0';
-                    indicator.style.transition = 'opacity 0.5s ease';
-                } else {
-                    indicator.style.opacity = '1';
-                }
-            });
+    <div class="mt-16 border-t border-gray-800 pt-8">
+
+        <h1 class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase">
+            Projects
+        </h1>
+
+        <p class="text-gray-400 leading-relaxed">
+            Scroll through a selection of projects. Each image represents a body of work.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+
+    <div id="prev-img" class="lightbox-arrow" onclick="prevImage()">←</div>
+    <div id="next-img" class="lightbox-arrow" onclick="nextImage()">→</div>
+
+    <img id="lightbox-img">
+
+    <div id="lightbox-counter"></div>
+
+</div>
+
+
+<script>
+
+/* =========================
+DATA (UNCHANGED)
+========================= */
+
+const projects = [
+{
+    id: 0,
+    title: "PROJECTS OVERVIEW",
+    description: `
+        <p>Welcome to the Projects section.</p>
+        <p>Use navigation arrows to explore different bodies of work.</p>
+    `,
+    listImage: "/subsections/projects/list/overview.jpg",
+    galleryCount: 0
+},
+...Array.from({ length: 10 }, (_, i) => ({
+    id: i + 1,
+    title: `PROJECT ${i + 1}`,
+    description: `
+        <p>This is Project ${i + 1}.</p>
+        <p>Click image to view full gallery.</p>
+    `,
+    listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
+    galleryCount: 3
+}))
+];
+
+
+/* =========================
+STATE
+========================= */
+
+let index = 0;
+let gallery = [];
+let galleryIndex = 0;
+
+
+/* =========================
+INIT
+========================= */
+
+function init() {
+    updateDesktop();
+    renderMobile();
+}
+
+
+/* =========================
+DESKTOP
+========================= */
+
+function updateDesktop() {
+
+    const project = projects[index];
+
+    document.getElementById("title").innerHTML = project.title;
+    document.getElementById("description").innerHTML = project.description;
+
+    const counter = document.getElementById("counter");
+    counter.innerText = project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
+
+    const img = document.getElementById("project-img");
+
+    // cinematic transition
+    img.classList.remove("image-active");
+    img.style.opacity = 0;
+
+    setTimeout(() => {
+        img.src = project.listImage;
+        img.style.opacity = 1;
+        img.classList.add("image-active");
+    }, 200);
+
+    const container = document.getElementById("image-container");
+
+    container.onclick = () => {
+        if (project.galleryCount > 0) {
+            openGallery(project.id, project.galleryCount);
         }
+    };
+}
 
-        // Send message to parent to open global lightbox
-        function openLightbox(index) {
-            window.parent.postMessage({
-                type: 'OPEN_LIGHTBOX',
-                images: images,
-                index: index
-            }, '*');
+
+/* =========================
+NAVIGATION
+========================= */
+
+function nextProject() {
+    index = (index + 1) % projects.length;
+    updateDesktop();
+}
+
+function prevProject() {
+    index = (index - 1 + projects.length) % projects.length;
+    updateDesktop();
+}
+
+
+/* =========================
+LIGHTBOX
+========================= */
+
+function openGallery(projectId, count) {
+
+    gallery = [];
+
+    for (let i = 1; i <= count; i++) {
+        gallery.push(`/projects/project${projectId}/img${i}.jpg`);
+    }
+
+    galleryIndex = 0;
+
+    document.getElementById("lightbox").style.display = "flex";
+    updateGallery();
+}
+
+function updateGallery() {
+
+    const img = document.getElementById("lightbox-img");
+
+    img.classList.remove("visible");
+
+    setTimeout(() => {
+        img.src = gallery[galleryIndex];
+
+        document.getElementById("lightbox-counter").innerText =
+            `${galleryIndex + 1} / ${gallery.length}`;
+
+        img.classList.add("visible");
+    }, 120);
+}
+
+function nextImage() {
+    galleryIndex = (galleryIndex + 1) % gallery.length;
+    updateGallery();
+}
+
+function prevImage() {
+    galleryIndex = (galleryIndex - 1 + gallery.length) % gallery.length;
+    updateGallery();
+}
+
+function closeGallery() {
+    document.getElementById("lightbox").style.display = "none";
+}
+
+document.getElementById("lightbox").addEventListener("click", (e) => {
+    if (e.target.id === "lightbox") closeGallery();
+});
+
+
+/* =========================
+KEYBOARD
+========================= */
+
+document.addEventListener("keydown", (e) => {
+
+    if (document.getElementById("lightbox").style.display === "flex") {
+        if (e.key === "ArrowRight") nextImage();
+        if (e.key === "ArrowLeft") prevImage();
+        if (e.key === "Escape") closeGallery();
+        return;
+    }
+
+    if (window.innerWidth >= 768) {
+        if (e.key === "ArrowRight") nextProject();
+        if (e.key === "ArrowLeft") prevProject();
+    }
+});
+
+
+/* =========================
+SWIPE
+========================= */
+
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+
+    let endX = e.changedTouches[0].clientX;
+
+    if (Math.abs(startX - endX) > 50) {
+
+        if (document.getElementById("lightbox").style.display === "flex") {
+            if (startX > endX) nextImage();
+            else prevImage();
+        } else {
+            if (startX > endX) nextProject();
+            else prevProject();
         }
+    }
+});
 
-        // Initialize on load
-        window.onload = init;
-    </script>
+
+/* =========================
+MOBILE
+========================= */
+
+function renderMobile() {
+
+    const container = document.getElementById("mobile-stack");
+
+    projects.forEach(project => {
+
+        const wrapper = document.createElement("div");
+
+        const img = document.createElement("img");
+
+        img.src = project.listImage;
+        img.className = "w-full h-auto block";
+
+        wrapper.appendChild(img);
+        container.appendChild(wrapper);
+    });
+}
+
+
+window.onload = init;
+
+</script>
+
 </body>
 </html>
