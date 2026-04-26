@@ -45,6 +45,17 @@
         /* Lightbox transitions */
         .lightbox-enter { opacity: 0; }
         .lightbox-enter-active { opacity: 1; transition: opacity 0.3s ease; }
+
+/* THUMBNAIL FADE-IN (no layout impact) */
+.thumb-img {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.thumb-img.visible {
+    opacity: 1;
+}
+        
     </style>
 </head>
 <body class="bg-black">
@@ -156,6 +167,12 @@
                 
                 const image = document.createElement('img');
                 image.src = img.thumb;
+
+                img.classList.add("thumb-img");
+                /* FADE IN AFTER LOAD */
+                img.onload = () => {
+                img.classList.add("visible");};
+                
                 image.alt = `Thumbnail ${index + 1}`;
                 image.className = "w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100";
                 image.referrerPolicy = "no-referrer";
