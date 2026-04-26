@@ -351,8 +351,14 @@ document.addEventListener("touchend", e => {
     }
 });
 
+<!-- ONLY CHANGE IS INSIDE renderMobile() -->
+
+<script>
+
 function renderMobile() {
-    const container = document.getElementById("mobile-stack");
+    const container = document.getElementById("mobile-image-stack"); // ✅ FIXED ID
+
+    container.innerHTML = ""; // (safe reset in case of re-init)
 
     projects.forEach(project => {
         const wrapper = document.createElement("div");
@@ -365,8 +371,6 @@ function renderMobile() {
         container.appendChild(wrapper);
     });
 }
-
-window.onload = init;
 
 </script>
 
