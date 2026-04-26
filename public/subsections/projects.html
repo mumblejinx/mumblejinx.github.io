@@ -1,291 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Jake Galm</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects - Jake Galm</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-        
-        body {
-            background-color: black;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
+<style>
+body {
+    background: black;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+}
 
-        /* LIGHTBOX UPGRADE */
-        #lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.97);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 1000;
-        }
-
-        #lightbox img {
-            max-width: 90vw;
-            max-height: 80vh;
-            object-fit: contain;
-            transition: opacity 0.3s ease;
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-        }
-
-        .lightbox-btn {
-            border: 1px solid #444;
-            padding: 12px;
-            cursor: pointer;
-            background: rgba(0,0,0,0.4);
-        }
-
-        #lightbox-counter {
-            position: absolute;
-            bottom: 20px;
-            font-size: 12px;
-            color: #aaa;
-            letter-spacing: 2px;
-        }
-    </style>
+/* Smooth scroll feel */
+html {
+    scroll-behavior: smooth;
+}
+</style>
 </head>
 
-<body class="bg-black">
+<body>
 
-<!-- DESKTOP / TABLET -->
-<div id="desktop-layout" class="hidden md:flex flex-row p-8 gap-12 min-h-screen items-start">
+<!-- ========================= -->
+<!-- DESKTOP + TABLET LAYOUT -->
+<!-- ========================= -->
+<div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
 
-    <!-- LEFT -->
+    <!-- LEFT: IMAGE + NAV -->
     <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
 
-        <div id="project-image-container"
-             class="w-full flex items-center justify-center bg-gray-900 overflow-hidden max-h-[70vh]">
+        <!-- IMAGE -->
+        <div id="image-container"
+             class="w-full flex items-center justify-center max-h-[70vh] bg-gray-900 overflow-hidden">
 
-            <img id="current-project-img"
-                 src=""
-                 class="max-w-full max-h-full object-contain transition-transform duration-500">
+            <img id="project-img"
+                 class="max-w-full max-h-full object-contain transition-all duration-500"
+                 src="">
         </div>
 
         <!-- NAV -->
         <div class="flex items-center gap-8 mt-6">
 
-            <button onclick="prevProject()" class="p-2 bg-gray-900 border border-gray-700 rounded-full">←</button>
+            <button onclick="prevProject()"
+                class="p-3 rounded-full border border-gray-700 hover:border-[#8bc34a] transition">
+                ←
+            </button>
 
-            <span id="project-counter" class="text-gray-500 font-mono text-sm tracking-widest min-w-[80px] text-center"></span>
+            <span id="counter"
+                class="text-gray-400 text-sm tracking-widest min-w-[80px] text-center"></span>
 
-            <button onclick="nextProject()" class="p-2 bg-gray-900 border border-gray-700 rounded-full">→</button>
+            <button onclick="nextProject()"
+                class="p-3 rounded-full border border-gray-700 hover:border-[#8bc34a] transition">
+                →
+            </button>
 
         </div>
     </div>
 
-    <!-- RIGHT -->
-    <div class="w-1/2 flex flex-col text-left max-h-[85vh] overflow-y-auto">
+    <!-- RIGHT: TEXT -->
+    <div class="w-1/2 flex flex-col justify-start max-h-[85vh] overflow-y-auto pr-4">
 
-        <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
+        <h1 id="title"
+            class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase"></h1>
 
-        <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4 max-w-2xl"></div>
+        <div id="description"
+             class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
 
-    </div>
-</div>
-
-
-<!-- MOBILE -->
-<div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
-
-    <div id="mobile-image-stack" class="flex flex-col gap-16 mb-12"></div>
-
-    <div class="mt-8 border-t border-gray-800 pt-8">
-        <h1 class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter">PROJECTS</h1>
-        <div class="text-gray-400 text-base leading-relaxed space-y-4">
-            <p>Scroll through a selection of featured projects. Each image represents a unique body of work or specific creative endeavor.</p>
-        </div>
     </div>
 
 </div>
 
 
-<!-- LIGHTBOX -->
-<div id="lightbox">
+<!-- ========================= -->
+<!-- MOBILE LAYOUT -->
+<!-- ========================= -->
+<div class="md:hidden px-4 py-6 pb-24">
 
-    <div class="lightbox-nav">
-        <button class="lightbox-btn" onclick="prevImage()">←</button>
-        <button class="lightbox-btn" onclick="nextImage()">→</button>
+    <!-- IMAGE STACK -->
+    <div id="mobile-stack" class="flex flex-col gap-12">
+        <!-- Images injected -->
     </div>
 
-    <img id="lightbox-img">
+    <!-- DESCRIPTION -->
+    <div class="mt-16 border-t border-gray-800 pt-8">
 
-    <div id="lightbox-counter"></div>
+        <h1 class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase">
+            Projects
+        </h1>
+
+        <p class="text-gray-400 leading-relaxed">
+            Scroll through a selection of projects. Each image represents a body of work.
+        </p>
+
+    </div>
 
 </div>
 
 
 <script>
 
-/* ORIGINAL DATA (UNCHANGED) */
+/* =========================
+   DATA
+========================= */
+
 const projects = [
 {
     id: 0,
     title: "PROJECTS OVERVIEW",
     description: `
-        <p>Welcome to the Projects section. This area is dedicated to long-form series and specific creative assignments.</p>
-        <p>Use the navigation buttons on the left to browse through the different projects. Each project contains a unique set of images and a detailed narrative.</p>
-        <p>Click on any project image (except this overview) to open a dedicated gallery for that specific project.</p>
+        <p>Welcome to the Projects section.</p>
+        <p>Use navigation arrows to explore different bodies of work.</p>
     `,
     listImage: "/subsections/projects/list/overview.jpg",
-    gallery: []
 },
 ...Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
     title: `PROJECT ${i + 1}`,
     description: `
-        <p>This is the detailed description for Project ${i + 1}. This project explores specific themes and visual languages developed over time.</p>
-        <p>Click the image to the left to view the full gallery of images associated with this project.</p>
+        <p>This is Project ${i + 1}.</p>
+        <p>Click image to view full gallery.</p>
     `,
     listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
-    gallery: Array.from({ length: 5 }, (_, j) => ({
-        full: `/subsections/projects/project-${i + 1}/img-${j + 1}.jpg`
-    }))
 }))
 ];
 
-let currentProjectIndex = 0;
-let activeGallery = [];
-let lightboxIndex = 0;
+
+/* =========================
+   STATE
+========================= */
+
+let index = 0;
+
+
+/* =========================
+   INIT
+========================= */
 
 function init() {
-    updateDesktopView();
-    renderMobileStack();
+    updateDesktop();
+    renderMobile();
 }
 
-function updateDesktopView() {
-    const project = projects[currentProjectIndex];
 
-    desktopTitle.innerText = project.title;
-    desktopDescription.innerHTML = project.description;
+/* =========================
+   DESKTOP
+========================= */
 
-    projectCounter.innerText =
-        project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
+function updateDesktop() {
 
-    currentProjectImg.src = project.listImage;
+    const project = projects[index];
 
-    projectImageContainer.onclick = () => {
-        if (project.gallery.length) openLightbox(project.gallery);
-    };
+    document.getElementById("title").innerHTML = project.title;
+    document.getElementById("description").innerHTML = project.description;
+
+    const counter = document.getElementById("counter");
+    counter.innerText = project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
+
+    const img = document.getElementById("project-img");
+    img.src = project.listImage;
 }
+
+
+/* =========================
+   NAVIGATION
+========================= */
 
 function nextProject() {
-    currentProjectIndex = (currentProjectIndex + 1) % projects.length;
-    updateDesktopView();
+    index = (index + 1) % projects.length;
+    updateDesktop();
 }
 
 function prevProject() {
-    currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
-    updateDesktopView();
+    index = (index - 1 + projects.length) % projects.length;
+    updateDesktop();
 }
 
 
-/* LIGHTBOX */
-function openLightbox(gallery) {
-    activeGallery = gallery;
-    lightboxIndex = 0;
-    lightbox.style.display = "flex";
-    updateLightbox();
-}
+/* =========================
+   MOBILE
+========================= */
 
-function updateLightbox() {
-    lightboxImg.style.opacity = 0;
+function renderMobile() {
 
-    setTimeout(() => {
-        lightboxImg.src = activeGallery[lightboxIndex].full;
-        lightboxCounter.innerText =
-            `${lightboxIndex + 1} / ${activeGallery.length}`;
-        lightboxImg.style.opacity = 1;
-    }, 100);
-}
-
-function closeLightbox() {
-    lightbox.style.display = "none";
-}
-
-function nextImage() {
-    lightboxIndex = (lightboxIndex + 1) % activeGallery.length;
-    updateLightbox();
-}
-
-function prevImage() {
-    lightboxIndex = (lightboxIndex - 1 + activeGallery.length) % activeGallery.length;
-    updateLightbox();
-}
-
-lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) closeLightbox();
-});
-
-
-/* KEYBOARD */
-document.addEventListener("keydown", (e) => {
-
-    if (lightbox.style.display === "flex") {
-        if (e.key === "ArrowRight") nextImage();
-        if (e.key === "ArrowLeft") prevImage();
-        if (e.key === "Escape") closeLightbox();
-        return;
-    }
-
-    if (window.innerWidth >= 768) {
-        if (e.key === "ArrowRight") nextProject();
-        if (e.key === "ArrowLeft") prevProject();
-    }
-});
-
-
-/* SWIPE */
-let startX = 0;
-
-document.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-});
-
-document.addEventListener("touchend", e => {
-    let endX = e.changedTouches[0].clientX;
-
-    if (Math.abs(startX - endX) > 50) {
-        if (lightbox.style.display === "flex") {
-            if (startX > endX) nextImage();
-            else prevImage();
-        } else {
-            if (startX > endX) nextProject();
-            else prevProject();
-        }
-    }
-});
-
-
-/* MOBILE */
-function renderMobileStack() {
-    const stack = document.getElementById('mobile-image-stack');
+    const container = document.getElementById("mobile-stack");
 
     projects.forEach(project => {
-        const img = document.createElement('img');
+
+        const wrapper = document.createElement("div");
+
+        wrapper.className = "w-full";
+
+        const img = document.createElement("img");
+
         img.src = project.listImage;
-        img.className = "w-full h-auto";
-        stack.appendChild(img);
+        img.className = "w-full h-auto block";
+
+        wrapper.appendChild(img);
+        container.appendChild(wrapper);
     });
 }
+
+
+/* =========================
+   KEYBOARD NAV
+========================= */
+
+document.addEventListener("keydown", (e) => {
+    if (window.innerWidth < 768) return;
+
+    if (e.key === "ArrowRight") nextProject();
+    if (e.key === "ArrowLeft") prevProject();
+});
+
 
 window.onload = init;
 
