@@ -3,23 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Projects - Jake Galm</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-
 body {
-    background-color: black;
+    background: black;
     color: white;
-    font-family: 'Inter', sans-serif;
     margin: 0;
-    padding: 0;
     overflow-x: hidden;
 }
 
-/* === NEW LIGHTBOX UI (SAFE ADD) === */
+/* LIGHTBOX */
 #lightbox {
     position: fixed;
     inset: 0;
@@ -36,117 +33,87 @@ body {
     object-fit: contain;
 }
 
-/* arrows */
-.lightbox-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 28px;
-    padding: 10px;
-    border: 1px solid #444;
-    cursor: pointer;
-}
-
-#lightbox-prev { left: 20px; }
-#lightbox-next { right: 20px; }
-
-#lightbox-counter {
-    position: absolute;
-    bottom: 20px;
-    font-size: 12px;
-    color: #aaa;
-    letter-spacing: 2px;
-}
 </style>
 </head>
 
-<body class="bg-black">
+<body>
 
-<!-- DESKTOP & TABLET -->
-<div id="desktop-layout" class="hidden md:flex flex-row p-8 gap-12 min-h-screen items-start">
+<!-- ========================= -->
+<!-- DESKTOP / TABLET -->
+<!-- ========================= -->
+<div id="desktop" class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
 
     <!-- LEFT -->
     <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
 
-        <!-- FIX: constrained height -->
-        <div id="project-image-container"
-             class="w-full flex-grow flex items-center justify-center bg-gray-900 overflow-hidden max-h-[70vh]">
+        <div id="image-container"
+             class="w-full flex items-center justify-center max-h-[70vh] bg-gray-900 cursor-pointer">
 
-            <img id="current-project-img"
-                 src=""
-                 class="max-w-full max-h-full object-contain transition-transform duration-500">
+            <img id="project-img"
+                 class="max-w-full max-h-full object-contain"
+                 src="">
         </div>
 
-        <!-- NAV -->
-        <div class="flex-none flex items-center gap-8 mt-6">
-            <button onclick="prevProject()" class="p-2 bg-gray-900 border border-gray-700 rounded-full">←</button>
+        <div class="flex items-center gap-8 mt-6">
 
-            <span id="project-counter" class="text-gray-500 font-mono text-sm tracking-widest min-w-[80px] text-center"></span>
+            <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">←</button>
 
-            <button onclick="nextProject()" class="p-2 bg-gray-900 border border-gray-700 rounded-full">→</button>
+            <span id="counter" class="text-gray-400 text-sm tracking-widest"></span>
+
+            <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">→</button>
+
         </div>
     </div>
 
     <!-- RIGHT -->
-    <div class="w-1/2 flex flex-col text-left max-h-[85vh] overflow-y-auto">
-        <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
+    <div class="w-1/2 overflow-y-auto max-h-[85vh] pr-4">
 
-        <div id="desktop-description"
-             class="text-gray-300 text-lg leading-relaxed space-y-4 max-w-2xl"></div>
+        <h1 id="title" class="text-[#8bc34a] text-4xl mb-6"></h1>
+        <div id="description" class="text-gray-300 space-y-4"></div>
+
     </div>
+
 </div>
 
 
+<!-- ========================= -->
 <!-- MOBILE -->
-<div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
+<!-- ========================= -->
+<div class="md:hidden px-4 py-6 pb-24">
 
-    <!-- FIX: more spacing -->
-    <div id="mobile-image-stack" class="flex flex-col gap-16 mb-12"></div>
-
-    <div class="mt-8 border-t border-gray-800 pt-8">
-        <h1 class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter">PROJECTS</h1>
-        <div class="text-gray-400 text-base leading-relaxed space-y-4">
-            <p>Scroll through a selection of featured projects.</p>
-        </div>
-    </div>
+    <div id="mobile-stack" class="flex flex-col gap-16"></div>
 
 </div>
 
 
+<!-- ========================= -->
 <!-- LIGHTBOX -->
-<div id="lightbox">
-
-    <div id="lightbox-prev" class="lightbox-arrow" onclick="prevImage()">←</div>
-    <div id="lightbox-next" class="lightbox-arrow" onclick="nextImage()">→</div>
+<!-- ========================= -->
+<div id="lightbox" onclick="closeLightbox()">
 
     <img id="lightbox-img">
 
-    <div id="lightbox-counter"></div>
 </div>
 
 
 <script>
 
-/* KEEP YOUR ORIGINAL DATA + LOGIC EXACTLY */
+/* =========================
+DATA
+========================= */
+
 const projects = [
 {
     id: 0,
     title: "PROJECTS OVERVIEW",
-    description: `
-        <p>Welcome to the Projects section. This area is dedicated to long-form series and specific creative assignments.</p>
-        <p>Use the navigation buttons on the left to browse through the different projects. Each project contains a unique set of images and a detailed narrative.</p>
-        <p>Click on any project image (except this overview) to open a dedicated gallery for that specific project.</p>
-    `,
+    description: `<p>Welcome to the Projects section.</p>`,
     listImage: "/subsections/projects/list/overview.jpg",
     gallery: []
 },
 ...Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
     title: `PROJECT ${i + 1}`,
-    description: `
-        <p>This is the detailed description for Project ${i + 1}. This project explores specific themes and visual languages developed over time.</p>
-        <p>Click the image to the left to view the full gallery of images associated with this project.</p>
-    `,
+    description: `<p>Project ${i + 1}</p>`,
     listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
     gallery: Array.from({ length: 5 }, (_, j) => ({
         full: `/subsections/projects/project-${i + 1}/img-${j + 1}.jpg`
@@ -154,60 +121,81 @@ const projects = [
 }))
 ];
 
-let currentProjectIndex = 0;
-let activeGallery = [];
+
+/* =========================
+STATE
+========================= */
+
+let index = 0;
 let lightboxIndex = 0;
+let activeGallery = [];
+
+
+/* =========================
+INIT
+========================= */
 
 function init() {
-    updateDesktopView();
-    renderMobileStack();
+    updateDesktop();
+    renderMobile();
 }
 
-function updateDesktopView() {
-    const project = projects[currentProjectIndex];
 
-    document.getElementById('desktop-title').innerText = project.title;
-    document.getElementById('desktop-description').innerHTML = project.description;
+/* =========================
+DESKTOP VIEW
+========================= */
 
-    const counter = document.getElementById('project-counter');
-    counter.innerText = project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
+function updateDesktop() {
 
-    const img = document.getElementById('current-project-img');
-    img.src = project.listImage;
+    const project = projects[index];
 
-    const container = document.getElementById('project-image-container');
+    title.innerHTML = project.title;
+    description.innerHTML = project.description;
 
-    container.onclick = () => {
+    counter.innerText =
+        project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
+
+    projectImg.src = project.listImage;
+
+    imageContainer.onclick = () => {
         if (project.gallery.length) openLightbox(project.gallery);
     };
 }
 
+
+/* =========================
+NAV
+========================= */
+
 function nextProject() {
-    currentProjectIndex = (currentProjectIndex + 1) % projects.length;
-    updateDesktopView();
+    index = (index + 1) % projects.length;
+    updateDesktop();
 }
 
 function prevProject() {
-    currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
-    updateDesktopView();
+    index = (index - 1 + projects.length) % projects.length;
+    updateDesktop();
 }
 
-/* LIGHTBOX */
+
+/* =========================
+LIGHTBOX
+========================= */
+
 function openLightbox(gallery) {
     activeGallery = gallery;
     lightboxIndex = 0;
-    document.getElementById('lightbox').style.display = "flex";
+
+    lightbox.style.display = "flex";
     updateLightbox();
 }
 
 function updateLightbox() {
-    document.getElementById('lightbox-img').src = activeGallery[lightboxIndex].full;
-    document.getElementById('lightbox-counter').innerText =
-        `${lightboxIndex + 1} / ${activeGallery.length}`;
+    lightboxImg.src = activeGallery[lightboxIndex].full;
 }
 
 function closeLightbox() {
-    document.getElementById('lightbox').style.display = "none";
+    lightbox.style.display = "none";
 }
 
 function nextImage() {
@@ -220,22 +208,69 @@ function prevImage() {
     updateLightbox();
 }
 
-/* CLICK OUTSIDE CLOSE */
-document.getElementById('lightbox').addEventListener("click", (e) => {
-    if (e.target.id === "lightbox") closeLightbox();
+
+/* =========================
+KEYBOARD
+========================= */
+
+document.addEventListener("keydown", (e) => {
+
+    if (lightbox.style.display === "flex") {
+        if (e.key === "ArrowRight") nextImage();
+        if (e.key === "ArrowLeft") prevImage();
+        if (e.key === "Escape") closeLightbox();
+        return;
+    }
+
+    if (window.innerWidth >= 768) {
+        if (e.key === "ArrowRight") nextProject();
+        if (e.key === "ArrowLeft") prevProject();
+    }
 });
 
-/* MOBILE */
-function renderMobileStack() {
-    const stack = document.getElementById('mobile-image-stack');
+
+/* =========================
+SWIPE (TABLET)
+========================= */
+
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+
+    if (Math.abs(startX - endX) > 50) {
+        if (startX > endX) nextProject();
+        else prevProject();
+    }
+});
+
+
+/* =========================
+MOBILE
+========================= */
+
+function renderMobile() {
+
+    const container = document.getElementById("mobile-stack");
 
     projects.forEach(project => {
-        const img = document.createElement('img');
+
+        const div = document.createElement("div");
+
+        const img = document.createElement("img");
+
         img.src = project.listImage;
         img.className = "w-full h-auto";
-        stack.appendChild(img);
+
+        div.appendChild(img);
+        container.appendChild(div);
     });
 }
+
 
 window.onload = init;
 
