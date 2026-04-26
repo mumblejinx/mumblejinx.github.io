@@ -97,17 +97,16 @@ body {
     transform: scale(1.1);
 }
 
-/* MOBILE BOUNCE */
+/* ===== MOBILE BOUNCE ===== */
 @keyframes bounce-scroll {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
-
 .animate-bounce-scroll {
     animation: bounce-scroll 2s infinite ease-in-out;
 }
 
-/* FADE IN */
+/* ===== PAGE FADE IN ===== */
 body {
     animation: fadeIn 1.2s ease;
 }
@@ -162,10 +161,12 @@ body {
 
 </div>
 
+
 <!-- MOBILE -->
 <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
 
-    <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12"></div>
+    <!-- ✅ increased spacing -->
+    <div id="mobile-image-stack" class="flex flex-col gap-8 mb-12"></div>
 
     <div class="mt-8 border-t border-gray-800 pt-8">
         <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
@@ -180,6 +181,7 @@ body {
 
 </div>
 
+
 <!-- LIGHTBOX -->
 <div id="lightbox">
 
@@ -189,12 +191,16 @@ body {
     <div id="next-img" class="lightbox-arrow" onclick="nextImage()">→</div>
 
     <img id="lightbox-img">
-
     <div id="lightbox-counter"></div>
 
 </div>
 
+
 <script>
+
+/* =========================
+DATA
+========================= */
 
 const projects = [
 {
@@ -219,24 +225,26 @@ const projects = [
 }))
 ];
 
+/* =========================
+STATE
+========================= */
+
 let index = 0;
 let gallery = [];
 let galleryIndex = 0;
 
+/* =========================
+INIT
+========================= */
+
 function init() {
     updateDesktop();
     renderMobile();
-
-    // Scroll indicator behavior (matches analog.html)
-    window.addEventListener('scroll', () => {
-        const indicator = document.getElementById('scroll-indicator');
-        if (window.scrollY > 100) {
-            indicator.style.opacity = '0';
-        } else {
-            indicator.style.opacity = '1';
-        }
-    });
 }
+
+/* =========================
+DESKTOP
+========================= */
 
 function updateDesktop() {
     const project = projects[index];
@@ -275,6 +283,10 @@ function prevProject() {
     updateDesktop();
 }
 
+/* =========================
+LIGHTBOX
+========================= */
+
 function openGallery(projectId, count) {
     gallery = [];
     for (let i = 1; i <= count; i++) {
@@ -311,7 +323,56 @@ function closeGallery() {
     document.getElementById("lightbox").style.display = "none";
 }
 
-/* ✅ FIXED MOBILE RENDER */
+/* =========================
+EVENTS
+========================= */
+
+document.getElementById("lightbox").addEventListener("click", (e) => {
+    if (e.target.id === "lightbox") closeGallery();
+});
+
+document.addEventListener("keydown", (e) => {
+    if (document.getElementById("lightbox").style.display === "flex") {
+        if (e.key === "ArrowRight") nextImage();
+        if (e.key === "ArrowLeft") prevImage();
+        if (e.key === "Escape") closeGallery();
+        return;
+    }
+
+    if (window.innerWidth >= 768) {
+        if (e.key === "ArrowRight") nextProject();
+        if (e.key === "ArrowLeft") prevProject();
+    }
+});
+
+/* =========================
+SWIPE
+========================= */
+
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+
+    if (Math.abs(startX - endX) > 50) {
+        if (document.getElementById("lightbox").style.display === "flex") {
+            if (startX > endX) nextImage();
+            else prevImage();
+        } else {
+            if (startX > endX) nextProject();
+            else prevProject();
+        }
+    }
+});
+
+/* =========================
+MOBILE RENDER
+========================= */
+
 function renderMobile() {
     const container = document.getElementById("mobile-image-stack");
     container.innerHTML = "";
