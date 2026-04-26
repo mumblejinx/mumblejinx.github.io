@@ -15,17 +15,22 @@ body {
     overflow-x: hidden;
 }
 
+/* ===== SCROLL INDICATOR ===== */
+@keyframes bounce-scroll {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.animate-bounce-scroll {
+    animation: bounce-scroll 2s infinite ease-in-out;
+}
+
 /* ===== IMAGE FEEL ===== */
 #project-img {
     transition: transform 6s ease, opacity 0.6s ease;
 }
-
-/* slow breathing motion */
 .image-active {
     transform: scale(1.03);
 }
-
-/* hover tension */
 #image-container:hover #project-img {
     transform: scale(1.06);
 }
@@ -41,6 +46,19 @@ body {
     z-index: 1000;
 }
 
+/* CLOSE BUTTON */
+#close-lightbox {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+#close-lightbox:hover {
+    opacity: 1;
+}
+
 #lightbox img {
     max-width: 90vw;
     max-height: 85vh;
@@ -48,7 +66,6 @@ body {
     opacity: 0;
     transition: opacity 0.5s ease;
 }
-
 #lightbox img.visible {
     opacity: 1;
 }
@@ -62,12 +79,9 @@ body {
     border: 1px solid #444;
     cursor: pointer;
     opacity: 0.6;
-    transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
 .lightbox-arrow:hover {
     opacity: 1;
-    transform: translateY(-50%) scale(1.1);
 }
 
 #prev-img { left: 20px; }
@@ -81,22 +95,10 @@ body {
     letter-spacing: 2px;
 }
 
-/* ===== BUTTON FEEL ===== */
-button {
-    transition: all 0.3s ease;
-    opacity: 0.6;
-}
-
-button:hover {
-    opacity: 1;
-    transform: scale(1.08);
-}
-
-/* ===== PAGE FADE IN ===== */
+/* ===== FADE ===== */
 body {
     animation: fadeIn 1.2s ease;
 }
-
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -106,306 +108,137 @@ body {
 
 <body>
 
-<!-- DESKTOP + TABLET -->
+<!-- DESKTOP -->
 <div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
 
     <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
 
         <div id="image-container"
              class="w-full flex items-center justify-center max-h-[70vh] bg-gray-900 overflow-hidden cursor-pointer">
-
-            <img id="project-img"
-                 class="max-w-full max-h-full object-contain"
-                 src="">
+            <img id="project-img" class="max-w-full max-h-full object-contain">
         </div>
 
         <div class="flex items-center gap-8 mt-6">
-
-            <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">
-                ←
-            </button>
-
-            <span id="counter"
-                class="text-gray-400 text-sm tracking-widest min-w-[80px] text-center"></span>
-
-            <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">
-                →
-            </button>
-
+            <button onclick="prevProject()">←</button>
+            <span id="counter"></span>
+            <button onclick="nextProject()">→</button>
         </div>
     </div>
 
-    <div class="w-1/2 flex flex-col justify-start max-h-[85vh] overflow-y-auto pr-4">
-
-        <h1 id="title"
-            class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase"></h1>
-
-        <div id="description"
-             class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
-
+    <div class="w-1/2 overflow-y-auto">
+        <h1 id="title" class="text-[#8bc34a] text-4xl mb-6 uppercase"></h1>
+        <div id="description"></div>
     </div>
 
 </div>
-
 
 <!-- MOBILE -->
 <div class="md:hidden px-4 py-6 pb-24">
 
-    <!-- increased spacing -->
     <div id="mobile-stack" class="flex flex-col gap-20"></div>
 
     <div class="mt-16 border-t border-gray-800 pt-8">
-
         <h1 class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase">
             Projects
         </h1>
+    </div>
 
-        <p class="text-gray-400 leading-relaxed">
-            Scroll through a selection of projects. Each image represents a body of work.
-        </p>
-
+    <!-- SCROLL INDICATOR -->
+    <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
+        <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
+            ▼ SCROLL
+        </div>
     </div>
 
 </div>
 
-
 <!-- LIGHTBOX -->
 <div id="lightbox">
+
+    <div id="close-lightbox" onclick="closeGallery()">✕</div>
 
     <div id="prev-img" class="lightbox-arrow" onclick="prevImage()">←</div>
     <div id="next-img" class="lightbox-arrow" onclick="nextImage()">→</div>
 
     <img id="lightbox-img">
-
     <div id="lightbox-counter"></div>
 
 </div>
 
-
 <script>
 
-/* =========================
-DATA (UNCHANGED)
-========================= */
-
+/* DATA */
 const projects = [
-{
-    id: 0,
-    title: "PROJECTS OVERVIEW",
-    description: `
-        <p>Welcome to the Projects section.</p>
-        <p>Use navigation arrows to explore different bodies of work.</p>
-    `,
-    listImage: "/subsections/projects/list/overview.jpg",
-    galleryCount: 0
-},
-...Array.from({ length: 10 }, (_, i) => ({
-    id: i + 1,
-    title: `PROJECT ${i + 1}`,
-    description: `
-        <p>This is Project ${i + 1}.</p>
-        <p>Click image to view full gallery.</p>
-    `,
-    listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
-    galleryCount: 3
-}))
+    { id:0, title:"PROJECTS OVERVIEW", description:"Overview", listImage:"/subsections/projects/list/overview.jpg", galleryCount:0 },
+    ...Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1,
+        title: `PROJECT ${i + 1}`,
+        description: `Project ${i + 1}`,
+        listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
+        galleryCount: 3
+    }))
 ];
-
-
-/* =========================
-STATE
-========================= */
 
 let index = 0;
 let gallery = [];
 let galleryIndex = 0;
 
-
-/* =========================
-INIT
-========================= */
-
 function init() {
     updateDesktop();
     renderMobile();
-}
 
-
-/* =========================
-DESKTOP
-========================= */
-
-function updateDesktop() {
-
-    const project = projects[index];
-
-    document.getElementById("title").innerHTML = project.title;
-    document.getElementById("description").innerHTML = project.description;
-
-    const counter = document.getElementById("counter");
-    counter.innerText = project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
-
-    const img = document.getElementById("project-img");
-
-    // cinematic transition
-    img.classList.remove("image-active");
-    img.style.opacity = 0;
-
-    setTimeout(() => {
-        img.src = project.listImage;
-        img.style.opacity = 1;
-        img.classList.add("image-active");
-    }, 200);
-
-    const container = document.getElementById("image-container");
-
-    container.onclick = () => {
-        if (project.galleryCount > 0) {
-            openGallery(project.id, project.galleryCount);
-        }
-    };
-}
-
-
-/* =========================
-NAVIGATION
-========================= */
-
-function nextProject() {
-    index = (index + 1) % projects.length;
-    updateDesktop();
-}
-
-function prevProject() {
-    index = (index - 1 + projects.length) % projects.length;
-    updateDesktop();
-}
-
-
-/* =========================
-LIGHTBOX
-========================= */
-
-function openGallery(projectId, count) {
-
-    gallery = [];
-
-    for (let i = 1; i <= count; i++) {
-        gallery.push(`/projects/project${projectId}/img${i}.jpg`);
-    }
-
-    galleryIndex = 0;
-
-    document.getElementById("lightbox").style.display = "flex";
-    updateGallery();
-}
-
-function updateGallery() {
-
-    const img = document.getElementById("lightbox-img");
-
-    img.classList.remove("visible");
-
-    setTimeout(() => {
-        img.src = gallery[galleryIndex];
-
-        document.getElementById("lightbox-counter").innerText =
-            `${galleryIndex + 1} / ${gallery.length}`;
-
-        img.classList.add("visible");
-    }, 120);
-}
-
-function nextImage() {
-    galleryIndex = (galleryIndex + 1) % gallery.length;
-    updateGallery();
-}
-
-function prevImage() {
-    galleryIndex = (galleryIndex - 1 + gallery.length) % gallery.length;
-    updateGallery();
-}
-
-function closeGallery() {
-    document.getElementById("lightbox").style.display = "none";
-}
-
-document.getElementById("lightbox").addEventListener("click", (e) => {
-    if (e.target.id === "lightbox") closeGallery();
-});
-
-
-/* =========================
-KEYBOARD
-========================= */
-
-document.addEventListener("keydown", (e) => {
-
-    if (document.getElementById("lightbox").style.display === "flex") {
-        if (e.key === "ArrowRight") nextImage();
-        if (e.key === "ArrowLeft") prevImage();
-        if (e.key === "Escape") closeGallery();
-        return;
-    }
-
-    if (window.innerWidth >= 768) {
-        if (e.key === "ArrowRight") nextProject();
-        if (e.key === "ArrowLeft") prevProject();
-    }
-});
-
-
-/* =========================
-SWIPE
-========================= */
-
-let startX = 0;
-
-document.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-});
-
-document.addEventListener("touchend", e => {
-
-    let endX = e.changedTouches[0].clientX;
-
-    if (Math.abs(startX - endX) > 50) {
-
-        if (document.getElementById("lightbox").style.display === "flex") {
-            if (startX > endX) nextImage();
-            else prevImage();
-        } else {
-            if (startX > endX) nextProject();
-            else prevProject();
-        }
-    }
-});
-
-
-/* =========================
-MOBILE
-========================= */
-
-function renderMobile() {
-
-    const container = document.getElementById("mobile-stack");
-
-    projects.forEach(project => {
-
-        const wrapper = document.createElement("div");
-
-        const img = document.createElement("img");
-
-        img.src = project.listImage;
-        img.className = "w-full h-auto block";
-
-        wrapper.appendChild(img);
-        container.appendChild(wrapper);
+    window.addEventListener('scroll', () => {
+        const el = document.getElementById('scroll-indicator');
+        el.style.opacity = window.scrollY > 100 ? '0' : '1';
     });
 }
 
+function updateDesktop() {
+    const p = projects[index];
+    document.getElementById("title").innerText = p.title;
+    document.getElementById("description").innerText = p.description;
+    document.getElementById("counter").innerText = p.id === 0 ? "OVERVIEW" : `${p.id}/10`;
 
-window.onload = init;
+    const img = document.getElementById("project-img");
+    img.style.opacity = 0;
+    setTimeout(() => {
+        img.src = p.listImage;
+        img.style.opacity = 1;
+    }, 200);
+
+    document.getElementById("image-container").onclick = () => {
+        if (p.galleryCount > 0) openGallery(p.id, p.galleryCount);
+    };
+}
+
+function nextProject(){ index=(index+1)%projects.length; updateDesktop(); }
+function prevProject(){ index=(index-1+projects.length)%projects.length; updateDesktop(); }
+
+function openGallery(id,count){
+    gallery = [];
+    for(let i=1;i<=count;i++){
+        gallery.push(`/projects/project${id}/img${i}.jpg`);
+    }
+    galleryIndex=0;
+    document.getElementById("lightbox").style.display="flex";
+    updateGallery();
+}
+
+function updateGallery(){
+    const img=document.getElementById("lightbox-img");
+    img.classList.remove("visible");
+    setTimeout(()=>{
+        img.src=gallery[galleryIndex];
+        document.getElementById("lightbox-counter").innerText=`${galleryIndex+1}/${gallery.length}`;
+        img.classList.add("visible");
+    },100);
+}
+
+function nextImage(){ galleryIndex=(galleryIndex+1)%gallery.length; updateGallery(); }
+function prevImage(){ galleryIndex=(galleryIndex-1+gallery.length)%gallery.length; updateGallery(); }
+function closeGallery(){ document.getElementById("lightbox").style.display="none"; }
+
+window.onload=init;
 
 </script>
 
