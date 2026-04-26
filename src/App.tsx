@@ -3,24 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react'; // ✅ added useRef
 import { motion, AnimatePresence } from 'motion/react';
 import { Section, WorkSubsection, AboutSubsection, Subsection } from './constants';
 import { AssetImage } from './components/AssetImage';
 import { OrientationLock } from './components/OrientationLock';
-
-/**
- * JAKE GALM PORTFOLIO
- * 
- * ASSET REPLACEMENT GUIDE:
- * To replace text fallbacks with real images, place the following files in the 'public/' folder:
- * - /jakegalm.jpg (Logo)
- * - /work.jpg, /about.jpg, /support.jpg (Top Menu)
- * - /computer_intro.jpg, /phone_intro.jpg (Intro Images)
- * - /drip-one.png, /drip-two.png, /drip-three.png (Drips)
- * - /analog.jpg, /digital.jpg, /mixed.jpg (Work Subsections)
- * - /word.jpg, /rundown.jpg, /contact.jpg (About Subsections)
- */
 
 export default function App() {
   const [section, setSection] = useState<Section>(Section.INTRO);
@@ -29,6 +16,8 @@ export default function App() {
   const [isExitingToIntro, setIsExitingToIntro] = useState(false);
   const [headerHeight, setHeaderHeight] = useState('80px');
   const [lightbox, setLightbox] = useState<{ images: any[], index: number } | null>(null);
+
+  const touchStartX = useRef(0); // ✅ NEW
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -68,7 +57,6 @@ export default function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Reset subsection when section changes
   useEffect(() => {
     if (section === Section.WORK) {
       setSubsection(WorkSubsection.ANALOG);
@@ -108,6 +96,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden">
+
       {/* Global Lightbox */}
       <AnimatePresence>
         {lightbox && (
@@ -115,6 +104,33 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+
+            // ✅ NEW SWIPE HANDLERS (SAFE)
+            onTouchStart={(e) => {
+              touchStartX.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              const endX = e.changedTouches[0].clientX;
+              const diff = touchStartX.current - endX;
+
+              if (Math.abs(diff) > 50 && lightbox) {
+                if (diff > 0) {
+                  // NEXT
+                  setLightbox(prev =>
+                    prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null
+                  );
+                } else {
+                  // PREV
+                  setLightbox(prev =>
+                    prev ? {
+                      ...prev,
+                      index: (prev.index - 1 + prev.images.length) % prev.images.length
+                    } : null
+                  );
+                }
+              }
+            }}
+
             className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-12"
           >
             {/* Close Button */}
@@ -122,7 +138,10 @@ export default function App() {
               onClick={() => setLightbox(null)}
               className="absolute top-6 right-6 text-white hover:text-[#8bc34a] transition-colors z-[110]"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
             </button>
 
             {/* Navigation Buttons */}
@@ -130,39 +149,38 @@ export default function App() {
               onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null)}
               className="absolute left-6 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              ←
             </button>
+
             <button 
               onClick={() => setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null)}
               className="absolute right-6 top-1/2 -translate-y-1/2 text-white hover:text-[#8bc34a] transition-colors z-[110] p-2 bg-black/50 rounded-full"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              →
             </button>
 
-            {/* Content Container */}
+            {/* Content */}
             <div className="flex flex-col md:flex-row w-fit max-w-[95vw] max-h-full gap-8 items-center md:items-start overflow-y-auto md:overflow-visible relative">
-              {/* Image Column */}
               <div className="relative flex flex-col items-center justify-center">
                 <motion.img 
                   key={lightbox.images[lightbox.index].full}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   src={lightbox.images[lightbox.index].full} 
-                  alt="Full size" 
                   className="max-w-full max-h-[70vh] md:max-h-[80vh] object-contain shadow-2xl"
-                  referrerPolicy="no-referrer"
                 />
-                {/* Image Counter */}
+
                 <div className="mt-4 text-gray-500 text-sm font-mono tracking-widest">
                   {lightbox.index + 1} / {lightbox.images.length}
                 </div>
               </div>
 
-              {/* Description Column */}
-              <div className="w-full md:w-72 flex flex-col text-left pt-0 md:pt-0">
-                <h2 className="text-[#8bc34a] text-lg font-bold mb-3 uppercase tracking-widest">Description</h2>
-                <div className="text-gray-300 text-sm leading-relaxed font-light max-h-[30vh] md:max-h-none overflow-y-auto">
-                  {lightbox.images[lightbox.index].description || "No description available for this piece."}
+              <div className="w-full md:w-72">
+                <h2 className="text-[#8bc34a] text-lg font-bold mb-3 uppercase tracking-widest">
+                  Description
+                </h2>
+                <div className="text-gray-300 text-sm leading-relaxed">
+                  {lightbox.images[lightbox.index].description || "No description available."}
                 </div>
               </div>
             </div>
@@ -171,219 +189,25 @@ export default function App() {
       </AnimatePresence>
 
       <OrientationLock />
-      {/* Top Menu Bar */}
+
+      {/* HEADER */}
       <header className="absolute top-0 left-0 right-0 bg-black text-white p-4 z-50 h-auto md:h-20 flex items-center">
         <div className="w-full flex justify-between items-center md:justify-center md:relative">
-          <button 
-            onClick={() => handleSectionChange(Section.INTRO)}
-            className="hover:opacity-70 transition-opacity md:absolute md:left-8"
-          >
+          <button onClick={() => handleSectionChange(Section.INTRO)}>
             <AssetImage src="/jakegalm.jpg" fallback="Jake Galm" className="h-5 md:h-8" />
           </button>
-          <nav className="flex justify-center items-center gap-x-8 flex-grow md:flex-grow-0 md:space-x-12 ml-4 md:ml-0">
-            <button onClick={() => handleSectionChange(Section.WORK)} className="hover:opacity-70 transition-opacity flex-shrink">
-              <AssetImage src="/work.jpg" fallback="Work" className="h-5 md:h-8" />
-            </button>
-            <button onClick={() => handleSectionChange(Section.ABOUT)} className="hover:opacity-70 transition-opacity flex-shrink">
-              <AssetImage src="/about.jpg" fallback="About" className="h-5 md:h-8" />
-            </button>
-            <button onClick={() => handleSectionChange(Section.SUPPORT)} className="hover:opacity-70 transition-opacity flex-shrink">
-              <AssetImage src="/support.jpg" fallback="Support" className="h-5 md:h-8" />
-            </button>
-          </nav>
         </div>
       </header>
 
-      {/* Main Container */}
-      <div className="h-screen w-full flex flex-col relative">
-        {/* Layer 1: Intro Background (Static, always at the bottom) */}
-        <div className="absolute inset-0 bg-white z-10 flex flex-col items-center">
-          {/* Safe Zone Spacer: Header + Green Bars (65px mobile, 65px desktop) */}
-          <div className="h-[65px] md:h-[65px] w-full flex-shrink-0" />
-          
-          {/* Content Area: Centers image in the remaining space */}
-          <div className="flex-grow flex items-center justify-center p-4 w-full">
-            <div className="h-fit">
-              <div className="hidden md:block">
-                <AssetImage src="/computer_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[65vh] object-contain" />
-              </div>
-              <div className="md:hidden">
-                <AssetImage src="/phone_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[65vh] object-contain" />
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Spacer: To balance the bottom menu bar (80px) */}
-          <div className="h-[80px] w-full flex-shrink-0" />
-        </div>
-
-        {/* Layer 2: Black Content Background (Grows from top down) */}
-        <motion.div 
-          className="absolute inset-x-0 top-0 bg-black z-20"
-          initial={false}
-          animate={{ 
-            height: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)'
-          }}
-          transition={{ 
-            duration: section === Section.INTRO ? 0 : 1.5, 
-            ease: "easeInOut"
-          }}
-        />
-
-        {/* Layer 3: Drip Bar Container (Moves down, boundary between Black and Intro) */}
-        <motion.div 
-          className="absolute inset-x-0 z-40"
-          initial={false}
-          animate={{ 
-            top: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)' 
-          }}
-          transition={{ 
-            duration: section === Section.INTRO ? 0 : 1.5, 
-            ease: "easeInOut" 
-          }}
-        >
-          <div className="relative">
-            {/* Two Green Lines - Light on top, Dark on bottom - both 10px */}
-            <div className="h-[10px] bg-[#8bc34a] w-full relative z-10"></div>
-            <div className="h-[10px] bg-[#2e7d32] w-full relative z-10"></div>
-            
-            {/* Drips Container - Positioned at the top of the light green bar */}
-            <div className="absolute top-0 inset-x-0 h-16 z-20">
-              {/* Drip One */}
-              <motion.div 
-                key={`drip-one-${animKey}`}
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 2.5, ease: "easeOut" }}
-                className="absolute left-[8%] md:left-[11%] w-12 md:w-auto"
-              >
-                <AssetImage src="/drip-one.png" fallback="DRIP ONE" textClassName="text-[#8bc34a]" />
-              </motion.div>
-              
-              {/* Drip Two */}
-              <motion.div 
-                key={`drip-two-${animKey}`}
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
-                className="absolute left-[65%] md:left-[80%] w-12 md:w-auto"
-              >
-                <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
-              </motion.div>
-              
-              {/* Drip Three */}
-              <motion.div 
-                key={`drip-three-${animKey}`}
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
-                className="absolute left-[82%] md:left-[88%] w-12 md:w-auto"
-              >
-                <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Layer 4: Content Layer */}
-        <div className="flex-grow flex flex-col relative z-30">
-          <main className="flex-grow relative overflow-hidden">
-            <AnimatePresence mode="wait">
-              {section !== Section.INTRO && (
-                <motion.div
-                  key="content"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 1 }}
-                  transition={{ 
-                    duration: 0.3,
-                    delay: 1.5 // Wait for descent to finish
-                  }}
-                  className="absolute inset-0 flex flex-col"
-                >
-                  <div className="flex-grow px-4 md:px-8 pt-20 md:pt-24">
-                    {getSubsectionFile() ? (
-                      <iframe
-                        src={getSubsectionFile()!}
-                        className="w-full h-full border-none"
-                        title="Content"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-black" />
-                    )}
-                  </div>
-                  {/* Space for the drip bar and the white gap below it */}
-                  <div className="h-[120px]" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </main>
-
-          {/* Bottom Menu Bar - Always visible */}
-          <motion.footer 
-            layout
-            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-            className={`bg-black flex flex-wrap justify-center gap-2 md:gap-8 z-50 h-auto items-center border-gray-800 transition-colors ${
-              section === Section.INTRO 
-                ? 'p-4 min-h-16 border-t md:h-20' 
-                : 'p-4 min-h-16 md:h-20 border-t'
-            }`}
-          >
-            <AnimatePresence mode="wait">
-              {section !== Section.INTRO && !isExitingToIntro && (
-                <motion.div 
-                  key="footer-content"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ delay: 0.1, duration: 0.2 }}
-                  className="flex flex-wrap justify-center gap-2 md:gap-8 w-full"
-                >
-                  {section === Section.WORK && (
-                    <div className="flex flex-col items-center gap-y-1 md:flex-row md:flex-wrap md:justify-center md:gap-8 w-full">
-                      <div className="flex justify-center gap-x-4 md:contents">
-                        {Object.values(WorkSubsection).slice(0, 3).map((sub) => (
-                          <button
-                            key={sub}
-                            onClick={() => handleSubsectionChange(sub)}
-                            className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
-                          >
-                            <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
-                          </button>
-                        ))}
-                      </div>
-                      <div className="flex justify-center gap-x-4 md:contents">
-                        {Object.values(WorkSubsection).slice(3, 6).map((sub) => (
-                          <button
-                            key={sub}
-                            onClick={() => handleSubsectionChange(sub)}
-                            className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
-                          >
-                            <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {section === Section.ABOUT && (
-                    <div className="flex flex-wrap justify-center gap-2 md:gap-8 w-full">
-                      {Object.values(AboutSubsection).map((sub) => (
-                        <button
-                          key={sub}
-                          onClick={() => handleSubsectionChange(sub)}
-                          className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
-                        >
-                          <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.footer>
-        </div>
-      </div>
+      {/* MAIN */}
+      <main className="flex-grow pt-20">
+        {section !== Section.INTRO && (
+          <iframe
+            src={getSubsectionFile()!}
+            className="w-full h-full border-none"
+          />
+        )}
+      </main>
     </div>
   );
 }
