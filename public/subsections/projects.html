@@ -34,25 +34,6 @@ body {
     transition: opacity 0.3s ease;
 }
 
-.lightbox-ui {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-}
-
-.lightbox-btn {
-    pointer-events: all;
-    cursor: pointer;
-    font-size: 20px;
-    border: 1px solid #444;
-    padding: 10px 14px;
-}
-
 .lightbox-nav {
     position: absolute;
     top: 50%;
@@ -60,22 +41,21 @@ body {
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
-    pointer-events: none;
 }
 
-.lightbox-nav button {
-    pointer-events: all;
-    font-size: 28px;
-    padding: 12px;
+.lightbox-btn {
+    background: rgba(0,0,0,0.5);
     border: 1px solid #444;
+    padding: 12px;
+    cursor: pointer;
 }
 
 #lightbox-counter {
     position: absolute;
     bottom: 20px;
     font-size: 12px;
-    letter-spacing: 2px;
     color: #aaa;
+    letter-spacing: 2px;
 }
 </style>
 </head>
@@ -85,16 +65,17 @@ body {
 <!-- DESKTOP / TABLET -->
 <div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
 
-    <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
+    <!-- LEFT -->
+    <div class="w-1/2 flex flex-col justify-between h-[85vh]">
 
         <div id="image-container"
              class="w-full flex items-center justify-center max-h-[70vh] bg-gray-900 cursor-pointer">
 
             <img id="project-img"
-                 class="max-w-full max-h-full object-contain transition duration-500 hover:scale-105">
+                 class="max-w-full max-h-full object-contain transition hover:scale-105 duration-500">
         </div>
 
-        <div class="flex items-center gap-8 mt-6">
+        <div class="flex items-center justify-center gap-8 mt-6">
 
             <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">←</button>
 
@@ -105,6 +86,7 @@ body {
         </div>
     </div>
 
+    <!-- RIGHT -->
     <div class="w-1/2 overflow-y-auto max-h-[85vh] pr-4">
 
         <h1 id="title" class="text-[#8bc34a] text-4xl mb-6"></h1>
@@ -117,22 +99,16 @@ body {
 
 <!-- MOBILE -->
 <div class="md:hidden px-4 py-6 pb-24">
-
     <div id="mobile-stack" class="flex flex-col gap-16"></div>
-
 </div>
 
 
 <!-- LIGHTBOX -->
 <div id="lightbox">
 
-    <div class="lightbox-ui">
-        <button class="lightbox-btn" onclick="closeLightbox()">✕</button>
-    </div>
-
     <div class="lightbox-nav">
-        <button onclick="prevImage()">←</button>
-        <button onclick="nextImage()">→</button>
+        <button class="lightbox-btn" onclick="prevImage()">←</button>
+        <button class="lightbox-btn" onclick="nextImage()">→</button>
     </div>
 
     <img id="lightbox-img">
@@ -145,44 +121,38 @@ body {
 <script>
 
 /* =========================
-DATA (EASY TO EDIT)
+DATA (YOUR ORIGINAL STRUCTURE)
 ========================= */
 
 const projects = [
-
 {
     id: 0,
     title: "PROJECTS OVERVIEW",
-    description: `<p>Welcome to the Projects section.</p>`,
+    description: `
+        <p>Welcome to the Projects section. This area is dedicated to long-form series and specific creative assignments.</p>
+        <p>Use the navigation buttons on the left to browse through the different projects. Each project contains a unique set of images and a detailed narrative.</p>
+        <p>Click on any project image (except this overview) to open a dedicated gallery for that specific project.</p>
+    `,
     listImage: "/subsections/projects/list/overview.jpg",
     gallery: []
 },
 
-{
-    id: 1,
-    title: "PROJECT 1",
-    description: `<p>Description for project 1.</p>`,
-    listImage: "/subsections/projects/list/project-1.jpg",
+...Array.from({ length: 10 }, (_, i) => ({
+    id: i + 1,
+    title: `PROJECT ${i + 1}`,
+    description: `
+        <p>This is the detailed description for Project ${i + 1}. This project explores specific themes and visual languages developed over time.</p>
+        <p>Click the image to the left to view the full gallery of images associated with this project.</p>
+    `,
+    listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
     gallery: [
-        { full: "/subsections/projects/project-1/img-1.jpg" },
-        { full: "/subsections/projects/project-1/img-2.jpg" },
-        { full: "/subsections/projects/project-1/img-3.jpg" }
+        { full: `/subsections/projects/project-${i + 1}/img-1.jpg` },
+        { full: `/subsections/projects/project-${i + 1}/img-2.jpg` },
+        { full: `/subsections/projects/project-${i + 1}/img-3.jpg` },
+        { full: `/subsections/projects/project-${i + 1}/img-4.jpg` },
+        { full: `/subsections/projects/project-${i + 1}/img-5.jpg` }
     ]
-},
-
-{
-    id: 2,
-    title: "PROJECT 2",
-    description: `<p>Description for project 2.</p>`,
-    listImage: "/subsections/projects/list/project-2.jpg",
-    gallery: [
-        { full: "/subsections/projects/project-2/img-1.jpg" },
-        { full: "/subsections/projects/project-2/img-2.jpg" }
-    ]
-},
-
-// DUPLICATE BLOCKS ABOVE FOR NEW PROJECTS
-
+}))
 ];
 
 
@@ -217,7 +187,7 @@ function updateDesktop() {
     description.innerHTML = project.description;
 
     counter.innerText =
-        project.id === 0 ? "OVERVIEW" : `${project.id} / ${projects.length - 1}`;
+        project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
 
     projectImg.src = project.listImage;
 
@@ -228,7 +198,7 @@ function updateDesktop() {
 
 
 /* =========================
-NAV
+NAVIGATION
 ========================= */
 
 function nextProject() {
@@ -254,7 +224,6 @@ function openLightbox(gallery) {
 }
 
 function updateLightbox() {
-
     lightboxImg.style.opacity = 0;
 
     setTimeout(() => {
@@ -262,7 +231,7 @@ function updateLightbox() {
         lightboxCounter.innerText =
             `${lightboxIndex + 1} / ${activeGallery.length}`;
         lightboxImg.style.opacity = 1;
-    }, 150);
+    }, 100);
 }
 
 function closeLightbox() {
@@ -278,6 +247,12 @@ function prevImage() {
     lightboxIndex = (lightboxIndex - 1 + activeGallery.length) % activeGallery.length;
     updateLightbox();
 }
+
+
+/* CLICK OUTSIDE TO CLOSE */
+lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+});
 
 
 /* =========================
