@@ -15,89 +15,18 @@ body {
     overflow-x: hidden;
 }
 
-/* ===== IMAGE FEEL ===== */
+/* IMAGE FEEL */
 #project-img {
     transition: transform 6s ease, opacity 0.6s ease;
 }
-
 .image-active {
     transform: scale(1.03);
 }
-
 #image-container:hover #project-img {
     transform: scale(1.06);
 }
 
-/* ===== LIGHTBOX ===== */
-#lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.95);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-#lightbox img {
-    max-width: 90vw;
-    max-height: 85vh;
-    object-fit: contain;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-#lightbox img.visible {
-    opacity: 1;
-}
-
-.lightbox-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 28px;
-    padding: 12px;
-    border: 1px solid #444;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.lightbox-arrow:hover {
-    opacity: 1;
-    transform: translateY(-50%) scale(1.1);
-}
-
-#prev-img { left: 20px; }
-#next-img { right: 20px; }
-
-#lightbox-counter {
-    position: absolute;
-    bottom: 20px;
-    font-size: 12px;
-    color: #aaa;
-    letter-spacing: 2px;
-}
-
-/* CLOSE BUTTON */
-#lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 26px;
-    padding: 10px;
-    border: 1px solid #444;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: 0.3s;
-}
-
-#lightbox-close:hover {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-/* ===== MOBILE BOUNCE ===== */
+/* MOBILE BOUNCE */
 @keyframes bounce-scroll {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
@@ -106,11 +35,10 @@ body {
     animation: bounce-scroll 2s infinite ease-in-out;
 }
 
-/* ===== PAGE FADE IN ===== */
+/* PAGE FADE */
 body {
     animation: fadeIn 1.2s ease;
 }
-
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -135,16 +63,12 @@ body {
 
         <div class="flex items-center gap-8 mt-6">
 
-            <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">
-                ←
-            </button>
+            <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">←</button>
 
             <span id="counter"
                 class="text-gray-400 text-sm tracking-widest min-w-[80px] text-center"></span>
 
-            <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">
-                →
-            </button>
+            <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">→</button>
 
         </div>
     </div>
@@ -165,7 +89,7 @@ body {
 <!-- MOBILE -->
 <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
 
-    <!-- ✅ increased spacing -->
+    <!-- YOUR UPDATED SPACING -->
     <div id="mobile-image-stack" class="flex flex-col gap-16 mb-12"></div>
 
     <div class="mt-8 border-t border-gray-800 pt-8">
@@ -182,25 +106,9 @@ body {
 </div>
 
 
-<!-- LIGHTBOX -->
-<div id="lightbox">
-
-    <div id="lightbox-close" onclick="closeGallery()">✕</div>
-
-    <div id="prev-img" class="lightbox-arrow" onclick="prevImage()">←</div>
-    <div id="next-img" class="lightbox-arrow" onclick="nextImage()">→</div>
-
-    <img id="lightbox-img">
-    <div id="lightbox-counter"></div>
-
-</div>
-
-
 <script>
 
-/* =========================
-DATA
-========================= */
+/* DATA */
 
 const projects = [
 {
@@ -225,26 +133,18 @@ const projects = [
 }))
 ];
 
-/* =========================
-STATE
-========================= */
+/* STATE */
 
 let index = 0;
-let gallery = [];
-let galleryIndex = 0;
 
-/* =========================
-INIT
-========================= */
+/* INIT */
 
 function init() {
     updateDesktop();
     renderMobile();
 }
 
-/* =========================
-DESKTOP
-========================= */
+/* DESKTOP */
 
 function updateDesktop() {
     const project = projects[index];
@@ -283,71 +183,26 @@ function prevProject() {
     updateDesktop();
 }
 
-/* =========================
-LIGHTBOX
-========================= */
+/* 🔥 NEW: SEND TO APP.TSX LIGHTBOX */
 
 function openGallery(projectId, count) {
-    gallery = [];
+    const images = [];
+
     for (let i = 1; i <= count; i++) {
-        gallery.push(`/projects/project${projectId}/img${i}.jpg`);
-    }
-    galleryIndex = 0;
-    document.getElementById("lightbox").style.display = "flex";
-    updateGallery();
-}
-
-function updateGallery() {
-    const img = document.getElementById("lightbox-img");
-    img.classList.remove("visible");
-
-    setTimeout(() => {
-        img.src = gallery[galleryIndex];
-        document.getElementById("lightbox-counter").innerText =
-            `${galleryIndex + 1} / ${gallery.length}`;
-        img.classList.add("visible");
-    }, 120);
-}
-
-function nextImage() {
-    galleryIndex = (galleryIndex + 1) % gallery.length;
-    updateGallery();
-}
-
-function prevImage() {
-    galleryIndex = (galleryIndex - 1 + gallery.length) % gallery.length;
-    updateGallery();
-}
-
-function closeGallery() {
-    document.getElementById("lightbox").style.display = "none";
-}
-
-/* =========================
-EVENTS
-========================= */
-
-document.getElementById("lightbox").addEventListener("click", (e) => {
-    if (e.target.id === "lightbox") closeGallery();
-});
-
-document.addEventListener("keydown", (e) => {
-    if (document.getElementById("lightbox").style.display === "flex") {
-        if (e.key === "ArrowRight") nextImage();
-        if (e.key === "ArrowLeft") prevImage();
-        if (e.key === "Escape") closeGallery();
-        return;
+        images.push({
+            full: `/projects/project${projectId}/img${i}.jpg`,
+            description: `Project ${projectId} - Image ${i}`
+        });
     }
 
-    if (window.innerWidth >= 768) {
-        if (e.key === "ArrowRight") nextProject();
-        if (e.key === "ArrowLeft") prevProject();
-    }
-});
+    window.parent.postMessage({
+        type: 'OPEN_LIGHTBOX',
+        images: images,
+        index: 0
+    }, '*');
+}
 
-/* =========================
-SWIPE
-========================= */
+/* SWIPE (ONLY FOR PROJECT NAV NOW) */
 
 let startX = 0;
 
@@ -359,19 +214,12 @@ document.addEventListener("touchend", e => {
     let endX = e.changedTouches[0].clientX;
 
     if (Math.abs(startX - endX) > 50) {
-        if (document.getElementById("lightbox").style.display === "flex") {
-            if (startX > endX) nextImage();
-            else prevImage();
-        } else {
-            if (startX > endX) nextProject();
-            else prevProject();
-        }
+        if (startX > endX) nextProject();
+        else prevProject();
     }
 });
 
-/* =========================
-MOBILE RENDER
-========================= */
+/* MOBILE */
 
 function renderMobile() {
     const container = document.getElementById("mobile-image-stack");
