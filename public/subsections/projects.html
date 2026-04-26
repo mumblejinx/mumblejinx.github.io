@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Projects - Jake Galm</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -20,38 +19,79 @@ body {
 #lightbox {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.95);
+    background: rgba(0,0,0,0.97);
     display: none;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     z-index: 1000;
 }
 
 #lightbox img {
     max-width: 90vw;
-    max-height: 85vh;
+    max-height: 80vh;
     object-fit: contain;
+    transition: opacity 0.3s ease;
 }
 
+.lightbox-ui {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.lightbox-btn {
+    pointer-events: all;
+    cursor: pointer;
+    font-size: 20px;
+    border: 1px solid #444;
+    padding: 10px 14px;
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.lightbox-nav button {
+    pointer-events: all;
+    font-size: 28px;
+    padding: 12px;
+    border: 1px solid #444;
+}
+
+#lightbox-counter {
+    position: absolute;
+    bottom: 20px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #aaa;
+}
 </style>
 </head>
 
 <body>
 
-<!-- ========================= -->
 <!-- DESKTOP / TABLET -->
-<!-- ========================= -->
-<div id="desktop" class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
+<div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
 
-    <!-- LEFT -->
     <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
 
         <div id="image-container"
              class="w-full flex items-center justify-center max-h-[70vh] bg-gray-900 cursor-pointer">
 
             <img id="project-img"
-                 class="max-w-full max-h-full object-contain"
-                 src="">
+                 class="max-w-full max-h-full object-contain transition duration-500 hover:scale-105">
         </div>
 
         <div class="flex items-center gap-8 mt-6">
@@ -65,7 +105,6 @@ body {
         </div>
     </div>
 
-    <!-- RIGHT -->
     <div class="w-1/2 overflow-y-auto max-h-[85vh] pr-4">
 
         <h1 id="title" class="text-[#8bc34a] text-4xl mb-6"></h1>
@@ -76,9 +115,7 @@ body {
 </div>
 
 
-<!-- ========================= -->
 <!-- MOBILE -->
-<!-- ========================= -->
 <div class="md:hidden px-4 py-6 pb-24">
 
     <div id="mobile-stack" class="flex flex-col gap-16"></div>
@@ -86,12 +123,21 @@ body {
 </div>
 
 
-<!-- ========================= -->
 <!-- LIGHTBOX -->
-<!-- ========================= -->
-<div id="lightbox" onclick="closeLightbox()">
+<div id="lightbox">
+
+    <div class="lightbox-ui">
+        <button class="lightbox-btn" onclick="closeLightbox()">✕</button>
+    </div>
+
+    <div class="lightbox-nav">
+        <button onclick="prevImage()">←</button>
+        <button onclick="nextImage()">→</button>
+    </div>
 
     <img id="lightbox-img">
+
+    <div id="lightbox-counter"></div>
 
 </div>
 
@@ -99,10 +145,11 @@ body {
 <script>
 
 /* =========================
-DATA
+DATA (EASY TO EDIT)
 ========================= */
 
 const projects = [
+
 {
     id: 0,
     title: "PROJECTS OVERVIEW",
@@ -110,15 +157,32 @@ const projects = [
     listImage: "/subsections/projects/list/overview.jpg",
     gallery: []
 },
-...Array.from({ length: 10 }, (_, i) => ({
-    id: i + 1,
-    title: `PROJECT ${i + 1}`,
-    description: `<p>Project ${i + 1}</p>`,
-    listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
-    gallery: Array.from({ length: 5 }, (_, j) => ({
-        full: `/subsections/projects/project-${i + 1}/img-${j + 1}.jpg`
-    }))
-}))
+
+{
+    id: 1,
+    title: "PROJECT 1",
+    description: `<p>Description for project 1.</p>`,
+    listImage: "/subsections/projects/list/project-1.jpg",
+    gallery: [
+        { full: "/subsections/projects/project-1/img-1.jpg" },
+        { full: "/subsections/projects/project-1/img-2.jpg" },
+        { full: "/subsections/projects/project-1/img-3.jpg" }
+    ]
+},
+
+{
+    id: 2,
+    title: "PROJECT 2",
+    description: `<p>Description for project 2.</p>`,
+    listImage: "/subsections/projects/list/project-2.jpg",
+    gallery: [
+        { full: "/subsections/projects/project-2/img-1.jpg" },
+        { full: "/subsections/projects/project-2/img-2.jpg" }
+    ]
+},
+
+// DUPLICATE BLOCKS ABOVE FOR NEW PROJECTS
+
 ];
 
 
@@ -127,8 +191,8 @@ STATE
 ========================= */
 
 let index = 0;
-let lightboxIndex = 0;
 let activeGallery = [];
+let lightboxIndex = 0;
 
 
 /* =========================
@@ -142,7 +206,7 @@ function init() {
 
 
 /* =========================
-DESKTOP VIEW
+DESKTOP
 ========================= */
 
 function updateDesktop() {
@@ -153,7 +217,7 @@ function updateDesktop() {
     description.innerHTML = project.description;
 
     counter.innerText =
-        project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
+        project.id === 0 ? "OVERVIEW" : `${project.id} / ${projects.length - 1}`;
 
     projectImg.src = project.listImage;
 
@@ -185,13 +249,20 @@ LIGHTBOX
 function openLightbox(gallery) {
     activeGallery = gallery;
     lightboxIndex = 0;
-
     lightbox.style.display = "flex";
     updateLightbox();
 }
 
 function updateLightbox() {
-    lightboxImg.src = activeGallery[lightboxIndex].full;
+
+    lightboxImg.style.opacity = 0;
+
+    setTimeout(() => {
+        lightboxImg.src = activeGallery[lightboxIndex].full;
+        lightboxCounter.innerText =
+            `${lightboxIndex + 1} / ${activeGallery.length}`;
+        lightboxImg.style.opacity = 1;
+    }, 150);
 }
 
 function closeLightbox() {
@@ -230,7 +301,7 @@ document.addEventListener("keydown", (e) => {
 
 
 /* =========================
-SWIPE (TABLET)
+SWIPE (PROJECT + LIGHTBOX)
 ========================= */
 
 let startX = 0;
@@ -240,17 +311,24 @@ document.addEventListener("touchstart", e => {
 });
 
 document.addEventListener("touchend", e => {
+
     let endX = e.changedTouches[0].clientX;
 
     if (Math.abs(startX - endX) > 50) {
-        if (startX > endX) nextProject();
-        else prevProject();
+
+        if (lightbox.style.display === "flex") {
+            if (startX > endX) nextImage();
+            else prevImage();
+        } else {
+            if (startX > endX) nextProject();
+            else prevProject();
+        }
     }
 });
 
 
 /* =========================
-MOBILE
+MOBILE STACK
 ========================= */
 
 function renderMobile() {
