@@ -1,215 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analog - Work Template</title>
-    <!-- Tailwind CSS for easy styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-        
-        body {
-            background-color: black;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #444;
-        }
+<title>Analog - Work</title>
 
-        /* Floating Scroll Animation */
-        @keyframes bounce-scroll {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-bounce-scroll {
-            animation: bounce-scroll 2s infinite ease-in-out;
-        }
+<script src="https://cdn.tailwindcss.com"></script>
 
-        /* Lightbox transitions */
-        .lightbox-enter { opacity: 0; }
-        .lightbox-enter-active { opacity: 1; transition: opacity 0.3s ease; }
-    </style>
+<style>
+body {
+    background: black;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* =========================
+   PAGE FADE IN
+========================= */
+body {
+    animation: fadeIn 1.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* =========================
+   GRID (DESKTOP)
+========================= */
+#gallery {
+    column-count: 3;
+    column-gap: 16px;
+}
+
+@media (max-width: 1024px) {
+    #gallery { column-count: 2; }
+}
+
+@media (max-width: 640px) {
+    #gallery { column-count: 1; }
+}
+
+/* =========================
+   IMAGE STYLE
+========================= */
+.gallery-img {
+    width: 100%;
+    margin-bottom: 16px;
+    cursor: pointer;
+
+    opacity: 0;
+    transform: translateY(10px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease,
+        filter 0.6s ease;
+}
+
+/* fade in */
+.gallery-img.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* subtle grayscale (CAN REMOVE IF YOU WANT) */
+.gallery-img {
+    filter: grayscale(100%);
+}
+
+.gallery-img:hover {
+    filter: grayscale(0%);
+}
+
+/* =========================
+   LIGHTBOX
+========================= */
+#lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#lightbox img.visible {
+    opacity: 1;
+}
+
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    padding: 12px;
+    border: 1px solid #444;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.lightbox-arrow:hover {
+    opacity: 1;
+}
+
+#prev { left: 20px; }
+#next { right: 20px; }
+
+#close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: 1px solid #444;
+    padding: 8px 12px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+#close:hover {
+    opacity: 1;
+}
+
+/* =========================
+   SCROLL INDICATOR (MOBILE)
+========================= */
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+#scroll-indicator {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    font-size: 12px;
+    opacity: 0.7;
+    animation: bounce 2s infinite;
+}
+</style>
 </head>
-<body class="bg-black">
 
-    <!-- 
-        ================================================================
-        INSTRUCTIONS FOR EDITING:
-        1. IMAGES: Scroll down to the <script> section at the bottom.
-           Update the 'images' array with your actual image URLs.
-        2. TEXT: Update the 'title' and 'description' variables in the script.
-        3. DUPLICATING: Save this file as 'digital.html' or 'street.html' 
-           and just change the data in the script section.
-        ================================================================
-    -->
+<body>
 
-    <!-- DESKTOP & TABLET LAYOUT (Horizontal) -->
-    <div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-full">
-        <!-- Left Side: Thumbnails Grid -->
-        <div class="w-2/3 overflow-y-auto pr-4 flex items-center justify-center">
-            <div id="thumbnail-grid" class="grid grid-cols-9 gap-2 w-full max-w-fit">
-                <!-- Thumbnails will be injected here by JavaScript -->
-            </div>
-        </div>
+<!-- =========================
+     HEADER (EDIT TEXT HERE)
+========================= -->
+<div class="p-6">
+    <h1 class="text-[#8bc34a] text-3xl font-bold uppercase">
+        ANALOG
+    </h1>
 
-        <!-- Right Side: Description -->
-        <div class="w-1/3 flex flex-col justify-start text-left">
-            <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
-            <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4">
-                <!-- Description will be injected here -->
-            </div>
-        </div>
-    </div>
+    <p class="text-gray-400 mt-2">
+        <!-- EDIT THIS TEXT -->
+        Analog photography and image-based work.
+    </p>
+</div>
 
-    <!-- MOBILE LAYOUT (Vertical) -->
-    <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
-        <!-- Vertical Image Stack -->
-        <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12">
-            <!-- Images will be injected here by JavaScript -->
-        </div>
 
-        <!-- Mobile Description (at the bottom) -->
-        <div class="mt-8 border-t border-gray-800 pt-8">
-            <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
-            <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4">
-                <!-- Description will be injected here -->
-            </div>
-        </div>
+<!-- =========================
+     GALLERY
+========================= -->
+<div id="gallery" class="px-4 pb-20"></div>
 
-        <!-- Floating Scroll Indicator (Lower Left) -->
-        <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
-            <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
-                <span>▼ SCROLL</span>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        // =================================================================
-        // DATA SECTION - EDIT THIS PART
-        // =================================================================
-        
-        const title = "ANALOG";
-        
-        const description = `
-            <p>This is the ANALOG subsection. Placeholder content for analog photography and art.</p>
-            <p>The layout is designed to showcase 21 pieces of work in a clean, professional grid on desktop and a smooth scrolling experience on mobile.</p>
-            <p>Easily swap these images by updating the array in the script section of this file.</p>
-        `;
+<!-- =========================
+     LIGHTBOX
+========================= -->
+<div id="lightbox">
 
-        // Array of 21 images. 
-        // thumb: The small image shown in the grid.
-        // full: The large image shown in the pop-up.
-        // description: The text shown next to the full image.
-        const images = Array.from({ length: 21 }, (_, i) => {
-            return {
-                thumb: `/subsections/analog/analog_thumb/analog-${i}.jpg`,
-                full: `/subsections/analog/analog_full/analog-${i}.jpg`,
-                description: `This is a detailed description for Analog piece #${i + 1}. You can customize this text for each individual image in the gallery.`
-            };
-        });
+    <div id="close" onclick="closeLightbox()">✕</div>
 
-        // =================================================================
-        // LOGIC SECTION - DO NOT EDIT UNLESS NECESSARY
-        // =================================================================
+    <div id="prev" class="lightbox-arrow" onclick="prevImage()">←</div>
+    <div id="next" class="lightbox-arrow" onclick="nextImage()">→</div>
 
-        function init() {
-            // Set Titles
-            document.getElementById('desktop-title').innerText = title;
-            document.getElementById('mobile-title').innerText = title;
-            
-            // Set Descriptions
-            document.getElementById('desktop-description').innerHTML = description;
-            document.getElementById('mobile-description').innerHTML = description;
+    <img id="lightbox-img">
 
-            // Render Desktop Thumbnails
-            const grid = document.getElementById('thumbnail-grid');
-            
-            images.forEach((img, index) => {
-                // At the start of every row (every 7 images), add an empty spacer
-                if (index % 7 === 0) {
-                    const emptyStart = document.createElement('div');
-                    emptyStart.className = "aspect-[3/4]";
-                    grid.appendChild(emptyStart);
-                }
+</div>
 
-                const thumbDiv = document.createElement('div');
-                thumbDiv.className = "aspect-[3/4] bg-gray-900 cursor-pointer overflow-hidden group border border-transparent hover:border-[#8bc34a] transition-all";
-                thumbDiv.onclick = () => openLightbox(index);
-                
-                const image = document.createElement('img');
-                image.src = img.thumb;
-                image.alt = `Thumbnail ${index + 1}`;
-                image.className = "w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100";
-                image.referrerPolicy = "no-referrer";
-                
-                thumbDiv.appendChild(image);
-                grid.appendChild(thumbDiv);
 
-                // At the end of every row (every 7 images), add an empty spacer
-                if (index % 7 === 6 || index === images.length - 1) {
-                    const emptyEnd = document.createElement('div');
-                    emptyEnd.className = "aspect-[3/4]";
-                    grid.appendChild(emptyEnd);
-                }
-            });
+<!-- =========================
+     SCROLL INDICATOR
+========================= -->
+<div id="scroll-indicator" class="md:hidden">
+    ▼ SCROLL
+</div>
 
-            // Render Mobile Stack
-            const stack = document.getElementById('mobile-image-stack');
-            images.forEach((img, index) => {
-                const imgContainer = document.createElement('div');
-                imgContainer.className = "w-full bg-gray-900 overflow-hidden";
-                
-                const image = document.createElement('img');
-                image.src = img.full; 
-                image.alt = `Work ${index + 1}`;
-                image.className = "w-full h-auto block"; // Allow natural height
-                image.referrerPolicy = "no-referrer";
-                
-                imgContainer.appendChild(image);
-                stack.appendChild(imgContainer);
-            });
 
-            // Handle Scroll Indicator Visibility
-            window.addEventListener('scroll', () => {
-                const indicator = document.getElementById('scroll-indicator');
-                if (window.scrollY > 100) {
-                    indicator.style.opacity = '0';
-                    indicator.style.transition = 'opacity 0.5s ease';
-                } else {
-                    indicator.style.opacity = '1';
-                }
-            });
-        }
+<script>
 
-        // Send message to parent to open global lightbox
-        function openLightbox(index) {
-            window.parent.postMessage({
-                type: 'OPEN_LIGHTBOX',
-                images: images,
-                index: index
-            }, '*');
-        }
+/* =========================
+   🔧 EDIT YOUR IMAGES HERE
+========================= */
 
-        // Initialize on load
-        window.onload = init;
-    </script>
+const images = [
+    "/images/analog/img1.jpg",
+    "/images/analog/img2.jpg",
+    "/images/analog/img3.jpg",
+    "/images/analog/img4.jpg",
+    "/images/analog/img5.jpg"
+];
+
+
+/* =========================
+   STATE
+========================= */
+
+let currentIndex = 0;
+
+
+/* =========================
+   BUILD GALLERY
+========================= */
+
+function buildGallery() {
+
+    const gallery = document.getElementById("gallery");
+
+    images.forEach((src, i) => {
+
+        const img = document.createElement("img");
+
+        img.src = src;
+        img.className = "gallery-img";
+
+        img.onclick = () => openLightbox(i);
+
+        gallery.appendChild(img);
+
+        // staggered fade-in
+        setTimeout(() => {
+            img.classList.add("visible");
+        }, i * 80);
+    });
+}
+
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+function openLightbox(index) {
+    currentIndex = index;
+
+    document.getElementById("lightbox").style.display = "flex";
+
+    updateLightbox();
+}
+
+function updateLightbox() {
+
+    const img = document.getElementById("lightbox-img");
+
+    img.classList.remove("visible");
+
+    setTimeout(() => {
+        img.src = images[currentIndex];
+        img.classList.add("visible");
+    }, 100);
+}
+
+function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+}
+
+function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateLightbox();
+}
+
+function prevImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateLightbox();
+}
+
+
+/* =========================
+   KEYBOARD
+========================= */
+
+document.addEventListener("keydown", (e) => {
+
+    if (document.getElementById("lightbox").style.display === "flex") {
+        if (e.key === "ArrowRight") nextImage();
+        if (e.key === "ArrowLeft") prevImage();
+        if (e.key === "Escape") closeLightbox();
+    }
+});
+
+
+/* =========================
+   SCROLL INDICATOR FADE
+========================= */
+
+window.addEventListener("scroll", () => {
+
+    const el = document.getElementById("scroll-indicator");
+
+    if (window.scrollY > 100) {
+        el.style.opacity = 0;
+    } else {
+        el.style.opacity = 0.7;
+    }
+});
+
+
+/* =========================
+   INIT
+========================= */
+
+window.onload = buildGallery;
+
+</script>
+
 </body>
 </html>
