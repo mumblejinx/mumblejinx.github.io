@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analog - Work Template</title>
+    <title>Analog - Work</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -32,7 +32,7 @@
             animation: bounce-scroll 2s infinite ease-in-out;
         }
 
-        /* FADE-IN SYSTEM (USED EVERYWHERE) */
+        /* FADE-IN SYSTEM */
         .thumb-img {
             opacity: 0;
             transition: opacity 0.8s ease;
@@ -40,7 +40,6 @@
         .thumb-img.visible {
             opacity: 1;
         }
-
     </style>
 </head>
 
@@ -49,18 +48,20 @@
 <!-- DESKTOP -->
 <div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-full">
 
+    <!-- IMAGE COLUMN (UNCHANGED) -->
     <div class="w-2/3 overflow-y-auto pr-4 flex items-center justify-center">
         <div id="thumbnail-grid" class="grid grid-cols-9 gap-2 w-full max-w-fit"></div>
     </div>
 
-    <div class="w-1/3 flex flex-col justify-start text-left">
+    <!-- ✅ UPDATED TEXT COLUMN (SCROLLABLE) -->
+    <div class="w-1/3 flex flex-col justify-start text-left overflow-y-auto max-h-full pr-2">
         <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
         <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
     </div>
 
 </div>
 
-<!-- MOBILE -->
+<!-- MOBILE (UNCHANGED) -->
 <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
 
     <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12"></div>
@@ -82,28 +83,7 @@
 
 const title = "ANALOG / アナログ";
 
-const description = `
-    <p>I love drawing. It is probably the activity that I can trace back through almost my whole life. I taught myself to hold a pencil before entering the 
-    school system in order to draw. Consequently I hold a pencil differently than what is recommended and it’s caused my forefinger to grow with a bend in it and
-    has caused a large gap between my fore- and middle finger. </p>
-    <p>I took art very seriously as a kid and when I was in elementary school I started to take group art classes offered at a church by a woman who used to work
-    as a designer for an ad agency. I would draw pictures out of Walter Lantz art instruction books. However I would never allow myself to work in color. I thought 
-    I needed to perfect black and white first and then I could work in color. It is probably part of the reason I use such bright colors in my work now.  These pieces
-    are part of the work I was doing from 1997-2013. They are all colored pencil pieces with black ink outlines.</p>
-
-<p>私は「描くこと」がとても好きです。
-自分の人生のほとんどにわたって続いている活動です。</p>
-<p>学校に入る前から、絵を描くために独学で鉛筆の持ち方を覚えました。
-そのため一般的な持ち方とは少し違っていて、人差し指が少し曲がっていたり、人差し指と中指の間に大きな隙間ができています。</p>
-<p>子どもの頃は、とても真剣に美術に向き合っていました。
-小学生の頃には、教会で開かれていたグループのアート教室に通い始めました。そこでは、広告会社でデザイナーとして働いていた経験のある女性が指導していました。</p>
-<p>また、Walter Lantz の作画指導本を参考にしながら絵を描いていました。
-ただし当時は、色を使うことを自分に許していませんでした。まずは白黒で完成度を高めるべきだと考えていたからです。</p>
-<p>その反動もあってか、現在の作品ではとても鮮やかな色を使うようになっています。</p>
-<p>ここにある作品は、1997年から2013年に制作したものです。
-すべて、黒インクの線と色鉛筆によって制作されています。</p>
-
-`;
+const description = `...YOUR EXISTING TEXT...`;
 
 const images = Array.from({ length: 21 }, (_, i) => ({
     thumb: `/subsections/analog/analog_thumb/analog-${i}.jpg`,
@@ -136,7 +116,6 @@ function init() {
         const image = document.createElement('img');
         image.src = img.thumb;
 
-        /* DESKTOP FADE */
         image.classList.add("thumb-img");
         image.onload = () => image.classList.add("visible");
 
@@ -153,10 +132,9 @@ function init() {
         }
     });
 
-    /* MOBILE FADE-IN (NEW) */
     const stack = document.getElementById('mobile-image-stack');
 
-    images.forEach((img, index) => {
+    images.forEach((img) => {
         const container = document.createElement('div');
         container.className = "w-full bg-gray-900 overflow-hidden";
 
