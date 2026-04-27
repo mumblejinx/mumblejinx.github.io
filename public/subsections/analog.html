@@ -19,22 +19,11 @@
             overflow-x: hidden;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #444;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444; }
 
-        /* Floating Scroll Animation */
         @keyframes bounce-scroll {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -43,18 +32,11 @@
             animation: bounce-scroll 2s infinite ease-in-out;
         }
 
-        /* Lightbox transitions */
-        .lightbox-enter { opacity: 0; }
-        .lightbox-enter-active { opacity: 1; transition: opacity 0.3s ease; }
-
-        /* =========================
-           THUMBNAIL FADE-IN (FIXED)
-        ========================= */
+        /* FADE-IN SYSTEM (USED EVERYWHERE) */
         .thumb-img {
             opacity: 0;
             transition: opacity 0.8s ease;
         }
-
         .thumb-img.visible {
             opacity: 1;
         }
@@ -64,66 +46,51 @@
 
 <body class="bg-black">
 
-    <!-- DESKTOP & TABLET -->
-    <div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-full">
+<!-- DESKTOP -->
+<div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-full">
 
-        <!-- LEFT: GRID -->
-        <div class="w-2/3 overflow-y-auto pr-4 flex items-center justify-center">
-            <div id="thumbnail-grid" class="grid grid-cols-9 gap-2 w-full max-w-fit"></div>
-        </div>
-
-        <!-- RIGHT: TEXT -->
-        <div class="w-1/3 flex flex-col justify-start text-left">
-            <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
-            <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
-        </div>
-
+    <div class="w-2/3 overflow-y-auto pr-4 flex items-center justify-center">
+        <div id="thumbnail-grid" class="grid grid-cols-9 gap-2 w-full max-w-fit"></div>
     </div>
 
-    <!-- MOBILE -->
-    <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
-
-        <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12"></div>
-
-        <div class="mt-8 border-t border-gray-800 pt-8">
-            <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
-            <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4"></div>
-        </div>
-
-        <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
-            <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
-                <span>▼ SCROLL</span>
-            </div>
-        </div>
-
+    <div class="w-1/3 flex flex-col justify-start text-left">
+        <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
+        <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
     </div>
+
+</div>
+
+<!-- MOBILE -->
+<div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
+
+    <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12"></div>
+
+    <div class="mt-8 border-t border-gray-800 pt-8">
+        <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
+        <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4"></div>
+    </div>
+
+    <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
+        <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
+            <span>▼ SCROLL</span>
+        </div>
+    </div>
+
+</div>
 
 <script>
-
-/* =========================
-   DATA (EDIT THIS ONLY)
-========================= */
 
 const title = "ANALOG";
 
 const description = `
-    <p>This is the ANALOG subsection. Placeholder content for analog photography and art.</p>
-    <p>The layout is designed to showcase 21 pieces of work in a clean, professional grid on desktop and a smooth scrolling experience on mobile.</p>
-    <p>Easily swap these images by updating the array in the script section of this file.</p>
+    <p>This is the ANALOG subsection.</p>
 `;
 
-const images = Array.from({ length: 21 }, (_, i) => {
-    return {
-        thumb: `/subsections/analog/analog_thumb/analog-${i}.jpg`,
-        full: `/subsections/analog/analog_full/analog-${i}.jpg`,
-        description: `This is a detailed description for Analog piece #${i + 1}.`
-    };
-});
-
-
-/* =========================
-   INIT
-========================= */
+const images = Array.from({ length: 21 }, (_, i) => ({
+    thumb: `/subsections/analog/analog_thumb/analog-${i}.jpg`,
+    full: `/subsections/analog/analog_full/analog-${i}.jpg`,
+    description: `Analog piece #${i + 1}`
+}));
 
 function init() {
 
@@ -144,20 +111,17 @@ function init() {
         }
 
         const thumbDiv = document.createElement('div');
-        thumbDiv.className = "aspect-[3/4] bg-gray-900 cursor-pointer overflow-hidden group border border-transparent hover:border-[#8bc34a] transition-all";
+        thumbDiv.className = "aspect-[3/4] bg-gray-900 cursor-pointer overflow-hidden group border border-transparent hover:border-[#8bc34a]";
         thumbDiv.onclick = () => openLightbox(index);
 
         const image = document.createElement('img');
         image.src = img.thumb;
 
-        /* ✅ FIXED FADE-IN */
+        /* DESKTOP FADE */
         image.classList.add("thumb-img");
-        image.onload = () => {
-            image.classList.add("visible");
-        };
+        image.onload = () => image.classList.add("visible");
 
-        image.alt = `Thumbnail ${index + 1}`;
-        image.className += " w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100";
+        image.className += " w-full h-full object-cover grayscale group-hover:grayscale-0";
         image.referrerPolicy = "no-referrer";
 
         thumbDiv.appendChild(image);
@@ -170,38 +134,31 @@ function init() {
         }
     });
 
-    /* MOBILE STACK (unchanged) */
+    /* MOBILE FADE-IN (NEW) */
     const stack = document.getElementById('mobile-image-stack');
 
     images.forEach((img, index) => {
-        const imgContainer = document.createElement('div');
-        imgContainer.className = "w-full bg-gray-900 overflow-hidden";
+        const container = document.createElement('div');
+        container.className = "w-full bg-gray-900 overflow-hidden";
 
         const image = document.createElement('img');
         image.src = img.full;
-        image.alt = `Work ${index + 1}`;
-        image.className = "w-full h-auto block";
+
+        image.classList.add("thumb-img");
+        image.onload = () => image.classList.add("visible");
+
+        image.className += " w-full h-auto block";
         image.referrerPolicy = "no-referrer";
 
-        imgContainer.appendChild(image);
-        stack.appendChild(imgContainer);
+        container.appendChild(image);
+        stack.appendChild(container);
     });
 
-    /* Scroll indicator */
     window.addEventListener('scroll', () => {
         const indicator = document.getElementById('scroll-indicator');
-        if (window.scrollY > 100) {
-            indicator.style.opacity = '0';
-        } else {
-            indicator.style.opacity = '1';
-        }
+        indicator.style.opacity = window.scrollY > 100 ? '0' : '1';
     });
 }
-
-
-/* =========================
-   LIGHTBOX
-========================= */
 
 function openLightbox(index) {
     window.parent.postMessage({
@@ -210,11 +167,6 @@ function openLightbox(index) {
         index: index
     }, '*');
 }
-
-
-/* =========================
-   START
-========================= */
 
 window.onload = init;
 
