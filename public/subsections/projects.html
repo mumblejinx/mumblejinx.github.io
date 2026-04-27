@@ -1,150 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projects</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects - Jake Galm</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+    background: black;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* IMAGE FEEL */
+#project-img {
+    transition: transform 6s ease, opacity 0.6s ease;
+}
+.image-active {
+    transform: scale(1.03);
+}
+#image-container:hover #project-img {
+    transform: scale(1.06);
+}
+
+/* MOBILE BOUNCE */
+@keyframes bounce-scroll {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.animate-bounce-scroll {
+    animation: bounce-scroll 2s infinite ease-in-out;
+}
+
+/* PAGE FADE */
+body {
+    animation: fadeIn 1.2s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+</style>
 </head>
 
-<body class="bg-black text-white font-sans">
+<body>
 
-  <!-- DESKTOP GRID -->
-  <div id="desktop-grid" class="hidden md:grid grid-cols-3 gap-4 p-6"></div>
+<!-- DESKTOP + TABLET -->
+<div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
 
-  <!-- MOBILE STACK -->
-  <div id="mobile-image-stack" class="flex flex-col gap-12 p-4 md:hidden"></div>
+    <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
 
-  <script>
-    /* =========================
-       PROJECT DATA
-    ========================= */
-    const projects = [
-      {
-        id: "project1",
-        title: "Project One",
-        description: "<p>Description for project one.</p>",
-        listImage: "/projects/project1.jpg",
-        galleryCount: 3
-      },
-      {
-        id: "project2",
-        title: "Project Two",
-        description: "<p>Description for project two.</p>",
-        listImage: "/projects/project2.jpg",
-        galleryCount: 0
-      },
-      {
-        id: "project3",
-        title: "Project Three",
-        description: "<p>Description for project three.</p>",
-        listImage: "/projects/project3.jpg",
-        galleryCount: 5
-      }
-    ];
+        <div id="image-container"
+             class="w-full flex items-center justify-center max-h-[70vh] bg-gray-900 overflow-hidden cursor-pointer">
 
-    /* =========================
-       LIGHTBOX TRIGGER
-    ========================= */
-    function openGallery(projectId, count) {
-      const images = [];
+            <img id="project-img"
+                 class="max-w-full max-h-full object-contain"
+                 src="">
+        </div>
 
-      for (let i = 1; i <= count; i++) {
-        images.push({
-          full: `/projects/${projectId}/${i}.jpg`,
-          description: ""
-        });
-      }
+        <div class="flex items-center gap-8 mt-6">
 
-      window.parent.postMessage({
-        type: "OPEN_LIGHTBOX",
-        images,
-        index: 0
-      }, "*");
-    }
+            <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">←</button>
 
-    /* =========================
-       DESKTOP RENDER
-    ========================= */
-    function renderDesktop() {
-      const grid = document.getElementById("desktop-grid");
-      grid.innerHTML = "";
+            <span id="counter"
+                class="text-gray-400 text-sm tracking-widest min-w-[80px] text-center"></span>
 
-      projects.forEach(project => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "flex flex-col gap-3";
+            <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">→</button>
 
-        const img = document.createElement("img");
+        </div>
+    </div>
+
+    <div class="w-1/2 flex flex-col justify-start max-h-[85vh] overflow-y-auto pr-4">
+
+        <h1 id="title"
+            class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase"></h1>
+
+        <div id="description"
+             class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
+
+    </div>
+
+</div>
+
+
+<!-- MOBILE -->
+<div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
+
+    <!-- YOUR UPDATED SPACING -->
+    <div id="mobile-image-stack" class="flex flex-col gap-16 mb-12"></div>
+
+    <div class="mt-8 border-t border-gray-800 pt-8">
+        <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
+        <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4"></div>
+    </div>
+
+    <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
+        <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
+            <span>▼ SCROLL</span>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+/* DATA */
+
+const projects = [
+{
+    id: 0,
+    title: "PROJECTS OVERVIEW",
+    description: `
+        <p>Welcome to the Projects section.</p>
+        <p>Use navigation arrows to explore different bodies of work.</p>
+    `,
+    listImage: "/subsections/projects/list/overview.jpg",
+    galleryCount: 0
+},
+...Array.from({ length: 10 }, (_, i) => ({
+    id: i + 1,
+    title: `PROJECT ${i + 1}`,
+    description: `
+        <p>This is Project ${i + 1}.</p>
+        <p>Click image to view full gallery.</p>
+    `,
+    listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
+    galleryCount: 3
+}))
+];
+
+/* STATE */
+
+let index = 0;
+
+/* INIT */
+
+function init() {
+    updateDesktop();
+    renderMobile();
+}
+
+/* DESKTOP */
+
+function updateDesktop() {
+    const project = projects[index];
+
+    document.getElementById("title").innerHTML = project.title;
+    document.getElementById("description").innerHTML = project.description;
+
+    const counter = document.getElementById("counter");
+    counter.innerText = project.id === 0 ? "OVERVIEW" : `${project.id} / 10`;
+
+    const img = document.getElementById("project-img");
+
+    img.classList.remove("image-active");
+    img.style.opacity = 0;
+
+    setTimeout(() => {
         img.src = project.listImage;
-        img.className = "w-full h-auto object-cover";
+        img.style.opacity = 1;
+        img.classList.add("image-active");
+    }, 200);
 
+    document.getElementById("image-container").onclick = () => {
         if (project.galleryCount > 0) {
-          img.style.cursor = "pointer";
-          img.onclick = () => openGallery(project.id, project.galleryCount);
+            openGallery(project.id, project.galleryCount);
         }
+    };
+}
 
-        const title = document.createElement("h2");
-        title.innerText = project.title;
-        title.className = "text-[#8bc34a] text-lg font-bold uppercase";
+function nextProject() {
+    index = (index + 1) % projects.length;
+    updateDesktop();
+}
 
-        wrapper.appendChild(img);
-        wrapper.appendChild(title);
+function prevProject() {
+    index = (index - 1 + projects.length) % projects.length;
+    updateDesktop();
+}
 
-        grid.appendChild(wrapper);
-      });
+/* 🔥 NEW: SEND TO APP.TSX LIGHTBOX */
+
+function openGallery(projectId, count) {
+    const images = [];
+
+    for (let i = 1; i <= count; i++) {
+        images.push({
+            full: `/projects/project${projectId}/img${i}.jpg`,
+            description: `Project ${projectId} - Image ${i}`
+        });
     }
 
-    /* =========================
-       ✅ FIXED MOBILE RENDER
-    ========================= */
-    function renderMobile() {
-      const container = document.getElementById("mobile-image-stack");
-      container.innerHTML = "";
+    window.parent.postMessage({
+        type: 'OPEN_LIGHTBOX',
+        images: images,
+        index: 0
+    }, '*');
+}
 
-      projects.forEach(project => {
+/* SWIPE (ONLY FOR PROJECT NAV NOW) */
 
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+
+    if (Math.abs(startX - endX) > 50) {
+        if (startX > endX) nextProject();
+        else prevProject();
+    }
+});
+
+/* MOBILE */
+
+function renderMobile() {
+    const container = document.getElementById("mobile-image-stack");
+    container.innerHTML = "";
+
+    projects.forEach(project => {
         const wrapper = document.createElement("div");
-        wrapper.className = "flex flex-col gap-4";
-
-        // IMAGE
         const img = document.createElement("img");
+
         img.src = project.listImage;
         img.className = "w-full h-auto block";
 
-        // TITLE
-        const title = document.createElement("h2");
-        title.innerText = project.title;
-        title.className = "text-[#8bc34a] text-xl font-bold uppercase tracking-tighter";
-
-        // DESCRIPTION
-        const desc = document.createElement("div");
-        desc.innerHTML = project.description;
-        desc.className = "text-gray-400 text-sm leading-relaxed space-y-3";
-
-        // CLICK (lightbox)
-        if (project.galleryCount > 0) {
-          img.style.cursor = "pointer";
-          img.onclick = () => openGallery(project.id, project.galleryCount);
-        }
-
         wrapper.appendChild(img);
-        wrapper.appendChild(title);
-        wrapper.appendChild(desc);
-
         container.appendChild(wrapper);
-      });
-    }
+    });
+}
 
-    /* =========================
-       INIT
-    ========================= */
-    function init() {
-      renderDesktop();
-      renderMobile();
-    }
+window.onload = init;
 
-    init();
-  </script>
+</script>
 
 </body>
 </html>
