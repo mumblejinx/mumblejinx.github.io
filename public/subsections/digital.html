@@ -32,7 +32,7 @@
             animation: bounce-scroll 2s infinite ease-in-out;
         }
 
-        /* FADE-IN SYSTEM (USED EVERYWHERE) */
+        /* FADE-IN SYSTEM */
         .thumb-img {
             opacity: 0;
             transition: opacity 0.8s ease;
@@ -40,22 +40,26 @@
         .thumb-img.visible {
             opacity: 1;
         }
-
     </style>
 </head>
 
 <body class="bg-black">
 
 <!-- DESKTOP -->
-<div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-full">
+<div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-screen">
 
-    <div class="w-2/3 overflow-y-auto pr-4 flex items-center justify-center">
+    <!-- FIXED IMAGE GRID -->
+    <div class="w-2/3 h-full flex items-center justify-center">
         <div id="thumbnail-grid" class="grid grid-cols-9 gap-2 w-full max-w-fit"></div>
     </div>
 
-    <div class="w-1/3 flex flex-col justify-start text-left">
+    <!-- SCROLLABLE TEXT -->
+    <div class="w-1/3 h-full overflow-y-auto pr-4">
         <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
-        <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
+
+        <div id="desktop-description"
+             class="text-gray-300 text-lg leading-relaxed space-y-4 pb-20">
+        </div>
     </div>
 
 </div>
@@ -96,7 +100,6 @@ continue to try new styles and new techniques.</p>
 そのため、デジタル制作に本格的に取り組むようになったのは、2003年から2004年頃、ストリートアート用のステッカーを制作し始めてからです。</p>
 <p>現在でも、デジタル作品は必ず紙の上でのドローイングから始めます。
 これは自分にとってとても重要なプロセスです。</p>
-
 `;
 
 const images = Array.from({ length: 21 }, (_, i) => ({
@@ -130,7 +133,6 @@ function init() {
         const image = document.createElement('img');
         image.src = img.thumb;
 
-        /* DESKTOP FADE */
         image.classList.add("thumb-img");
         image.onload = () => image.classList.add("visible");
 
@@ -147,10 +149,9 @@ function init() {
         }
     });
 
-    /* MOBILE FADE-IN (NEW) */
     const stack = document.getElementById('mobile-image-stack');
 
-    images.forEach((img, index) => {
+    images.forEach((img) => {
         const container = document.createElement('div');
         container.className = "w-full bg-gray-900 overflow-hidden";
 
