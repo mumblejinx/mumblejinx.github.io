@@ -32,7 +32,7 @@
             animation: bounce-scroll 2s infinite ease-in-out;
         }
 
-        /* FADE-IN SYSTEM (USED EVERYWHERE) */
+        /* FADE-IN SYSTEM */
         .thumb-img {
             opacity: 0;
             transition: opacity 0.8s ease;
@@ -40,22 +40,26 @@
         .thumb-img.visible {
             opacity: 1;
         }
-
     </style>
 </head>
 
 <body class="bg-black">
 
 <!-- DESKTOP -->
-<div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-full">
+<div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-screen">
 
-    <div class="w-2/3 overflow-y-auto pr-4 flex items-center justify-center">
+    <!-- FIXED IMAGE GRID -->
+    <div class="w-2/3 h-full flex items-center justify-center">
         <div id="thumbnail-grid" class="grid grid-cols-9 gap-2 w-full max-w-fit"></div>
     </div>
 
-    <div class="w-1/3 flex flex-col justify-start text-left">
+    <!-- SCROLLABLE TEXT -->
+    <div class="w-1/3 h-full overflow-y-auto pr-4">
         <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
-        <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
+
+        <div id="desktop-description"
+             class="text-gray-300 text-lg leading-relaxed space-y-4 pb-20">
+        </div>
     </div>
 
 </div>
@@ -80,12 +84,57 @@
 
 <script>
 
-const title = "STREET ART";
+const title = "STREET / 現場";
 
 const description = `
-    <p>This is the Street subsection. Placeholder content for street design and media.</p>
-    <p>The layout is designed to showcase 21 pieces of work in a clean, professional grid on desktop and a smooth scrolling experience on mobile.</p>
-    <p>Easily swap these images by updating the array in the script section of this file.</p>
+    <p>Hip Hop has been a big influence on my life ever since I first saw breakdancing in movies in the early 
+1980s and heard Run DMC. I wanted to get into all of the different elements, Djing, Mcing, Bboying and Graffiti.  
+Out of all of them, Graffiti was the hardest to find my way. It was not a thing in small town rural Michigan at 
+the time.</p>
+<p>In the early 2000s I was living in Seattle. I was aware of the Street Art movement that was taking off but it 
+didn’t interest me that much at first. Then I met this artist the Blue Baby at a party I was showing art at and he 
+gave me a handful of stickers.  I liked how he was using stickers of his art as a way to connect with other people. 
+Later another artist, Zac Boetes, introduced me to the larger international community of sticker arts online and I 
+started trading stickers with people and sending stickers to art shows all over the world.</p>
+<p>After amassing stickers from other artists for about seven years I moved to Pittsburgh.  Pittsburgh, unlike Seattle, 
+did not have that big of a Street Art scene. I came to realize pretty quickly that it wasn’t just putting my own art 
+up on the street that I found interesting.  I was the conservation I was having with all these other artists who I 
+knew and didn’t know. Artists who had different life experiences and goals than my own.  I came to believe that Street 
+Art is an art form of emergence.  It’s not any one particular artist that makes it interesting, it’s all these different 
+voices layered on top of each other that make it special.  So I started making collages with all the stickers people had 
+sent me over the years. I am now lucky because I have met a lot of artists whose work I think is fantastic and they see 
+what I’m doing and they help support this project by sending me their work to use. </p>
+<p>Now I work mainly non-destructively using a lot of magnets. I like this because it gives someone else the opportunity 
+to take the work home if they like it.  Since I include so much work from other artists these aren’t pieces I would ever
+ charge money for. And if someone likes the work and wants it for their home I try to encourage that because eventually,
+ outside, the artwork is going to bleach. </p>
+
+<p>ヒップホップは、1980年代初頭に映画でブレイクダンスを見て、Run DMC を聴いたときから、ずっと自分の人生に大きな影響を与え
+てきました。DJ、MC、ブレイクダンス、グラフィティといった、ヒップホップのあらゆる要素に関わりたいと思っていました。</p>
+<p>その中でも、グラフィティは自分にとって最も入り口が難しい分野でした。当時、自分が育ったミシガン州の小さな田舎町では、
+グラフィティ文化に触れる機会がほとんどなかったからです。</p>
+<p>2000年代初頭、シアトルに住んでいた頃、ストリートアートのムーブメントが広がり始めていることは知っていましたが、
+最初はそれほど強い関心はありませんでした。そんな中、ある展示会のパーティーで「Blue Baby」というアーティストに出会い、
+彼から何枚かのステッカーをもらいました。作品をステッカーという形で人と共有し、つながっていくその方法に魅力を感じました。
+</p>
+<p>その後、「Zac Boetes」というアーティストを通じて、オンライン上に広がる国際的なステッカーアートのコミュニティを知り、
+世界中のアーティストとステッカーを交換したり、各地の展示に送ったりするようになりました。</p>
+<p>約7年にわたって他のアーティストのステッカーを集めた後、ピッツバーグへ移りました。シアトルとは違い、
+ピッツバーグには大きなストリートアートのシーンはありませんでした。その中で気づいたのは、自分の作品を街に貼ること以上に、
+多くのアーティストとの“対話”そのものに強く惹かれているということでした。</p>
+<p>それは、知っている人もいれば、まだ会ったことのない人もいる、多様な背景や価値観を持つアーティストたちとの対話です。
+そうした経験を通して、ストリートアートは「エマージェンス（創発）」の芸術だと考えるようになりました。
+特定の一人のアーティストが面白さを生み出すのではなく、さまざまな声や表現が重なり合うことで、
+独自の魅力が生まれるのだと思っています。</p>
+<p>そこで私は、これまでに集めてきたステッカーを使ってコラージュ作品を制作するようになりました。
+ありがたいことに、素晴らしい作品を制作している多くのアーティストと出会い、私の活動に共感してくれた方々が、
+自分の作品を送ってサポートしてくれています。</p>
+<p>現在は、主にマグネットを使った非破壊的な方法で作品を展開しています。この方法は、
+作品を気に入った人が持ち帰ることができるという点でも気に入っています。また、多くのアーティストの作品を含んでいるため、
+これらを販売することは考えていません。誰かが気に入って自宅に持ち帰ってくれるのであれば、それをむしろ歓迎しています。
+というのも、屋外に置かれた作品は、いずれ時間とともに色あせてしまうからです。</p>
+
+</p>
 `;
 
 const images = Array.from({ length: 21 }, (_, i) => ({
@@ -119,7 +168,6 @@ function init() {
         const image = document.createElement('img');
         image.src = img.thumb;
 
-        /* DESKTOP FADE */
         image.classList.add("thumb-img");
         image.onload = () => image.classList.add("visible");
 
@@ -136,10 +184,9 @@ function init() {
         }
     });
 
-    /* MOBILE FADE-IN (NEW) */
     const stack = document.getElementById('mobile-image-stack');
 
-    images.forEach((img, index) => {
+    images.forEach((img) => {
         const container = document.createElement('div');
         container.className = "w-full bg-gray-900 overflow-hidden";
 
