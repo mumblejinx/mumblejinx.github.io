@@ -89,9 +89,9 @@ body {
 <!-- MOBILE -->
 <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
 
-    <!-- YOUR UPDATED SPACING -->
     <div id="mobile-image-stack" class="flex flex-col gap-16 mb-12"></div>
 
+    <!-- ✅ THIS STAYS — NOW WILL BE FORCED TO OVERVIEW -->
     <div class="mt-8 border-t border-gray-800 pt-8">
         <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
         <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4"></div>
@@ -133,18 +133,14 @@ const projects = [
 }))
 ];
 
-/* STATE */
-
 let index = 0;
-
-/* INIT */
 
 function init() {
     updateDesktop();
     renderMobile();
 }
 
-/* DESKTOP */
+/* DESKTOP (UNCHANGED) */
 
 function updateDesktop() {
     const project = projects[index];
@@ -183,7 +179,7 @@ function prevProject() {
     updateDesktop();
 }
 
-/* 🔥 NEW: SEND TO APP.TSX LIGHTBOX */
+/* LIGHTBOX (UNCHANGED) */
 
 function openGallery(projectId, count) {
     const images = [];
@@ -202,7 +198,7 @@ function openGallery(projectId, count) {
     }, '*');
 }
 
-/* SWIPE (ONLY FOR PROJECT NAV NOW) */
+/* SWIPE (UNCHANGED) */
 
 let startX = 0;
 
@@ -219,12 +215,13 @@ document.addEventListener("touchend", e => {
     }
 });
 
-/* MOBILE */
+/* ✅ MOBILE (FIXED) */
 
 function renderMobile() {
     const container = document.getElementById("mobile-image-stack");
     container.innerHTML = "";
 
+    // STACK ALL IMAGES
     projects.forEach(project => {
         const wrapper = document.createElement("div");
         const img = document.createElement("img");
@@ -235,6 +232,12 @@ function renderMobile() {
         wrapper.appendChild(img);
         container.appendChild(wrapper);
     });
+
+    // ✅ FORCE OVERVIEW TEXT AT BOTTOM (LIKE ANALOG)
+    const overview = projects[0];
+
+    document.getElementById("mobile-title").innerHTML = overview.title;
+    document.getElementById("mobile-description").innerHTML = overview.description;
 }
 
 window.onload = init;
