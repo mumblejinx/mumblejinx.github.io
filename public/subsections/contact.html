@@ -31,12 +31,10 @@ body {
     <!-- RIGHT CONTENT (60%) -->
     <div class="w-3/5 overflow-y-auto p-12 flex flex-col">
 
-        <!-- HEADER -->
         <h1 class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase">
             Contact / 連絡
         </h1>
 
-        <!-- DESCRIPTION -->
         <div class="text-gray-300 text-lg leading-relaxed space-y-4 mb-10">
             <p>
                 I’m always open to connecting. If you have questions about commissions, projects,
@@ -51,7 +49,6 @@ body {
         <!-- FORM -->
         <form action="https://formspree.io/f/xbdqvaoz" method="POST" class="flex flex-col gap-6 w-full">
 
-            <!-- EMAIL -->
             <input
                 type="email"
                 name="email"
@@ -60,7 +57,6 @@ body {
                 class="p-4 w-full bg-black border border-gray-700 text-white focus:outline-none focus:border-[#8bc34a]"
             />
 
-            <!-- MESSAGE -->
             <textarea
                 name="message"
                 rows="6"
@@ -69,35 +65,35 @@ body {
                 class="p-4 w-full bg-black border border-gray-700 text-white focus:outline-none focus:border-[#8bc34a]"
             ></textarea>
 
-            <!-- BUTTON -->
             <button
                 type="submit"
                 class="bg-[#8bc34a] text-black font-bold py-3 hover:opacity-80 transition w-full"
             >
                 Send
             </button>
+
+            <!-- SOCIAL ICONS (ALIGNED TO BUTTON WIDTH) -->
+            <div class="flex justify-between items-center w-full mt-2">
+
+                <a href="#" target="_blank">
+                    <img src="/subsections/contact/instagram.jpg" class="w-12 h-12 object-contain" />
+                </a>
+
+                <a href="#" target="_blank">
+                    <img src="/subsections/contact/youtube.jpg" class="w-12 h-12 object-contain" />
+                </a>
+
+                <a href="#" target="_blank">
+                    <img src="/subsections/contact/facebook.jpg" class="w-12 h-12 object-contain" />
+                </a>
+
+                <a href="#" target="_blank">
+                    <img src="/subsections/contact/linkedin.jpg" class="w-12 h-12 object-contain" />
+                </a>
+
+            </div>
+
         </form>
-
-        <!-- SOCIAL ICONS -->
-        <div class="flex gap-6 mt-12 items-center">
-
-            <a href="#" target="_blank">
-                <img src="/subsections/contact/instagram.jpg" class="w-8 h-8 object-contain" />
-            </a>
-
-            <a href="#" target="_blank">
-                <img src="/subsections/contact/youtube.jpg" class="w-8 h-8 object-contain" />
-            </a>
-
-            <a href="#" target="_blank">
-                <img src="/subsections/contact/facebook.jpg" class="w-8 h-8 object-contain" />
-            </a>
-
-            <a href="#" target="_blank">
-                <img src="/subsections/contact/linkedin.jpg" class="w-8 h-8 object-contain" />
-            </a>
-
-        </div>
 
     </div>
 
@@ -106,7 +102,6 @@ body {
 <!-- MOBILE -->
 <div class="md:hidden flex flex-col min-h-screen p-6 w-full overflow-x-hidden">
 
-    <!-- TEXT FIRST -->
     <h1 class="text-[#8bc34a] text-3xl font-bold mb-6 uppercase">
         Contact / 連絡
     </h1>
@@ -147,28 +142,29 @@ body {
         >
             Send
         </button>
+
+        <!-- SOCIAL ICONS (FULL WIDTH + EVEN SPACING) -->
+        <div class="flex justify-between items-center w-full mt-2">
+
+            <a href="#" target="_blank">
+                <img src="/subsections/contact/instagram.jpg" class="w-10 h-10 object-contain" />
+            </a>
+
+            <a href="#" target="_blank">
+                <img src="/subsections/contact/youtube.jpg" class="w-10 h-10 object-contain" />
+            </a>
+
+            <a href="#" target="_blank">
+                <img src="/subsections/contact/facebook.jpg" class="w-10 h-10 object-contain" />
+            </a>
+
+            <a href="#" target="_blank">
+                <img src="/subsections/contact/linkedin.jpg" class="w-10 h-10 object-contain" />
+            </a>
+
+        </div>
+
     </form>
-
-    <!-- SOCIAL -->
-    <div class="flex gap-4 mt-8 items-center">
-
-        <a href="#" target="_blank">
-            <img src="/subsections/contact/instagram.jpg" class="w-7 h-7 object-contain" />
-        </a>
-
-        <a href="#" target="_blank">
-            <img src="/subsections/contact/youtube.jpg" class="w-7 h-7 object-contain" />
-        </a>
-
-        <a href="#" target="_blank">
-            <img src="/subsections/contact/facebook.jpg" class="w-7 h-7 object-contain" />
-        </a>
-
-        <a href="#" target="_blank">
-            <img src="/subsections/contact/linkedin.jpg" class="w-7 h-7 object-contain" />
-        </a>
-
-    </div>
 
     <!-- IMAGE BELOW -->
     <div class="mt-10 flex justify-center w-full">
