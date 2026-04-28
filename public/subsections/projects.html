@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projects - Work</title>
+<title>Projects - Jake Galm</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -48,7 +48,7 @@ body {
 
 <body>
 
-<!-- DESKTOP + TABLET -->
+<!-- DESKTOP -->
 <div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
 
     <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
@@ -62,36 +62,30 @@ body {
         </div>
 
         <div class="flex items-center gap-8 mt-6">
-
             <button onclick="prevProject()" class="p-3 border border-gray-700 rounded-full">←</button>
 
             <span id="counter"
                 class="text-gray-400 text-sm tracking-widest min-w-[80px] text-center"></span>
 
             <button onclick="nextProject()" class="p-3 border border-gray-700 rounded-full">→</button>
-
         </div>
     </div>
 
     <div class="w-1/2 flex flex-col justify-start max-h-[85vh] overflow-y-auto pr-4">
-
         <h1 id="title"
             class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase"></h1>
 
         <div id="description"
-             class="text-gray-300 text-lg leading-relaxed space-y-4"></div>
-
+             class="text-gray-300 text-lg leading-relaxed space-y-2"></div>
     </div>
 
 </div>
-
 
 <!-- MOBILE -->
 <div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
 
     <div id="mobile-image-stack" class="flex flex-col gap-16 mb-12"></div>
 
-    <!-- ✅ THIS STAYS — NOW WILL BE FORCED TO OVERVIEW -->
     <div class="mt-8 border-t border-gray-800 pt-8">
         <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
         <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4"></div>
@@ -105,33 +99,228 @@ body {
 
 </div>
 
-
 <script>
 
-/* DATA */
+/* =========================
+   ✏️ EDIT YOUR PROJECTS HERE
+   ========================= */
 
 const projects = [
+
+/* ===== PROJECT 0: OVERVIEW ===== */
 {
     id: 0,
-    title: "PROJECTS OVERVIEW",
+    title: "PROJECTS / プロジェクト",
     description: `
-        <p>Welcome to the Projects section.</p>
-        <p>Use navigation arrows to explore different bodies of work.</p>
+        <p> This is a selection of projects I’ve worked on or been involved in over the years. 
+Some came out of experimentation, some through collaboration, and others from a simple need to 
+try something new. Each one marks a different moment in my practice. These are the projects that 
+stayed with me—the ones I’m happiest to share.</p>
+
+<p>これまでに取り組んできた、または関わってきたプロジェクトの一部をまとめています。実験から生まれたものもあれば、
+コラボレーションによるもの、ただ「やってみたい」と思って始めたものもあります。それぞれが、自分の制作の中のある瞬間を表しています。
+ここにあるのは、今でも自分の中に残っているもの、そして人に見てもらいたいと思えるものです。
+</p>
+      
     `,
     listImage: "/subsections/projects/list/overview.jpg",
     galleryCount: 0
 },
-...Array.from({ length: 10 }, (_, i) => ({
-    id: i + 1,
-    title: `PROJECT ${i + 1}`,
+
+/* ===== PROJECT 1 ===== */
+{
+    id: 1,
+    title: "Falling Up 01",
     description: `
-        <p>This is Project ${i + 1}.</p>
-        <p>Click image to view full gallery.</p>
+        <p> This is the first book in a four-part series created as an introduction to a larger comic, 
+The Homespun Jive of Mr. MumbleJinx. My goal was to build a comic made entirely of single-panel works where 
+each panel could stand on its own as an individual piece of art, while still contributing to a larger narrative. 
+This book is available for purchase here.</p>
+
+<p>これは、より大きなコミック作品『The Homespun Jive of Mr. MumbleJinx』の導入として制作している全4冊シリーズの第1作目です。
+すべてを1コマ作品で構成し、それぞれが単体でも成立する一つの作品でありながら、全体としてひとつの流れや物語につながるような形を目指しました。
+この本はここから購入できます。
+</p>
+        
     `,
-    listImage: `/subsections/projects/list/project-${i + 1}.jpg`,
+    listImage: "/subsections/projects/list/project-1.jpg",
     galleryCount: 3
-}))
+},
+
+/* ===== PROJECT 2 ===== */
+{
+    id: 2,
+    title: "Tenderfoot Wanderlust 01",
+    description: `
+        <p> This is the first book in a series focused on documenting and exploring the street art and 
+graffiti I’ve been creating. At the same time, the books are loosely connected through an ongoing story 
+following MumbleJinx’s search for the DORW. It exists somewhere between an art book and fragments of lost media. 
+This book is available for purchase here.</p>
+
+<p>このシリーズは、自分がこれまでに制作してきたストリートアートやグラフィティを記録しつつ、それを探っていくような内容になっています。
+同時に、MumbleJinxがDORWを探すというストーリーがゆるやかにつながっています。アートブックでもあり、
+どこか失われたメディアの断片のような感覚もある作品です。この本はここから購入できます。
+</p>
+    `,
+    listImage: "/subsections/projects/list/project-2.jpg",
+    galleryCount: 3
+},
+
+/* ===== PROJECT 3 ===== */
+{
+    id: 3,
+    title: "Tenderfoot Wanderlust 02",
+    description: `
+        <p> This is the second issue in the continuing Tenderfoot Wanderlust series. Like the first, it focuses 
+on street art and graffiti, but these early volumes place a stronger emphasis on freight train graffiti—work that 
+played a big role in first drawing me into this art movement. These pieces are meant as both documentation and homage. 
+This book is available for purchase here.</p>
+
+<p>『Tenderfoot Wanderlust』シリーズの第2作目です。前作と同じくストリートアートとグラフィティを中心にしていますが、
+この初期の2冊では特に貨物列車のグラフィティにフォーカスしています。自分がこの表現に惹かれるきっかけになった重要な要素でもあります。
+これらの作品は、記録でありながらオマージュでもあります。この本はここから購入できます。
+</p>
+    `,
+    listImage: "/subsections/projects/list/project-3.jpg",
+    galleryCount: 3
+},
+
+/* ===== PROJECT 4 ===== */
+{
+    id: 4,
+    title: "SwampWalk - Kids Like Me",
+    description: `
+        <p> I created the cover art for SwampWalk’s 2019 album Kids Like Me. I discovered her music 
+unexpectedly while walking home from a day of drawing in a graveyard in Pittsburgh. I passed by a festival 
+with my headphones on, but something about her sound cut through and made me stop, listen, and walk in. I’m 
+grateful to have been invited into the project and proud to have contributed to something I genuinely connect with.</p>
+
+<p>SwampWalkの2019年のアルバム『Kids Like Me』のカバーアートを制作しました。ピッツバーグで墓地でドローイングをした帰り道、
+偶然彼女の音楽に出会いました。ヘッドフォンで自分の音楽を聴いていたのですが、その音が気になって思わず足を止め、
+そのままフェスの中に入っていきました。このプロジェクトに関われたことに感謝していますし、
+自分が本当にいいと思ったものに関われたことを嬉しく思っています。
+</p>
+    `,
+    listImage: "/subsections/projects/list/project-4.jpg",
+    galleryCount: 3
+},
+
+/* ===== PROJECT 5 ===== */
+{
+    id: 5,
+    title: "Artist Portfolio Video",
+    description: `
+        <p>This video was created for upcoming gallery shows as a way to showcase my street art work from roughly 
+2012 to 2025. The YouTube version includes excerpts from DJ Shadow’s Live at Brixton Academy 2006, though the video
+ was not originally edited to music. It was designed to be shown in gallery spaces, often for viewers who may already be 
+listening to their own music. That said, the DJ Shadow mix does fit well with the style of my work. The video can be viewed </p>
+
+<p>この動画は、ギャラリー展示に向けて制作したもので、2012年から2025年頃までのストリートアート作品をまとめたものです。
+YouTube版ではDJ Shadowの『Live at Brixton Academy 2006』の一部を使用していますが、もともとは音楽に合わせて編集したものではありません。
+ギャラリー空間で、それぞれが自分の音楽を聴いているような状況でも成立するように作っています。ただ、
+このDJ Shadowのミックスは作品の雰囲気とよく合っているとも感じています。動画はこちらからご覧いただけます。
+</p>
+    `,
+    listImage: "/subsections/projects/list/project-5.jpg",
+    galleryCount: 3
+},
+
+/* ===== PROJECT 6 ===== */
+{
+    id: 6,
+    title: "SLAP STARS - Tokyo Edition",
+    description: `
+        <p>I was featured in the SLAP STARS Tokyo Edition trading card series by Bridge Mogura. It’s 
+an honor to be included, especially alongside artists like The London Police, whose work influenced me early on, 
+and VLOT, who has been part of my sticker exchange community for years. Being included in this project feels full-circle.</p>
+
+<p>Bridge Moguraによるトレーディングカードシリーズ『SLAP STARS Tokyo Edition』に参加させてもらいました。
+初期に影響を受けたThe London Policeや、長くステッカー交換を続けてきたVLOTと並んで紹介されていることを、
+とても嬉しく思っています。このプロジェクトに参加できたことは、自分の中でひとつの区切りのようにも感じています。
+</p>
+    `,
+    listImage: "/subsections/projects/list/project-6.jpg",
+    galleryCount: 3
+},
+
+/* ===== PROJECT 7 ===== */
+{
+    id: 7,
+    title: "Sticker Movie",
+    description: `
+        <p>Sticker Movie (2023) is a documentary centered on the global sticker art subculture. 
+Directed by Will Deloney and created in collaboration with Sha-Risse R. Smith, the film highlights a worldwide 
+network of artists, traders, and “slap taggers.” It features over 80 artists across 23 countries and focuses on 
+the shared energy and connection within this scene. More information about Sticker Movie can be found here.</p>
+
+<p>『Sticker Movie』（2023年）は、世界中に広がるステッカーアートのカルチャーをテーマにしたドキュメンタリーです。
+Will Deloney監督とSha-Risse R. Smithによって制作されました。23カ国、80名以上のアーティストが登場し、
+ステッカーを通じてつながるコミュニティや、そのエネルギーが描かれています。詳しくはこちらをご覧ください。
+</p>
+    `,
+    listImage: "/subsections/projects/list/project-7.jpg",
+    galleryCount: 3
+},
+
+/* ===== PROJECT 8 ===== */
+{
+    id: 8,
+    title: "A Showcase of Street Art",
+    description: `
+        <p>This was my first attempt at creating a video showcase of my street art, covering work from 2011 to 2018. 
+It was an experimental project and an important learning experience for me in terms of documenting and presenting the work. 
+The video features music by Pretty Lights, mixed by Ansir. It can be viewed here.</p>
+
+<p>これは、自分のストリートアートを映像としてまとめた最初の試みで、2011年から2018年までの作品を収録しています。
+実験的なプロジェクトでもあり、自分にとって多くの学びがありました。音楽にはPretty Lights（ミックス：Ansir）を使用しています。
+動画はこちらからご覧いただけます。
+</p>
+    `,
+    listImage: "/subsections/projects/list/project-8.jpg",
+    galleryCount: 3
+},
+
+/* ===== PROJECT 9 ===== */
+{
+    id: 9,
+    title: "Pop-Up Gallery of Street Art",
+    description: `
+        <p>This project was in South Carolina, where I found a landscape of decaying cotton mills that felt perfect for 
+street art and graffiti. I set up a temporary, pop-up gallery within those crumbling walls. I’m not sure how many people 
+encountered it, but I hope it reached at least a few who could experience it in that space.</p>
+
+<p>このプロジェクトはサウスカロライナで行いました。朽ちかけたコットンミルの建物が広がる風景が、
+ストリートアートやグラフィティにとても合っていると感じ、その空間の中に一時的なポップアップギャラリーを作りました。
+どれくらいの人が見てくれたのかは分かりませんが、その場所で作品に触れてくれた人が少しでもいればいいなと思っています。
+</p>
+    `,
+    listImage: "/subsections/projects/list/project-9.jpg",
+    galleryCount: 3
+},
+
+/* ===== PROJECT 10 ===== */
+{
+    id: 10,
+    title: "Tattoos / タトゥー",
+    description: `
+        <p> Having somebody choose to display your artwork on their body is one of the highest honors an artist can receive. 
+It hasn’t happened often for me, but each time it has, I’ve been deeply grateful. I’ve thought about trying to become a 
+tattoo artist, but between the shaky hands and a tendency to revise too often, I’ve stayed on my current path—for now.</p>
+
+<p>自分の作品を身体に入れてもらえるというのは、アーティストにとってとても特別なことだと思います。頻繁にあることではありませんが、
+そのたびにありがたく感じています。自分でタトゥーをやることも考えたことはありますが、手の震えや、つい描き直してしまう性格もあって、
+今のところは別の形で制作を続けています。
+</p>
+    `,
+    listImage: "/subsections/projects/list/project-10.jpg",
+    galleryCount: 3
+}
+
 ];
+
+/* =========================
+   🚫 DO NOT EDIT BELOW
+   ========================= */
 
 let index = 0;
 
@@ -139,8 +328,6 @@ function init() {
     updateDesktop();
     renderMobile();
 }
-
-/* DESKTOP (UNCHANGED) */
 
 function updateDesktop() {
     const project = projects[index];
@@ -179,8 +366,6 @@ function prevProject() {
     updateDesktop();
 }
 
-/* LIGHTBOX (UNCHANGED) */
-
 function openGallery(projectId, count) {
     const images = [];
 
@@ -198,30 +383,12 @@ function openGallery(projectId, count) {
     }, '*');
 }
 
-/* SWIPE (UNCHANGED) */
-
-let startX = 0;
-
-document.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-});
-
-document.addEventListener("touchend", e => {
-    let endX = e.changedTouches[0].clientX;
-
-    if (Math.abs(startX - endX) > 50) {
-        if (startX > endX) nextProject();
-        else prevProject();
-    }
-});
-
-/* ✅ MOBILE (FIXED) */
+/* MOBILE */
 
 function renderMobile() {
     const container = document.getElementById("mobile-image-stack");
     container.innerHTML = "";
 
-    // STACK ALL IMAGES
     projects.forEach(project => {
         const wrapper = document.createElement("div");
         const img = document.createElement("img");
@@ -233,26 +400,21 @@ function renderMobile() {
         container.appendChild(wrapper);
     });
 
-    // ✅ FORCE OVERVIEW TEXT AT BOTTOM (LIKE ANALOG)
     const overview = projects[0];
 
     document.getElementById("mobile-title").innerHTML = overview.title;
     document.getElementById("mobile-description").innerHTML = overview.description;
 }
 
-    /* SCROLL INDICATOR HIDE (MATCH ANALOG) */
+/* SCROLL INDICATOR */
 
 window.addEventListener("scroll", () => {
     const indicator = document.getElementById("scroll-indicator");
     if (!indicator) return;
 
-    if (window.scrollY > 50) {
-        indicator.style.opacity = "0";
-    } else {
-        indicator.style.opacity = "1";
-    }
+    indicator.style.opacity = window.scrollY > 50 ? "0" : "1";
 });
-    
+
 window.onload = init;
 
 </script>
