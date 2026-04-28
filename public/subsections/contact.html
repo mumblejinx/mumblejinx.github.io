@@ -1,17 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - About</title>
-    <style>
-        body { background-color: black; color: white; font-family: sans-serif; padding: 20px; }
-        h1 { color: #8bc34a; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - Jake Galm</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+    background: black;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+}
+</style>
 </head>
+
 <body>
-    <h1>CONTACT</h1>
-    <p>This is the CONTACT subsection of the ABOUT section.</p>
-    <p>Placeholder content for contact information and social links.</p>
+
+<!-- DESKTOP -->
+<div class="hidden md:flex h-screen">
+
+    <!-- LEFT IMAGE (FIXED) -->
+    <div class="w-1/3 flex items-center justify-center bg-black">
+        <img src="/subsections/contact/contact.jpg"
+             class="max-w-full max-h-[80vh] object-contain" />
+    </div>
+
+    <!-- RIGHT CONTENT (SCROLLABLE) -->
+    <div class="w-2/3 overflow-y-auto p-12 flex flex-col">
+
+        <!-- HEADER -->
+        <h1 class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase">
+            Contact / 連絡
+        </h1>
+
+        <!-- DESCRIPTION -->
+        <div class="text-gray-300 text-lg leading-relaxed space-y-4 mb-10">
+            <p>
+                I’m always open to connecting. If you have questions about commissions, projects,
+                collaborations, or just want to say hello, feel free to reach out.
+            </p>
+            <p>
+                どんな内容でも気軽にご連絡ください。制作のご依頼やご質問はもちろん、
+                ちょっとした一言でも歓迎しています。
+            </p>
+        </div>
+
+        <!-- FORM -->
+        <form action="https://formspree.io/f/xbdqvaoz" method="POST" class="flex flex-col gap-6">
+
+            <!-- EMAIL -->
+            <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                required
+                class="p-4 bg-black border border-gray-700 text-white focus:outline-none focus:border-[#8bc34a]"
+            />
+
+            <!-- SUBJECT -->
+            <input
+                type="text"
+                name="subject"
+                placeholder="Subject"
+                required
+                class="p-4 bg-black border border-gray-700 text-white focus:outline-none focus:border-[#8bc34a]"
+            />
+
+            <!-- MESSAGE -->
+            <textarea
+                name="message"
+                rows="6"
+                placeholder="Message"
+                required
+                class="p-4 bg-black border border-gray-700 text-white focus:outline-none focus:border-[#8bc34a]"
+            ></textarea>
+
+            <!-- BUTTON -->
+            <button
+                type="submit"
+                class="bg-[#8bc34a] text-black font-bold py-3 hover:opacity-80 transition"
+            >
+                Send
+            </button>
+        </form>
+
+        <!-- SOCIAL ICONS -->
+        <div class="flex gap-6 mt-12 text-[#8bc34a] text-2xl">
+            <a href="#" target="_blank">Instagram</a>
+            <a href="#" target="_blank">YouTube</a>
+            <a href="#" target="_blank">LinkedIn</a>
+            <a href="#" target="_blank">Facebook</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MOBILE -->
+<div class="md:hidden flex flex-col min-h-screen p-6">
+
+    <!-- TEXT FIRST -->
+    <h1 class="text-[#8bc34a] text-3xl font-bold mb-6 uppercase">
+        Contact / 連絡
+    </h1>
+
+    <div class="text-gray-300 text-base leading-relaxed space-y-4 mb-8">
+        <p>
+            I’m always open to connecting. If you have questions about commissions, projects,
+            collaborations, or just want to say hello, feel free to reach out.
+        </p>
+        <p>
+            どんな内容でも気軽にご連絡ください。制作のご依頼やご質問はもちろん、
+            ちょっとした一言でも歓迎しています。
+        </p>
+    </div>
+
+    <!-- FORM -->
+    <form action="https://formspree.io/f/xbdqvaoz" method="POST" class="flex flex-col gap-4">
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            required
+            class="p-3 bg-black border border-gray-700 text-white"
+        />
+
+        <input
+            type="text"
+            name="subject"
+            placeholder="Subject"
+            required
+            class="p-3 bg-black border border-gray-700 text-white"
+        />
+
+        <textarea
+            name="message"
+            rows="5"
+            placeholder="Message"
+            required
+            class="p-3 bg-black border border-gray-700 text-white"
+        ></textarea>
+
+        <button
+            type="submit"
+            class="bg-[#8bc34a] text-black font-bold py-3"
+        >
+            Send
+        </button>
+    </form>
+
+    <!-- SOCIAL -->
+    <div class="flex gap-4 mt-8 text-[#8bc34a] text-xl">
+        <a href="#" target="_blank">Instagram</a>
+        <a href="#" target="_blank">YouTube</a>
+        <a href="#" target="_blank">LinkedIn</a>
+        <a href="#" target="_blank">Facebook</a>
+    </div>
+
+    <!-- IMAGE BELOW -->
+    <div class="mt-10 flex justify-center">
+        <img src="/subsections/contact/contact.jpg"
+             class="max-w-full object-contain" />
+    </div>
+
+</div>
+
 </body>
 </html>
