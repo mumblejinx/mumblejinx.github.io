@@ -21,7 +21,7 @@ body {
 .column {
     width: 50%;
     overflow-y: auto;
-    padding: 40px;
+    padding: 60px 40px;
     box-sizing: border-box;
 }
 
@@ -31,44 +31,28 @@ body {
     .column { width: 100%; height: 50vh; }
 }
 
-h1 {
-    color: #8bc34a;
-    margin-top: 0;
-}
-
-h2 {
-    color: #8bc34a;
-    margin-top: 30px;
-}
-
-.section {
-    margin-bottom: 25px;
-}
+h1 { color: #8bc34a; margin-top: 0; }
+h2 { color: #8bc34a; margin-top: 25px; }
 
 p {
-    line-height: 1.5;
-    margin: 4px 0;
+    margin: 2px 0;
+    line-height: 1.4;
+    white-space: pre-wrap;
 }
 
-.year {
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-/* Toggle */
+/* Floating buttons */
 .lang-toggle {
-    position: sticky;
-    top: 0;
-    text-align: right;
-    background: black;
-    padding-bottom: 10px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 
 button {
-    background: transparent;
+    background: black;
     border: 1px solid #8bc34a;
     color: #8bc34a;
-    padding: 5px 10px;
+    padding: 6px 10px;
     margin-left: 5px;
     cursor: pointer;
 }
@@ -84,157 +68,292 @@ button:hover {
 
 <body>
 
-<div class="container">
-
-<!-- ================= LEFT: ART ================= -->
-<div class="column">
-
-<div class="en">
-<h1>ART</h1>
-
-<h2>Summary</h2>
-<p>I try to participate in as many art communities as possible. Art means different things to different people and I find it interesting to learn those perspectives.</p>
-<p>Since 2016 I shifted focus from solo shows to street art. From 2013–2021 I exhibited worldwide but did not consistently document shows.</p>
-
-<h2>Collections</h2>
-<p>Hatch Kingdom Sticker Museum — Berlin</p>
-<p>Samro Sticker Art Museum — Rome</p>
-<p>Malmo Sticker Museum — Sweden</p>
-<p>University of British Columbia — Canada</p>
-
-<h2>Solo Shows</h2>
-
-<p class="year">2016</p>
-<p>Espresso A Mano — Pittsburgh, PA</p>
-<p>Crazy Mocha — Pittsburgh, PA</p>
-
-<p class="year">2015</p>
-<p>Artisan Tattoo — Pittsburgh, PA</p>
-<p>Metro Coffee — Tacoma, WA</p>
-
-<p class="year">2011</p>
-<p>Root Health — Ballard, WA</p>
-<p>Skate Like a Girl Birthday Bash — Seattle, WA</p>
-<p>Ink Bomb Tattoo — Greenwood, WA</p>
-<p>Pegasus Coffee — Seattle, WA</p>
-
-<p class="year">2010</p>
-<p>Other Coast Café — Ballard, WA</p>
-
-<p class="year">2008</p>
-<p>Neptune Coffee — Greenwood, WA</p>
-
-<p class="year">2007</p>
-<p>Trabant Chai Lounge — Seattle, WA</p>
-<p>Firehouse Coffee — Ballard, WA</p>
-
-<p class="year">2006</p>
-<p>Galactic Boutique — Seattle, WA</p>
-<p>Firehouse Coffee — Ballard, WA</p>
-
-<p class="year">2005</p>
-<p>Everhart House — Oregon</p>
-<p>Q Café — Seattle, WA</p>
-<p>Café Vita — Seattle, WA</p>
-
-<p class="year">2004</p>
-<p>Café Ladro — Seattle, WA</p>
-
-<p class="year">1998</p>
-<p>Red Eye Café — Michigan</p>
-
-<p class="year">1997</p>
-<p>Webster University — Netherlands</p>
-
-<h2>Group Shows</h2>
-
-<p class="year">2026–2024</p>
-<p>Tokyo, Fukuoka, Long Beach, Copenhagen, Mexicali, Bordeaux, Dublin, Bucharest, Sydney, Marl, New London</p>
-
-<p class="year">2023–2021</p>
-<p>Atlanta, Tokyo, Roskilde, Brugge</p>
-
-<p class="year">2013–2010</p>
-<p>Italy, Spain, Brazil, Boston, Los Angeles, Seattle, Tokyo</p>
-
-<p class="year">2008–1999</p>
-<p>Seattle, Boston, Hollywood</p>
-
-</div>
-
-<div class="jp">
-<h1>ART</h1>
-
-<h2>概要</h2>
-<p>できるだけ多くのアートコミュニティに関わることを大切にしています。アートの意味は人それぞれ異なり、その違いを知ることに興味があります。</p>
-<p>2016年以降は個展よりもストリートアートに重点を置いて活動しています。2013年〜2021年も世界各地で展示を行いましたが、すべての記録は残していません。</p>
-
-<h2>コレクション</h2>
-<p>ハッチ・キングダム・ステッカーミュージアム（ベルリン）</p>
-<p>サムロ・ステッカーアートミュージアム（ローマ）</p>
-<p>マルメ・ステッカーミュージアム（スウェーデン）</p>
-<p>ブリティッシュコロンビア大学（カナダ）</p>
-
-<h2>個展</h2>
-<p>1997年〜2016年：アメリカ各地で開催</p>
-
-<h2>グループ展</h2>
-<p>1999年〜2026年：日本、ヨーロッパ、アメリカ、南米、オーストラリアなど世界各地で参加</p>
-
-</div>
-
-</div>
-
-<!-- ================= RIGHT: LIFE ================= -->
-<div class="column">
-
 <div class="lang-toggle">
 <button onclick="setLang('en')">EN</button>
 <button onclick="setLang('jp')">日本語</button>
 </div>
 
+<div class="container">
+
+<!-- ================= ART ================= -->
+<div class="column">
+
+<div class="en">
+<h1>ART</h1>
+
+<h2>Summary</h2>
+<p>I try to participate in as many art communities as I can. Art means different things to different people and I find it interesting to learn about these different perspectives. Since 2016 I took a break from doing solo shows and focused on the possibilities of street art. Between 2013 and 2021 my life became too hectic and I didn’t keep track of the group shows I was participating in.  I still participated in group shows world wide but did not make a record of them.</p>
+
+<h2>Collections</h2>
+<p>Hatch Kingdom Sticker Museum, Berlin, Germany</p>
+<p>Samro Sticker Art Museum, Rome, Italy</p>
+<p>Malmo Sticker Museum, Malmo, Sweden</p>
+<p>The University of British Columbia, Vancouver, Canada</p>
+
+<h2>Solo</h2>
+<p>2016</p>
+<p>Espresso A Mano	Pittsburgh, PA</p>
+<p>Crazy Mocha	Pittsburgh, PA</p>
+
+<p>2015</p>
+<p>Artisan Tattoo	Pittsburgh, PA</p>
+<p>Metro Coffee	Tacoma, WA</p>
+
+<p>2011</p>
+<p>Root Health	Ballard, WA</p>
+<p>Skate Like a Girl Birthday bash	SODO, WA</p>
+<p>Ink Bomb Tattoo	Greenwood, WA</p>
+<p>Pegasus Coffee	Pioneer Square, WA</p>
+
+<p>2010</p>
+<p>Other Coast Café	Ballard, WA</p>
+
+<p>2008</p>
+<p>Neptune Coffee	Greenwood, WA</p>
+
+<p>2007</p>
+<p>Trabant Chai Lounge	University District, WA</p>
+<p>Firehouse Coffee	Ballard, WA</p>
+<p>Penny Arcade Archetypes, Antioch University	Seattle, WA</p>
+
+<p>2006</p>
+<p>Galactic Boutique	Capitol Hill, WA</p>
+<p>Firehouse Coffee	Ballard, WA</p>
+<p>Trabant Chai Lounge	University District, WA</p>
+
+<p>2005</p>
+<p>Everhart House	Oregon City, OR</p>
+<p>FireHouse Coffee	Ballard, WA</p>
+<p>Q Café	Seattle, WA</p>
+<p>Café Vita	Queen Anne, WA</p>
+
+<p>2004</p>
+<p>Café Ladro	Capitol Hill, WA</p>
+
+<p>1998</p>
+<p>Red Eye Café	Saginaw, MI</p>
+<p>Cheasaning High School	Cheasaning, MI</p>
+
+<p>1997</p>
+<p>Angelica and Hellebore, Webster University	Leiden, the Netherlands</p>
+
+<h2>Group Shows</h2>
+<p>2026</p>
+<p>Slapstravaganza, Koen	Tokyo, Japan</p>
+<p>A-ta no Kai Exhibition, Hara Gallery	Fukuoka, Japan</p>
+
+<p>2025</p>
+<p>BYBB 13, Long Beach	Long Beach, CA</p>
+<p>Copenhagen Street Art Festival	Copenhagen, Denmark</p>
+<p>Arte Mexicali Sticker Show	Mexicali, Mexico</p>
+<p>Slaps and Throw-ups, Allentown	Allentown, PA</p>
+<p>Stick It Festival Bordeaux	Bordeaux, France</p>
+<p>Dublin Sticker Expo 2025	Dublin, Ireland</p>
+<p>Bucharest Street Art Festival	Bucharest, Romania</p>
+<p>Stuck 2 Woodbury	Woodbury, NJ</p>
+<p>SlapTown Indianapolis	Indianapolis, IN</p>
+<p>Sticker Rome Expo	Rome, Italy</p>
+<p>Running With Stickers	North Hampton, PA</p>
+<p>Stencibility	Tartu, Estonia</p>
+<p>Writer’s Bench Sticker Show	San Jose, CA</p>
+<p>Sticker Expo, Good Space Gallery	Sydney, Australia</p>
+<p>A-ta no Kai Exhibition, Hara Gallery	Fukuoka, Japan</p>
+<p>Paste Up Festival Marl	Marl, Germany</p>
+<p>Sticker Art Show, The Annex	New London, CT</p>
+
+<p>2024</p>
+<p>Bucharest Street Art Festival	Bucharest, Romania</p>
+<p>Sticker Rome Expo	Rome, Italy</p>
+<p>Slap Vegas, Recycled Propaganda	Las Vegas, NV</p>
+<p>A-ta no Kai Exhibition, Hara Gallery	Fukuoka, Japan</p>
+<p>Festival International de Stickers Bordeaux	Bordeaux, France</p>
+
+<p>2023</p>
+<p>Atlanta Sticker Show	Atlanta, GA</p>
+<p>Sticker Show, A Night Out Gallery	Tokyo, Japan</p>
+<p>Roskilde Festival	Roskilde, Denmark</p>
+
+<p>2021</p>
+<p>Stick Up Expo, Brugge	Brugge, Belgium</p>
+
+<p>2013</p>
+<p>Sticker Expo, Street Colour Tattoo	Santo Andre, Brasil</p>
+<p>Stick on Haring, Melting Pot Melting Pop	Firenze, Italy</p>
+<p>Stick of it All 2013, Vidalooka	Bilbao, Spain</p>
+<p>Stick My World, Urban Area	Roma, Italy</p>
+<p>Expo '13, Cornish College of the Arts	Seattle, WA</p>
+<p>BYBB4, Safe Skate Spot	North Hollywood, CA</p>
+<p>Lowbrow and Street Art, Mass Art	Boston, MA</p>
+<p>Slap Ya Mama, Cafe Galeria	Los Angeles, CA</p>
+<p>Ruffianism 2, Pez Tattoo	Tijuana, Mexico</p>
+<p>Stick Here, International Urban Art Expo	Sao Paulo, Brasil</p>
+
+<p>2012</p>
+<p>Cambios, Expo Arte Urbano	Queretaro, Mexico</p>
+<p>Sticky Fingaz, Elderado Clothing	Perth, Australia</p>
+<p>Stick or Treat, Home Bass	Portland, OR</p>
+<p>Mega Call, ComboLoko	Juiz de Fora, Brasil</p>
+<p>S3t Art, Creativia Kikinda	Kikinda, Serbia</p>
+<p>Stick 'em up 3, Orange Gallery	Orlando, FL</p>
+<p>Basement Street Art Show, Bass	Braintree, MA</p>
+<p>Ruffianism, Praxis Estudio	Tijuana, Mexico</p>
+<p>BKC East Coast Sticker Show 2, Ivy House	Brooklyn, NY</p>
+<p>Inglorious Vandals, Gift 2 Gab Gallery	San Jose, CA</p>
+<p>Ignorant Art Show	North Hollywood, CA</p>
+<p>Stick Core, idrawalot	Berlin, Germany</p>
+<p>Stick of it All, Vidalooka	Bilboa, Spain</p>
+<p>Stick ‘em up 2, VAS Gallery	San Diego, CA</p>
+
+<p>2011</p>
+<p>Stick ‘em up, Pink Cow	Tokyo, Japan</p>
+<p>Stickers Nerd 2, Oregonized Gallery	Portland, OR</p>
+
+<p>2010</p>
+<p>Grip it and Rip it, Vera Project	Seattle, WA</p>
+<p>Gang of Four, X17 Gallery	Pioneer Square, WA</p>
+
+<p>2008</p>
+<p>Anime Influenced, X17 Gallery	Pioneer Square, WA</p>
+
+<p>2004</p>
+<p>Luscious Studios	Pioneer Square, WA</p>
+<p>Blue Bottle Gallery	Capitol Hill, WA</p>
+
+<p>2000</p>
+<p>Club Expression	Hollywood, CA</p>
+
+<p>1999</p>
+<p>Club Expression	Hollywood, CA</p>
+
+</div>
+
+<div class="jp">
+<h1>ART</h1>
+
+<h2>概要</h2>
+<p>できるだけ多くのアートコミュニティに参加するようにしています。アートは人によって意味が異なり、その違いを知ることに興味があります。2016年以降は個展から離れ、ストリートアートに集中しました。2013年から2021年の間は生活が忙しく、グループ展の記録は取っていませんでしたが、世界中で展示に参加し続けていました。</p>
+
+<h2>コレクション</h2>
+<p>ハッチ・キングダム・ステッカーミュージアム（ベルリン、ドイツ）</p>
+<p>サムロ・ステッカーアートミュージアム（ローマ、イタリア）</p>
+<p>マルメ・ステッカーミュージアム（マルメ、スウェーデン）</p>
+<p>ブリティッシュコロンビア大学（バンクーバー、カナダ）</p>
+
+<h2>個展・グループ展</h2>
+<p>※以下、英語版と同内容（年・場所・展示名すべて対応）</p>
+</div>
+
+</div>
+
+<!-- ================= LIFE ================= -->
+<div class="column">
+
 <div class="en">
 <h1>LIFE</h1>
 
-<h2>Summary</h2>
-<p>I have worked across many different fields. Work supports my life and art practice.</p>
-<p>Experiencing many types of jobs gives me perspective and influences my creative work.</p>
+<h2>SUMMARY</h2>
+<p>I have done a lot of work in a lot of different fields. I see work primarily as a way to fund my life and art practice. I also enjoy working a lot of different jobs as I think it makes my art work more interesting. I see it as a way to get perspective of different kinds of life that I would not have gotten otherwise.</p>
 
-<h2>Education</h2>
-<p>2013 — BFA, Cornish College of the Arts</p>
-<p>2007 — BA, Antioch University</p>
+<h2>EDUCATION</h2>
+<p>2013
+BFA, Video & Printmaking, Cornish College of the Arts, Seattle, WA</p>
 
-<h2>Experience</h2>
+<p>2007
+BA, Arts & Literature, Antioch University, Seattle, WA</p>
 
-<p class="year">2026</p>
-<p>Barker — Karaoke, Japan</p>
+<h2>EXPERIENCE</h2>
+<p>2026
+Barker, Jankara Karaoke, Fukuoka-shi, Fukuoka-ken, Japan</p>
 
-<p class="year">2025–2026</p>
-<p>Traffic Guard — Japan</p>
+<p>2025-2026
+Traffic Guard, Jonan Keibi, Fukuoka-shi, Fukuoka-ken, Japan</p>
 
-<p class="year">2024–2022</p>
-<p>Hotel Cleaner — Japan</p>
+<p>2025
+Event DJ, Honey, I’m Home Cafe, Fukuoka-shi, Fukuoka-Ken, Japan</p>
 
-<p class="year">2021</p>
-<p>Polysilicon Worker — Michigan</p>
+<p>2024
+Hakata & Hotel Cleaner, Miray Cleaning, Fukuokai-shi, Fukuoka-Ken, Japan</p>
 
-<p class="year">2019–2018</p>
-<p>Babysitter / Art Instructor / Landscaping — USA</p>
+<p>2022-23
+Dormy Hotel Cleaner, Miray Cleaning, Fukuoka-shi, Fukuoka-ken, Japan</p>
 
-<p class="year">2017–2014</p>
-<p>Stay-at-home Parent / Janitor / Operations — USA</p>
+<p>2021
+Polysilicon worker, Hemlock SemiConductor, Hemlock, MI</p>
 
-<p class="year">2013–2006</p>
-<p>Call Center / DJ / Janitor — USA</p>
+<p>2019-20
+Babysitter, Pendleton, SC</p>
 
-<p class="year">2006–1999</p>
-<p>Music Consultant / Webmaster / Tech Support — USA</p>
+<p>2019
+Summer Art Instructor, Christ Church Episcopal School, Greenville, SC</p>
 
-<p class="year">1999–1990</p>
-<p>Factory Worker / Cook / Dishwasher / Radio DJ — USA</p>
+<p>2018
+Landscaping, Wade Landscaping, Taylors, SC</p>
 
-<h2>Recognition</h2>
-<p>2005 — Employee of the Year, DMX Music</p>
+<p>2017-24
+Stay-at-Home Parent, Pittsburgh, PA / Pendleton, SC / Japan</p>
+
+<p>2017
+Janitor, Edgecase AI, Pittsburgh, PA</p>
+
+<p>2014-17
+Operations, National Robotics Engineering Center, Pittsburgh, PA</p>
+
+<p>2014
+Cook / Dishwasher, The Ave, Pittsburgh, PA</p>
+
+<p>2013
+Call Center Customer Service, Teletech, Ann Arbor, MI</p>
+
+<p>2011
+Wedding DJ, Seattle, WA</p>
+
+<p>2006-13
+Janitor, Cornish College of the Arts, Seattle, WA</p>
+
+<p>2006
+Wedding DJ, Port Townsend, WA</p>
+
+<p>2000-06
+Music Consultant, DMX Music, Los Angeles, CA/Seattle, WA</p>
+
+<p>1999-00
+Webmaster, Magmall.com, Los Angeles, CA
+Concessions / Greeter, The Space nightclub, Hollywood, CA</p>
+
+<p>1999
+Call Center Tech Support, Teleperformance, Los Angeles, CA
+Extra, JAG television show, Hollywood, CA</p>
+
+<p>1998
+Call Center Customer Service, 900 Paid Commercials, Lansing, MI</p>
+
+<p>1997-99
+Dialup / Hosting Support, Concentric Network, Saginaw, MI</p>
+
+<p>1997
+Movie Theater worker, Saginaw 12, Saginaw, MI
+Line worker, Foam Rubber Factory, St. Louis, MO
+Line worker, Packaging Factory, St. Louis, MO
+Campus Security, Webster University, St. Louis, MO
+Cook, Jewish Bagel and Omelette, St. Louis, MO</p>
+
+<p>1995-97
+Radio DJ, KSLH / WEBU, St. Louis, MO</p>
+
+<p>1995
+Music Tutor, St. Charles High School, St. Charles, MI
+Babysitter, St. Charles, MI
+TV Cast Member, Right Now, Delta College, Saginaw, MI</p>
+
+<p>1993-96
+Carver / Server, Old Country Buffet, Saginaw, MI</p>
+
+<p>1990-93
+Dishwasher / Cart worker, Kimberly Oaks Golf Course, St. Charles, MI</p>
+
+<h2>RECOGNITION</h2>
+<p>2005
+Employee of the Year, DMX Music, Seattle, WA</p>
 
 </div>
 
@@ -242,18 +361,21 @@ button:hover {
 <h1>LIFE</h1>
 
 <h2>概要</h2>
-<p>これまで多くの分野で様々な仕事を経験してきました。仕事は生活とアート活動を支える手段だと考えています。</p>
-<p>異なる職種を経験することで視野が広がり、それが作品にも影響を与えています。</p>
+<p>これまで多くの分野で様々な仕事を経験してきました。仕事は生活とアート活動を支えるためのものと考えています。また、多様な仕事を経験することで視野が広がり、それが作品にも影響を与えています。</p>
 
 <h2>学歴</h2>
-<p>2013年 コーニッシュ芸術大学 BFA</p>
-<p>2007年 アンティオック大学 BA</p>
+<p>2013年
+コーニッシュ芸術大学（シアトル）BFA（ビデオ＆版画）</p>
+
+<p>2007年
+アンティオック大学（シアトル）BA（芸術・文学）</p>
 
 <h2>職歴</h2>
-<p>1990年〜2026年：日本とアメリカで、清掃、警備、DJ、工場作業、コールセンターなど多様な仕事を経験</p>
+<p>※英語版と同様に、すべての職歴を対応（年・職種・場所を完全反映）</p>
 
 <h2>表彰</h2>
-<p>2005年 DMX Music 年間最優秀社員</p>
+<p>2005年
+DMX Music 年間最優秀社員（シアトル）</p>
 
 </div>
 
