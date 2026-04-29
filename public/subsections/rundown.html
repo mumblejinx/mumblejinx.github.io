@@ -27,6 +27,7 @@ body {
 
 /* Mobile stays side-by-side */
 @media (max-width: 768px) {
+
     .column {
         width: 50%;
         padding: 20px 12px;
@@ -36,6 +37,18 @@ body {
 
     h1 { font-size: 14px; }
     h2 { font-size: 12px; }
+
+    /* Stack language buttons */
+    .lang-toggle {
+        display: flex;
+        flex-direction: column;
+        top: 10px;
+        right: 10px;
+    }
+
+    .lang-toggle button {
+        margin: 3px 0;
+    }
 }
 
 /* Typography */
@@ -59,6 +72,15 @@ p {
     top: 20px;
     right: 20px;
     z-index: 1000;
+
+    /* NEW: transparency + smooth transition */
+    opacity: 0.4;
+    transition: opacity 0.25s ease;
+}
+
+/* Hover effect */
+.lang-toggle:hover {
+    opacity: 1;
 }
 
 button {
@@ -82,7 +104,7 @@ button:hover {
 <body>
 
 <div class="lang-toggle">
-<button onclick="setLang('en')">EN</button>
+<button onclick="setLang('en')">English</button>
 <button onclick="setLang('jp')">日本語</button>
 </div>
 
@@ -119,8 +141,6 @@ button:hover {
 <p>Ink Bomb Tattoo	Greenwood, WA</p>
 <p>Pegasus Coffee	Pioneer Square, WA</p>
 
-<!-- (rest unchanged but with .year applied similarly) -->
-
 </div>
 
 <div class="jp">
@@ -151,20 +171,6 @@ button:hover {
 <p>インク・ボム・タトゥー　ワシントン州グリーンウッド</p>
 <p>ペガサス・コーヒー　ワシントン州パイオニアスクエア</p>
 
-<!-- continue same pattern for ALL entries -->
-
-<h2>グループ展</h2>
-
-<p class="year">2026年</p>
-<p>スラップストラバガンザ、コーエン　日本・東京</p>
-<p>A-ta no Kai 展覧会、原ギャラリー　日本・福岡</p>
-
-<p class="year">2025年</p>
-<p>BYBB 13、ロングビーチ　カリフォルニア州ロングビーチ</p>
-<p>コペンハーゲン・ストリートアートフェスティバル　デンマーク・コペンハーゲン</p>
-
-<!-- continue full translation -->
-
 </div>
 
 </div>
@@ -186,13 +192,6 @@ button:hover {
 <p class="year">2007</p>
 <p>BA, Arts & Literature, Antioch University, Seattle, WA</p>
 
-<h2>EXPERIENCE</h2>
-
-<p class="year">2026</p>
-<p>Barker, Jankara Karaoke, Fukuoka-shi, Japan</p>
-
-<!-- continue -->
-
 </div>
 
 <div class="jp">
@@ -208,27 +207,6 @@ button:hover {
 
 <p class="year">2007年</p>
 <p>BA（芸術・文学）、アンティオック大学（アメリカ・シアトル）</p>
-
-<h2>職歴</h2>
-
-<p class="year">2026年</p>
-<p>呼び込みスタッフ、ジャンカラカラオケ、福岡市（日本）</p>
-
-<p class="year">2025年〜2026年</p>
-<p>交通誘導員、城南警備、福岡市（日本）</p>
-
-<p class="year">2025年</p>
-<p>イベントDJ、Honey, I’m Home Cafe、福岡市（日本）</p>
-
-<p class="year">2024年</p>
-<p>ホテル清掃・博多エリア、ミレイクリーニング、福岡市（日本）</p>
-
-<!-- continue full translation for ALL jobs -->
-
-<h2>表彰</h2>
-
-<p class="year">2005年</p>
-<p>年間最優秀社員、DMX Music、アメリカ・シアトル</p>
 
 </div>
 
