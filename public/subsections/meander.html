@@ -1,17 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meander - Work</title>
-    <style>
-        body { background-color: black; color: white; font-family: sans-serif; padding: 20px; }
-        h1 { color: #8bc34a; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meander - Work</title>
+
+<style>
+body {
+    margin: 0;
+    background-color: black;
+    color: white;
+    font-family: sans-serif;
+}
+
+/* Layout container */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Left image (desktop) */
+.left {
+    width: 40%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-image: url('meander/meandernew.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Right text (desktop) */
+.right {
+    margin-left: 40%;
+    width: 60%;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* Typography */
+h1 {
+    color: #8bc34a;
+    margin-top: 0;
+}
+
+p {
+    line-height: 1.5;
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+
+    .container {
+        display: block;
+        height: auto;
+    }
+
+    .left {
+        position: relative;
+        width: 100%;
+        height: 50vh;
+    }
+
+    .right {
+        margin-left: 0;
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+}
+</style>
 </head>
+
 <body>
-    <h1>MEANDER</h1>
-    <p>This is the MEANDER subsection of the WORK section.</p>
-    <p>Placeholder content for experimental and personal work.</p>
+
+<div class="container">
+
+    <div class="left"></div>
+
+    <div class="right">
+        <h1>MEANDER</h1>
+        <p>This is the MEANDER subsection of the WORK section.</p>
+        <p>Placeholder content for experimental and personal work.</p>
+    </div>
+
+</div>
+
 </body>
 </html>
