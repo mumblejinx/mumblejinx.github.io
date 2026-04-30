@@ -19,17 +19,21 @@ body {
     height: 100vh;
 }
 
-/* Left image (desktop) */
+/* Left side (image container) */
 .left {
     width: 40%;
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    background-image: url('meander/meandernew.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Image styling */
+.left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* fills space cleanly */
 }
 
 /* Right text (desktop) */
@@ -63,7 +67,13 @@ p {
     .left {
         position: relative;
         width: 100%;
-        height: 50vh;
+        height: auto;
+    }
+
+    .left img {
+        width: 100%;
+        height: auto;
+        object-fit: contain; /* ensures full image is visible */
     }
 
     .right {
@@ -80,7 +90,9 @@ p {
 
 <div class="container">
 
-    <div class="left"></div>
+    <div class="left">
+        <img src="public/subsections/meander/meandernew.jpg" alt="Meander Image">
+    </div>
 
     <div class="right">
         <h1>MEANDER</h1>
