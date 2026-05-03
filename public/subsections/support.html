@@ -24,6 +24,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* remove link styling globally */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* --- MODULE GRID --- */
 .modules {
   display: grid;
@@ -39,7 +45,7 @@ body {
 
 .module {
   position: relative;
-  height: 72vh; /* ⬅️ 20% taller feel */
+  height: 72vh;
   border: 1px solid white;
   display: flex;
   flex-direction: column;
@@ -51,19 +57,19 @@ body {
   background: black;
 }
 
-/* LABEL */
+/* LABEL (top-left) */
 .module-label {
   position: absolute;
   top: 20px;
   left: 20px;
   font-size: 11px;
   letter-spacing: 2px;
-  opacity: 0.3;
+  color: rgba(255,255,255,0.25); /* ✅ back to subtle grey */
 }
 
 /* ICON */
 .module svg {
-  width: 90px;   /* ⬅️ bigger icons */
+  width: 90px;
   height: 90px;
   stroke: var(--brand-lime);
   stroke-width: 1.5;
@@ -76,12 +82,17 @@ body {
 .module h2 {
   font-size: 26px;
   letter-spacing: 3px;
+  color: white; /* ✅ white by default */
 }
 
 /* HOVER STATE */
 .module:hover {
   background: var(--brand-lime);
   color: black;
+}
+
+.module:hover h2 {
+  color: black; /* ✅ black on hover */
 }
 
 .module:hover svg {
@@ -107,7 +118,7 @@ body {
   transform: translateY(0);
 }
 
-/* subtle dot detail */
+/* subtle dots */
 .module::before,
 .module::after {
   content: "";
@@ -128,9 +139,9 @@ body {
   top: 50%;
 }
 
-/* --- SUPPORT TEXT SECTION --- */
+/* --- SUPPORT SECTION --- */
 .support {
-  padding: 120px 20px;
+  padding: 90px 20px 120px; /* ✅ reduced top padding (moves content up ~30px) */
   text-align: center;
   border-top: 1px solid white;
 }
@@ -164,14 +175,12 @@ body {
 
 <body>
 
-<!-- MODULES -->
 <div class="modules">
 
   <!-- ETSY -->
   <a href="#" target="_blank" class="module">
     <div class="module-label">MODULE_01 // SHOP</div>
 
-    <!-- STORE ICON (Lucide-style SVG) -->
     <svg viewBox="0 0 24 24">
       <path d="M3 9l1-5h16l1 5"></path>
       <path d="M4 9h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
@@ -179,7 +188,6 @@ body {
     </svg>
 
     <h2>ETSY</h2>
-
     <div class="module-action">ACCESS_REPOSITORY →</div>
   </a>
 
@@ -187,7 +195,6 @@ body {
   <a href="#" target="_blank" class="module">
     <div class="module-label">MODULE_02 // LOGISTICS</div>
 
-    <!-- BOX ICON -->
     <svg viewBox="0 0 24 24">
       <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
       <path d="M3.3 7l8.7 5 8.7-5"></path>
@@ -195,7 +202,6 @@ body {
     </svg>
 
     <h2>AMAZON</h2>
-
     <div class="module-action">VIEW_CATALOG →</div>
   </a>
 
@@ -203,19 +209,16 @@ body {
   <a href="#" target="_blank" class="module">
     <div class="module-label">MODULE_03 // APPAREL</div>
 
-    <!-- SHIRT ICON -->
     <svg viewBox="0 0 24 24">
       <path d="M20 7l-4-3-2 2h-4l-2-2-4 3v3h2v10h12V10h2z"></path>
     </svg>
 
     <h2>THREADLESS</h2>
-
     <div class="module-action">BROWSE_COLLECTION →</div>
   </a>
 
 </div>
 
-<!-- SUPPORT TEXT -->
 <section class="support">
   <div class="support-tag">EAT UP // DIGITAL MARKETPLACE</div>
   <h1>SUPPORT</h1>
