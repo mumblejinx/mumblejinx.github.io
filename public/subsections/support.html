@@ -6,228 +6,224 @@
 <title>Support</title>
 
 <style>
+:root {
+  --brand-black: #000;
+  --brand-lime: #8bc34a;
+  --text-white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    background: black;
-    color: white;
-    font-family: sans-serif;
+  background: var(--brand-black);
+  color: var(--text-white);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ===== TOP OFFSET (IMPORTANT) ===== */
-.top-spacer {
-    height: 60px;
-}
-
-/* ===== MODULE GRID ===== */
+/* --- MODULE GRID --- */
 .modules {
-    display: flex;
-    height: 55vh;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 50px;
 }
 
-/* ===== MODULE BLOCK ===== */
+@media (min-width: 768px) {
+  .modules {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .module {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    text-align: center;
-    border-right: 1px solid white;
-    cursor: pointer;
-    transition: all 0.4s ease;
+  position: relative;
+  height: 72vh; /* ⬅️ 20% taller feel */
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  overflow: hidden;
+  background: black;
 }
 
-.module:last-child {
-    border-right: none;
-}
-
-/* ===== LABEL (top left faint text) ===== */
+/* LABEL */
 .module-label {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: rgba(255,255,255,0.2);
-    transition: color 0.3s ease;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  opacity: 0.3;
 }
 
-/* ===== ICON ===== */
+/* ICON */
 .module svg {
-    width: 60px;
-    height: 60px;
-    stroke: #8bc34a;
-    stroke-width: 1.5;
-    fill: none;
-    margin-bottom: 20px;
-    transition: all 0.4s ease;
+  width: 90px;   /* ⬅️ bigger icons */
+  height: 90px;
+  stroke: var(--brand-lime);
+  stroke-width: 1.5;
+  fill: none;
+  margin-bottom: 20px;
+  transition: all 0.4s ease;
 }
 
-/* ===== TITLE ===== */
+/* TITLE */
 .module h2 {
-    font-size: 28px;
-    letter-spacing: 2px;
-    font-weight: bold;
-    transition: color 0.3s ease;
+  font-size: 26px;
+  letter-spacing: 3px;
 }
 
-/* ===== HOVER ===== */
+/* HOVER STATE */
 .module:hover {
-    background: #8bc34a;
-}
-
-.module:hover h2 {
-    color: black;
+  background: var(--brand-lime);
+  color: black;
 }
 
 .module:hover svg {
-    stroke: black;
-    transform: scale(1.1);
+  stroke: black;
+  transform: scale(1.1);
 }
 
-.module:hover .module-label {
-    color: rgba(0,0,0,0.4);
+/* --- HIDDEN ACTION TEXT --- */
+.module-action {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+  font-weight: bold;
 }
 
-/* ===== SUPPORT TEXT SECTION ===== */
-.support-section {
-    text-align: center;
-    padding: 80px 20px;
-    border-bottom: 1px solid white;
+.module:hover .module-action {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.tag {
-    display: inline-block;
-    border: 1px solid #8bc34a;
-    color: #8bc34a;
-    padding: 6px 12px;
-    font-size: 10px;
-    letter-spacing: 3px;
-    margin-bottom: 30px;
+/* subtle dot detail */
+.module::before,
+.module::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  opacity: 0.2;
 }
 
-.support-section h1 {
-    color: #8bc34a;
-    font-size: 48px;
-    letter-spacing: 6px;
-    margin-bottom: 30px;
+.module::before {
+  left: 20px;
+  top: 50%;
 }
 
-.support-section p {
-    max-width: 700px;
-    margin: 0 auto;
-    color: rgba(255,255,255,0.7);
-    font-size: 18px;
-    line-height: 1.6;
-    font-style: italic;
+.module::after {
+  right: 20px;
+  top: 50%;
 }
 
-.divider {
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+/* --- SUPPORT TEXT SECTION --- */
+.support {
+  padding: 120px 20px;
+  text-align: center;
+  border-top: 1px solid white;
 }
 
-.divider-line {
-    width: 60px;
-    height: 1px;
-    background: rgba(255,255,255,0.2);
+.support-tag {
+  display: inline-block;
+  border: 1px solid var(--brand-lime);
+  color: var(--brand-lime);
+  padding: 6px 12px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
 }
 
-.divider-text {
-    font-size: 10px;
-    letter-spacing: 5px;
-    color: rgba(255,255,255,0.5);
+.support h1 {
+  color: var(--brand-lime);
+  font-size: 48px;
+  letter-spacing: 6px;
+  margin-bottom: 20px;
 }
 
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-    .modules {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .module {
-        height: 200px;
-        border-right: none;
-        border-bottom: 1px solid white;
-    }
-
-    .module:last-child {
-        border-bottom: none;
-    }
+.support p {
+  max-width: 700px;
+  margin: auto;
+  opacity: 0.7;
+  font-style: italic;
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="top-spacer"></div>
-
 <!-- MODULES -->
 <div class="modules">
 
-    <!-- ETSY -->
-    <div class="module" onclick="window.open('#','_blank')">
-        <div class="module-label">MODULE_01 // SHOP</div>
+  <!-- ETSY -->
+  <a href="#" target="_blank" class="module">
+    <div class="module-label">MODULE_01 // SHOP</div>
 
-        <svg viewBox="0 0 24 24">
-            <path d="M3 9h18l-1 10H4L3 9z"/>
-            <path d="M7 9V6a5 5 0 0 1 10 0v3"/>
-        </svg>
+    <!-- STORE ICON (Lucide-style SVG) -->
+    <svg viewBox="0 0 24 24">
+      <path d="M3 9l1-5h16l1 5"></path>
+      <path d="M4 9h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+      <path d="M9 22V12h6v10"></path>
+    </svg>
 
-        <h2>ETSY</h2>
-    </div>
+    <h2>ETSY</h2>
 
-    <!-- AMAZON -->
-    <div class="module" onclick="window.open('#','_blank')">
-        <div class="module-label">MODULE_02 // LOGISTICS</div>
+    <div class="module-action">ACCESS_REPOSITORY →</div>
+  </a>
 
-        <svg viewBox="0 0 24 24">
-            <path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/>
-        </svg>
+  <!-- AMAZON -->
+  <a href="#" target="_blank" class="module">
+    <div class="module-label">MODULE_02 // LOGISTICS</div>
 
-        <h2>AMAZON</h2>
-    </div>
+    <!-- BOX ICON -->
+    <svg viewBox="0 0 24 24">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+      <path d="M3.3 7l8.7 5 8.7-5"></path>
+      <path d="M12 22V12"></path>
+    </svg>
 
-    <!-- THREADLESS -->
-    <div class="module" onclick="window.open('#','_blank')">
-        <div class="module-label">MODULE_03 // APPAREL</div>
+    <h2>AMAZON</h2>
 
-        <svg viewBox="0 0 24 24">
-            <path d="M16 3l5 5-3 2v10H6V10L3 8l5-5 4 2 4-2z"/>
-        </svg>
+    <div class="module-action">VIEW_CATALOG →</div>
+  </a>
 
-        <h2>THREADLESS</h2>
-    </div>
+  <!-- THREADLESS -->
+  <a href="#" target="_blank" class="module">
+    <div class="module-label">MODULE_03 // APPAREL</div>
+
+    <!-- SHIRT ICON -->
+    <svg viewBox="0 0 24 24">
+      <path d="M20 7l-4-3-2 2h-4l-2-2-4 3v3h2v10h12V10h2z"></path>
+    </svg>
+
+    <h2>THREADLESS</h2>
+
+    <div class="module-action">BROWSE_COLLECTION →</div>
+  </a>
 
 </div>
 
 <!-- SUPPORT TEXT -->
-<div class="support-section">
-
-    <div class="tag">EAT UP // DIGITAL MARKETPLACE</div>
-
-    <h1>SUPPORT</h1>
-
-    <p>
-        "While the creation of art remains a deeply spiritual and conceptual journey for me,
-        the mechanics of existence are far more practical. Every print purchased, every shirt worn,
-        and every book ordered directly fuels the vision."
-    </p>
-
-    <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-text">STAY_HUNGRY</div>
-        <div class="divider-line"></div>
-    </div>
-
-</div>
+<section class="support">
+  <div class="support-tag">EAT UP // DIGITAL MARKETPLACE</div>
+  <h1>SUPPORT</h1>
+  <p>
+    "While the creation of art remains a deeply spiritual and conceptual journey,
+    the mechanics of existence are far more practical. Every purchase fuels the next evolution."
+  </p>
+</section>
 
 </body>
 </html>
