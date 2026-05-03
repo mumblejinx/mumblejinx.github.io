@@ -5,186 +5,229 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Support</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
 body {
+    margin: 0;
     background: black;
     color: white;
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    animation: fadeIn 1s ease;
+    font-family: sans-serif;
 }
 
-/* TYPOGRAPHY SYSTEM */
-.headline-lg {
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
+/* ===== TOP OFFSET (IMPORTANT) ===== */
+.top-spacer {
+    height: 60px;
 }
 
-.headline-md {
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
+/* ===== MODULE GRID ===== */
+.modules {
+    display: flex;
+    height: 55vh;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
 }
 
-.label-caps {
-    font-size: 0.7rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
+/* ===== MODULE BLOCK ===== */
+.module {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    border-right: 1px solid white;
+    cursor: pointer;
+    transition: all 0.4s ease;
 }
 
-/* Fade */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.module:last-child {
+    border-right: none;
 }
 
-/* Module hover */
-.module:hover .icon {
-    transform: scale(1.1);
+/* ===== LABEL (top left faint text) ===== */
+.module-label {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.2);
+    transition: color 0.3s ease;
 }
 
-/* Image hover */
-.image-hover img {
-    transition: transform 0.7s ease, filter 0.7s ease;
-}
-.image-hover:hover img {
-    transform: scale(1.05);
-    filter: grayscale(0%);
+/* ===== ICON ===== */
+.module svg {
+    width: 60px;
+    height: 60px;
+    stroke: #8bc34a;
+    stroke-width: 1.5;
+    fill: none;
+    margin-bottom: 20px;
+    transition: all 0.4s ease;
 }
 
-/* Button */
-.button-hover:hover {
-    background-color: #8bc34a;
+/* ===== TITLE ===== */
+.module h2 {
+    font-size: 28px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+/* ===== HOVER ===== */
+.module:hover {
+    background: #8bc34a;
+}
+
+.module:hover h2 {
     color: black;
 }
 
-/* Pulse */
-.pulse {
-    animation: pulse 2s infinite;
+.module:hover svg {
+    stroke: black;
+    transform: scale(1.1);
 }
-@keyframes pulse {
-    0%,100% { opacity: 1; }
-    50% { opacity: 0.5; }
+
+.module:hover .module-label {
+    color: rgba(0,0,0,0.4);
+}
+
+/* ===== SUPPORT TEXT SECTION ===== */
+.support-section {
+    text-align: center;
+    padding: 80px 20px;
+    border-bottom: 1px solid white;
+}
+
+.tag {
+    display: inline-block;
+    border: 1px solid #8bc34a;
+    color: #8bc34a;
+    padding: 6px 12px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+}
+
+.support-section h1 {
+    color: #8bc34a;
+    font-size: 48px;
+    letter-spacing: 6px;
+    margin-bottom: 30px;
+}
+
+.support-section p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: rgba(255,255,255,0.7);
+    font-size: 18px;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.divider {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.divider-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+}
+
+.divider-text {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: rgba(255,255,255,0.5);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+    .modules {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .module {
+        height: 200px;
+        border-right: none;
+        border-bottom: 1px solid white;
+    }
+
+    .module:last-child {
+        border-bottom: none;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- MODULE ROW -->
-<section class="flex flex-col md:flex-row border-b border-white">
+<div class="top-spacer"></div>
 
-    <a href="#" target="_blank"
-       class="module flex-1 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-white min-h-[260px] hover:bg-[#8bc34a] transition duration-500">
+<!-- MODULES -->
+<div class="modules">
 
-        <div class="label-caps text-white/20 mb-6">MODULE_01 // SHOP</div>
+    <!-- ETSY -->
+    <div class="module" onclick="window.open('#','_blank')">
+        <div class="module-label">MODULE_01 // SHOP</div>
 
-        <div class="icon text-[#8bc34a] text-6xl mb-6 transition">
-            🛒
-        </div>
+        <svg viewBox="0 0 24 24">
+            <path d="M3 9h18l-1 10H4L3 9z"/>
+            <path d="M7 9V6a5 5 0 0 1 10 0v3"/>
+        </svg>
 
-        <h2 class="headline-md">ETSY</h2>
-    </a>
-
-    <a href="#" target="_blank"
-       class="module flex-1 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-white min-h-[260px] hover:bg-[#8bc34a] transition duration-500">
-
-        <div class="label-caps text-white/20 mb-6">MODULE_02 // LOGISTICS</div>
-
-        <div class="icon text-[#8bc34a] text-6xl mb-6 transition">
-            📦
-        </div>
-
-        <h2 class="headline-md">AMAZON</h2>
-    </a>
-
-    <a href="#" target="_blank"
-       class="module flex-1 flex flex-col items-center justify-center min-h-[260px] hover:bg-[#8bc34a] transition duration-500">
-
-        <div class="label-caps text-white/20 mb-6">MODULE_03 // APPAREL</div>
-
-        <div class="icon text-[#8bc34a] text-6xl mb-6 transition">
-            👕
-        </div>
-
-        <h2 class="headline-md">THREADLESS</h2>
-    </a>
-
-</section>
-
-<!-- SUPPORT STATEMENT -->
-<section class="py-24 px-6 text-center border-b border-white max-w-4xl mx-auto">
-
-    <div class="label-caps border border-[#8bc34a] text-[#8bc34a] px-4 py-1 mb-8 inline-block font-bold">
-        EAT UP // DIGITAL MARKETPLACE
+        <h2>ETSY</h2>
     </div>
 
-    <h1 class="headline-lg text-[#8bc34a] mb-8">
-        SUPPORT
-    </h1>
+    <!-- AMAZON -->
+    <div class="module" onclick="window.open('#','_blank')">
+        <div class="module-label">MODULE_02 // LOGISTICS</div>
 
-    <p class="text-white/80 text-lg leading-relaxed italic mb-10 max-w-2xl mx-auto">
-        "While the creation of art remains a deeply spiritual and conceptual journey for me, 
-        the mechanics of existence are far more practical. Every print purchased, every shirt worn, 
-        and every book ordered directly fuels the vision. Your support provides the momentum for new explorations."
+        <svg viewBox="0 0 24 24">
+            <path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/>
+        </svg>
+
+        <h2>AMAZON</h2>
+    </div>
+
+    <!-- THREADLESS -->
+    <div class="module" onclick="window.open('#','_blank')">
+        <div class="module-label">MODULE_03 // APPAREL</div>
+
+        <svg viewBox="0 0 24 24">
+            <path d="M16 3l5 5-3 2v10H6V10L3 8l5-5 4 2 4-2z"/>
+        </svg>
+
+        <h2>THREADLESS</h2>
+    </div>
+
+</div>
+
+<!-- SUPPORT TEXT -->
+<div class="support-section">
+
+    <div class="tag">EAT UP // DIGITAL MARKETPLACE</div>
+
+    <h1>SUPPORT</h1>
+
+    <p>
+        "While the creation of art remains a deeply spiritual and conceptual journey for me,
+        the mechanics of existence are far more practical. Every print purchased, every shirt worn,
+        and every book ordered directly fuels the vision."
     </p>
 
-    <div class="flex items-center justify-center gap-6">
-        <div class="w-16 h-px bg-white/20"></div>
-        <span class="label-caps text-white/60 tracking-[0.4em]">STAY_HUNGRY</span>
-        <div class="w-16 h-px bg-white/20"></div>
+    <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">STAY_HUNGRY</div>
+        <div class="divider-line"></div>
     </div>
 
-</section>
-
-<!-- TIP JAR -->
-<section class="grid grid-cols-1 md:grid-cols-2 border-b border-white">
-
-    <div class="image-hover h-[320px] md:h-auto overflow-hidden border-b md:border-b-0 md:border-r border-white">
-        <img src="https://images.unsplash.com/photo-1515405299443-410ced6152bc?q=80&w=1974&auto=format&fit=crop"
-             class="w-full h-full object-cover grayscale">
-    </div>
-
-    <div class="flex items-center justify-center p-12 lg:p-20">
-
-        <div class="text-center max-w-md">
-
-            <div class="flex justify-center items-center gap-3 mb-6">
-                <span class="text-[#8bc34a] pulse">❤</span>
-                <span class="label-caps text-[#8bc34a]">VOLUNTARY_EXCHANGE</span>
-            </div>
-
-            <h2 class="headline-md text-white mb-8">
-                DIGITAL_TIP_JAR
-            </h2>
-
-            <p class="text-white/60 text-sm italic mb-10">
-                Support the momentum of new explorations. Direct contributions provide immediate fuel for the creative engine.
-            </p>
-
-            <button onclick="window.open('https://paypal.me', '_blank')"
-                class="button-hover w-full bg-white text-black py-5 label-caps font-bold transition flex items-center justify-center gap-2">
-                SEND_FUEL →
-            </button>
-
-            <div class="mt-8 label-caps text-white/20 text-[9px] tracking-[0.3em]">
-                TRANSMISSION_SECURE
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
+</div>
 
 </body>
 </html>
