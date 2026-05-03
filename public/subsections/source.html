@@ -1,17 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Source - Work</title>
-    <style>
-        body { background-color: black; color: white; font-family: sans-serif; padding: 20px; }
-        h1 { color: #8bc34a; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Source - Work</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+    background: black;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+    font-family: sans-serif;
+}
+
+/* PAGE FADE */
+body {
+    animation: fadeIn 1.2s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* IMAGE FADE-IN */
+.fade-img {
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+.fade-img.loaded {
+    opacity: 1;
+}
+
+/* IMAGE HOVER FEEL */
+#image-container:hover img {
+    transform: scale(1.03);
+    transition: transform 6s ease;
+}
+
+/* MOBILE BOUNCE */
+@keyframes bounce-scroll {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.animate-bounce-scroll {
+    animation: bounce-scroll 2s infinite ease-in-out;
+}
+</style>
 </head>
+
 <body>
-    <h1>SOURCE</h1>
-    <p>This is the SOURCE subsection of the WORK section.</p>
-    <p>Placeholder content for source materials and inspirations.</p>
+
+<!-- DESKTOP -->
+<div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
+
+    <!-- LEFT IMAGE (50%) -->
+    <div class="w-1/2 flex flex-col items-center justify-center">
+
+        <div id="image-container"
+             class="w-full max-h-[80vh] flex items-center justify-center bg-gray-900 overflow-hidden">
+
+            <img 
+                src="/subsections/source/opensouce.jpg"
+                class="fade-img max-w-full max-h-full object-contain"
+                alt="Meander Image">
+        </div>
+
+    </div>
+
+    <!-- RIGHT TEXT (50%) -->
+    <div class="w-1/2 flex flex-col justify-start max-h-[85vh] overflow-y-auto pr-4">
+
+        <h1 class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase">
+            OPEN SOURCE
+        </h1>
+
+        <div class="text-gray-300 text-lg leading-relaxed space-y-3">
+            <p>This is the Open Source subsection of the WORK section.</p>
+            <p>Placeholder content for experimental and personal work.</p>
+	    <p>I'm still working on this website, the images in this section
+		are not yet the full image size. I'm just working on the structure
+		of the site. The <a href="https://mumblejinx.github.io/opensource/">Open Source</a>
+		section can be found <a href="https://mumblejinx.github.io/opensource/">here.</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MOBILE -->
+<div class="md:hidden flex flex-col min-h-screen p-4 pb-24">
+
+    <!-- IMAGE -->
+    <div class="w-full bg-gray-900 flex items-center justify-center mb-10">
+	 <a href="https://mumblejinx.github.io/opensource/">
+        <img 
+            src="/subsections/source/opensource.jpg"
+            class="fade-img w-full h-auto object-contain"
+            alt="Source Image"></a>
+    </div>
+
+    <!-- TEXT -->
+    <div class="mt-4 border-t border-gray-800 pt-6">
+
+        <h1 class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase">
+            MEANDER
+        </h1>
+
+        <div class="text-gray-400 text-base leading-relaxed space-y-4">
+             <p>This is the Open Source subsection of the WORK section.</p>
+            <p>Placeholder content for experimental and personal work.</p>
+	    <p>I'm still working on this website, the images in this section
+		are not yet the full image size. I'm just working on the structure
+		of the site. The <a href="https://mumblejinx.github.io/opensource/">Open Source</a>
+		section can be found <a href="https://mumblejinx.github.io/opensource/">here.</a>
+        </div>
+
+    </div>
+
+    <!-- SCROLL INDICATOR -->
+    <div class="fixed bottom-4 left-6 z-40 pointer-events-none">
+        <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
+            <span>▼ SCROLL</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+/* IMAGE FADE-IN ON LOAD */
+window.addEventListener("load", () => {
+    document.querySelectorAll(".fade-img").forEach(img => {
+        if (img.complete) {
+            img.classList.add("loaded");
+        } else {
+            img.onload = () => img.classList.add("loaded");
+        }
+    });
+});
+
+/* SCROLL INDICATOR FADE */
+window.addEventListener("scroll", () => {
+    const indicator = document.querySelector(".animate-bounce-scroll")?.parentElement;
+    if (!indicator) return;
+
+    indicator.style.opacity = window.scrollY > 50 ? "0" : "1";
+});
+
+</script>
+
 </body>
 </html>
