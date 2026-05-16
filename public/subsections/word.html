@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Word - About</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,13 +21,16 @@
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #444; }
+
+        .h-dvh-safe { height: 100vh; height: 100dvh; }
+        .min-h-dvh-safe { min-height: 100vh; min-height: 100dvh; }
     </style>
 </head>
 
 <body>
 
 <!-- DESKTOP -->
-<div class="hidden md:flex h-screen w-full">
+<div class="hidden lg:flex h-dvh-safe w-full max-w-[1600px] mx-auto">
 
     <!-- LEFT: IMAGE -->
     <div class="w-[40%] h-full flex items-center justify-center bg-black">
@@ -95,7 +98,7 @@
 </div>
 
 <!-- MOBILE -->
-<div class="md:hidden flex flex-col min-h-screen">
+<div class="lg:hidden flex flex-col min-h-dvh-safe">
 
     <!-- IMAGE ON TOP -->
     <div class="w-full flex justify-center items-center p-4">

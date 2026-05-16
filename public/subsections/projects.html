@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Projects - Jake Galm</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -43,13 +43,15 @@ body {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+.h-dvh-safe { height: 100vh; height: 100dvh; }
+.min-h-dvh-safe { min-height: 100vh; min-height: 100dvh; }
 </style>
 </head>
 
 <body>
 
 <!-- DESKTOP -->
-<div class="hidden md:flex min-h-screen px-6 lg:px-12 py-8 gap-10">
+<div class="hidden lg:flex min-h-dvh-safe px-6 lg:px-12 py-8 gap-10 max-w-[1600px] mx-auto w-full">
 
     <div class="w-1/2 flex flex-col items-center justify-between h-[85vh]">
 
@@ -82,7 +84,7 @@ body {
 </div>
 
 <!-- MOBILE -->
-<div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
+<div id="mobile-layout" class="lg:hidden flex flex-col min-h-dvh-safe p-4 pb-24">
 
     <div id="mobile-image-stack" class="flex flex-col gap-16 mb-12"></div>
 

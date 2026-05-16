@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Support</title>
 
 <style>
@@ -37,7 +37,7 @@ a {
   margin-top: 50px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .modules {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -45,7 +45,7 @@ a {
 
 .module {
   position: relative;
-  height: 72vh;
+  height: 260px;
   border: 1px solid white;
   display: flex;
   flex-direction: column;
@@ -55,6 +55,12 @@ a {
   cursor: pointer;
   overflow: hidden;
   background: black;
+}
+
+@media (min-width: 1024px) {
+  .module {
+    height: 72vh;
+  }
 }
 
 /* LABEL (top-left) */
@@ -85,19 +91,26 @@ a {
   color: white; /* ✅ white by default */
 }
 
-/* HOVER STATE */
-.module:hover {
-  background: var(--brand-lime);
-  color: black;
-}
+/* HOVER STATE — desktop/mouse only */
+@media (hover: hover) and (pointer: fine) {
+  .module:hover {
+    background: var(--brand-lime);
+    color: black;
+  }
 
-.module:hover h2 {
-  color: black; /* ✅ black on hover */
-}
+  .module:hover h2 {
+    color: black;
+  }
 
-.module:hover svg {
-  stroke: black;
-  transform: scale(1.1);
+  .module:hover svg {
+    stroke: black;
+    transform: scale(1.1);
+  }
+
+  .module:hover .module-action {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* --- HIDDEN ACTION TEXT --- */
@@ -111,11 +124,6 @@ a {
   transform: translateY(10px);
   transition: all 0.4s ease;
   font-weight: bold;
-}
-
-.module:hover .module-action {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* subtle dots */

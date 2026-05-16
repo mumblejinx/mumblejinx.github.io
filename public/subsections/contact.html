@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Contact - Jake Galm</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -14,13 +14,15 @@ body {
     margin: 0;
     overflow-x: hidden;
 }
+.h-dvh-safe { height: 100vh; height: 100dvh; }
+.min-h-dvh-safe { min-height: 100vh; min-height: 100dvh; }
 </style>
 </head>
 
 <body>
 
 <!-- DESKTOP -->
-<div class="hidden md:flex h-screen w-full overflow-x-hidden">
+<div class="hidden lg:flex h-dvh-safe w-full overflow-x-hidden max-w-[1600px] mx-auto">
 
     <!-- LEFT IMAGE (40%) -->
     <div class="w-2/5 flex items-center justify-center bg-black">
@@ -99,7 +101,7 @@ body {
 </div>
 
 <!-- MOBILE -->
-<div class="md:hidden flex flex-col min-h-screen p-6 w-full overflow-x-hidden">
+<div class="lg:hidden flex flex-col min-h-dvh-safe p-6 w-full overflow-x-hidden">
 
     <h1 class="text-[#8bc34a] text-3xl font-bold mb-6 uppercase">
         Contact / 連絡

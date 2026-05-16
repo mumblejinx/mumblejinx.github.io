@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Digital - Work</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -40,13 +40,16 @@
         .thumb-img.visible {
             opacity: 1;
         }
+
+        .h-dvh-safe { height: 100vh; height: 100dvh; }
+        .min-h-dvh-safe { min-height: 100vh; min-height: 100dvh; }
     </style>
 </head>
 
 <body class="bg-black">
 
 <!-- DESKTOP -->
-<div id="desktop-layout" class="hidden md:flex flex-row p-8 pb-0 gap-8 h-screen">
+<div id="desktop-layout" class="hidden lg:flex flex-row p-8 pb-0 gap-8 h-dvh-safe max-w-[1600px] mx-auto w-full">
 
     <!-- FIXED IMAGE GRID -->
     <div class="w-3/5 h-full flex items-center justify-center">
@@ -65,7 +68,7 @@
 </div>
 
 <!-- MOBILE -->
-<div id="mobile-layout" class="md:hidden flex flex-col min-h-screen p-4 pb-24">
+<div id="mobile-layout" class="lg:hidden flex flex-col min-h-dvh-safe p-4 pb-24">
 
     <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12"></div>
 

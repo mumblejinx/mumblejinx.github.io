@@ -61,7 +61,7 @@ export default function App() {
 
   useEffect(() => {
     const handleResize = () => {
-      setHeaderHeight(window.innerWidth < 768 ? '52px' : '80px');
+      setHeaderHeight(window.innerWidth < 1024 ? '52px' : '80px');
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -80,7 +80,7 @@ export default function App() {
   }, [section]);
 
   const handleSectionChange = (newSection: Section) => {
-    if (newSection === Section.INTRO && section === Section.WORK && window.innerWidth < 768) {
+    if (newSection === Section.INTRO && section === Section.WORK && window.innerWidth < 1024) {
       setIsExitingToIntro(true);
       setTimeout(() => {
         setSection(Section.INTRO);
@@ -107,7 +107,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden">
+    <div className="min-h-dvh bg-white flex flex-col font-sans overflow-hidden">
       {/* Global Lightbox */}
       <AnimatePresence>
         {lightbox && (
@@ -115,7 +115,7 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-12"
+            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 lg:p-12"
           >
             {/* Close Button */}
             <button 
@@ -140,7 +140,7 @@ export default function App() {
             </button>
 
             {/* Content Container */}
-            <div className="flex flex-col md:flex-row w-fit max-w-[95vw] max-h-full gap-8 items-center md:items-start overflow-y-auto md:overflow-visible relative">
+            <div className="flex flex-col lg:flex-row w-fit max-w-[95vw] max-h-full gap-8 items-center lg:items-start overflow-y-auto lg:overflow-visible relative">
               {/* Image Column */}
               <div className="relative flex flex-col items-center justify-center">
                 <motion.img 
@@ -149,7 +149,7 @@ export default function App() {
                   animate={{ opacity: 1, scale: 1 }}
                   src={lightbox.images[lightbox.index].full} 
                   alt="Full size" 
-                  className="max-w-full max-h-[70vh] md:max-h-[80vh] object-contain shadow-2xl"
+                  className="max-w-full max-h-[70vh] lg:max-h-[80vh] object-contain shadow-2xl"
                   referrerPolicy="no-referrer"
                 />
                 {/* Image Counter */}
@@ -159,9 +159,9 @@ export default function App() {
               </div>
 
               {/* Description Column */}
-              <div className="w-full md:w-72 flex flex-col text-left pt-0 md:pt-0">
+              <div className="w-full lg:w-72 flex flex-col text-left">
                 <h2 className="text-[#8bc34a] text-lg font-bold mb-3 uppercase tracking-widest">Description</h2>
-                <div className="text-gray-300 text-sm leading-relaxed font-light max-h-[30vh] md:max-h-none overflow-y-auto">
+                <div className="text-gray-300 text-sm leading-relaxed font-light max-h-[30vh] lg:max-h-none overflow-y-auto">
                   {lightbox.images[lightbox.index].description || "No description available for this piece."}
                 </div>
               </div>
@@ -172,30 +172,30 @@ export default function App() {
 
       <OrientationLock />
       {/* Top Menu Bar */}
-      <header className="absolute top-0 left-0 right-0 bg-black text-white p-4 z-50 h-auto md:h-20 flex items-center">
-        <div className="w-full flex justify-between items-center md:justify-center md:relative">
-          <button 
+      <header className="absolute top-0 left-0 right-0 bg-black text-white p-4 z-50 h-auto lg:h-20 flex items-center">
+        <div className="w-full flex justify-between items-center lg:justify-center lg:relative">
+          <button
             onClick={() => handleSectionChange(Section.INTRO)}
-            className="hover:opacity-70 transition-opacity md:absolute md:left-8"
+            className="hover:opacity-70 transition-opacity lg:absolute lg:left-8"
           >
-            <AssetImage src="/jakegalm.jpg" fallback="Jake Galm" className="h-5 md:h-8" />
+            <AssetImage src="/jakegalm.jpg" fallback="Jake Galm" className="h-5 lg:h-8" />
           </button>
-          <nav className="flex justify-center items-center gap-x-8 flex-grow md:flex-grow-0 md:space-x-12 ml-4 md:ml-0">
+          <nav className="flex justify-center items-center gap-x-8 flex-grow lg:flex-grow-0 lg:space-x-12 ml-4 lg:ml-0">
             <button onClick={() => handleSectionChange(Section.WORK)} className="hover:opacity-70 transition-opacity flex-shrink">
-              <AssetImage src="/work.jpg" fallback="Work" className="h-5 md:h-8" />
+              <AssetImage src="/work.jpg" fallback="Work" className="h-5 lg:h-8" />
             </button>
             <button onClick={() => handleSectionChange(Section.ABOUT)} className="hover:opacity-70 transition-opacity flex-shrink">
-              <AssetImage src="/about.jpg" fallback="About" className="h-5 md:h-8" />
+              <AssetImage src="/about.jpg" fallback="About" className="h-5 lg:h-8" />
             </button>
             <button onClick={() => handleSectionChange(Section.SUPPORT)} className="hover:opacity-70 transition-opacity flex-shrink">
-              <AssetImage src="/support.jpg" fallback="Support" className="h-5 md:h-8" />
+              <AssetImage src="/support.jpg" fallback="Support" className="h-5 lg:h-8" />
             </button>
           </nav>
         </div>
       </header>
 
       {/* Main Container */}
-      <div className="h-screen w-full flex flex-col relative">
+      <div className="h-dvh w-full flex flex-col relative">
         {/* Layer 1: Intro Background (Static, always at the bottom) */}
         <div className="absolute inset-0 bg-white z-10 flex flex-col items-center">
           {/* Safe Zone Spacer: Header + Green Bars (65px mobile, 65px desktop) */}
@@ -204,10 +204,10 @@ export default function App() {
           {/* Content Area: Centers image in the remaining space */}
           <div className="flex-grow flex items-center justify-center p-4 w-full">
             <div className="h-fit">
-              <div className="hidden md:block">
+              <div className="hidden lg:block">
                 <AssetImage src="/computer_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[65vh] object-contain" />
               </div>
-              <div className="md:hidden">
+              <div className="lg:hidden">
                 <AssetImage src="/phone_intro.jpg" fallback="[INTRO IMAGE]" className="max-w-full max-h-[65vh] object-contain" />
               </div>
             </div>
@@ -255,7 +255,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 2.5, ease: "easeOut" }}
-                className="absolute left-[8%] md:left-[11%] w-12 md:w-auto"
+                className="absolute left-[8%] lg:left-[11%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-one.png" fallback="DRIP ONE" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -266,7 +266,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
-                className="absolute left-[65%] md:left-[80%] w-12 md:w-auto"
+                className="absolute left-[65%] lg:left-[80%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -277,7 +277,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
-                className="absolute left-[82%] md:left-[88%] w-12 md:w-auto"
+                className="absolute left-[82%] lg:left-[88%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -301,7 +301,7 @@ export default function App() {
                   }}
                   className="absolute inset-0 flex flex-col"
                 >
-                  <div className="flex-grow px-4 md:px-8 pt-20 md:pt-24">
+                  <div className="flex-grow px-4 lg:px-8 pt-16 lg:pt-24">
                     {getSubsectionFile() ? (
                       <iframe
                         src={getSubsectionFile()!}
@@ -323,10 +323,10 @@ export default function App() {
           <motion.footer 
             layout
             transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-            className={`bg-black flex flex-wrap justify-center gap-2 md:gap-8 z-50 h-auto items-center border-gray-800 transition-colors ${
-              section === Section.INTRO 
-                ? 'p-4 min-h-16 border-t md:h-20' 
-                : 'p-4 min-h-16 md:h-20 border-t'
+            className={`bg-black flex flex-wrap justify-center gap-2 lg:gap-8 z-50 h-auto items-center border-gray-800 transition-colors ${
+              section === Section.INTRO
+                ? 'p-4 min-h-16 border-t lg:h-20'
+                : 'p-4 min-h-16 lg:h-20 border-t'
             }`}
           >
             <AnimatePresence mode="wait">
@@ -337,43 +337,43 @@ export default function App() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: 0.1, duration: 0.2 }}
-                  className="flex flex-wrap justify-center gap-2 md:gap-8 w-full"
+                  className="flex flex-wrap justify-center gap-2 lg:gap-8 w-full"
                 >
                   {section === Section.WORK && (
-                    <div className="flex flex-col items-center gap-y-1 md:flex-row md:flex-wrap md:justify-center md:gap-8 w-full">
-                      <div className="flex justify-center gap-x-4 md:contents">
+                    <div className="flex flex-col items-center gap-y-1 lg:flex-row lg:flex-wrap lg:justify-center lg:gap-8 w-full">
+                      <div className="flex justify-center gap-x-4 lg:contents">
                         {Object.values(WorkSubsection).slice(0, 3).map((sub) => (
                           <button
                             key={sub}
                             onClick={() => handleSubsectionChange(sub)}
                             className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
                           >
-                            <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
+                            <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 lg:h-8" />
                           </button>
                         ))}
                       </div>
-                      <div className="flex justify-center gap-x-4 md:contents">
+                      <div className="flex justify-center gap-x-4 lg:contents">
                         {Object.values(WorkSubsection).slice(3, 6).map((sub) => (
                           <button
                             key={sub}
                             onClick={() => handleSubsectionChange(sub)}
                             className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
                           >
-                            <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
+                            <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 lg:h-8" />
                           </button>
                         ))}
                       </div>
                     </div>
                   )}
                   {section === Section.ABOUT && (
-                    <div className="flex flex-wrap justify-center gap-2 md:gap-8 w-full">
+                    <div className="flex flex-wrap justify-center gap-2 lg:gap-8 w-full">
                       {Object.values(AboutSubsection).map((sub) => (
                         <button
                           key={sub}
                           onClick={() => handleSubsectionChange(sub)}
                           className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
                         >
-                          <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 md:h-8" />
+                          <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 lg:h-8" />
                         </button>
                       ))}
                     </div>
