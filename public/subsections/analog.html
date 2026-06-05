@@ -113,11 +113,29 @@ black ink outlines.</p>
 
 `;
 
-const images = Array.from({ length: 21 }, (_, i) => ({
-    thumb: `/subsections/analog/analog_thumb/analog-${i}.jpg`,
-    full: `/subsections/analog/analog_full/analog-${i}.jpg`,
-    description: `Analog piece #${i + 1}`
-}));
+const images = [
+    { thumb: '/subsections/analog/analog_thumb/analog-0.jpg',  full: '/subsections/analog/analog_full/analog-0.jpg',  name: 'Spun Gold',                                                                                          description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-1.jpg',  full: '/subsections/analog/analog_full/analog-1.jpg',  name: 'Cake',                                                                                               description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-2.jpg',  full: '/subsections/analog/analog_full/analog-2.jpg',  name: 'Message in a Bottle',                                                                                description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-3.jpg',  full: '/subsections/analog/analog_full/analog-3.jpg',  name: 'A Palindrome in the Heart of Pascal\'s Triangle',                                                    description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-4.jpg',  full: '/subsections/analog/analog_full/analog-4.jpg',  name: 'The Two Gypsies',                                                                                    description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-5.jpg',  full: '/subsections/analog/analog_full/analog-5.jpg',  name: 'Where e. e. cummings meets Parliament Funkadelic',                                                   description: 'Accent on the One. Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-6.jpg',  full: '/subsections/analog/analog_full/analog-6.jpg',  name: 'Follow the Feather',                                                                                 description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-7.jpg',  full: '/subsections/analog/analog_full/analog-7.jpg',  name: 'Candid Camera',                                                                                      description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-8.jpg',  full: '/subsections/analog/analog_full/analog-8.jpg',  name: 'Bout with a Trout II; Rock the Academy',                                                             description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-9.jpg',  full: '/subsections/analog/analog_full/analog-9.jpg',  name: 'The Snow White / Wicked Witch Memetic Cycle',                                                        description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-10.jpg', full: '/subsections/analog/analog_full/analog-10.jpg', name: 'Hey Lady',                                                                                           description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-11.jpg', full: '/subsections/analog/analog_full/analog-11.jpg', name: 'Dada Poem',                                                                                          description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-12.jpg', full: '/subsections/analog/analog_full/analog-12.jpg', name: 'Judy Canova',                                                                                        description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-13.jpg', full: '/subsections/analog/analog_full/analog-13.jpg', name: 'In Tune, On Time',                                                                                   description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-14.jpg', full: '/subsections/analog/analog_full/analog-14.jpg', name: 'Audiophile',                                                                                         description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-15.jpg', full: '/subsections/analog/analog_full/analog-15.jpg', name: 'At 11 O\'Clock is when my MusicBox Jock likes to Rock, She Wakes up the Whole Damn Block',           description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-16.jpg', full: '/subsections/analog/analog_full/analog-16.jpg', name: 'Freehand to the Clockwork Jukebox',                                                                  description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-17.jpg', full: '/subsections/analog/analog_full/analog-17.jpg', name: 'Valentimes',                                                                                         description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-18.jpg', full: '/subsections/analog/analog_full/analog-18.jpg', name: 'Crossing the Croquet Fields',                                                                        description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-19.jpg', full: '/subsections/analog/analog_full/analog-19.jpg', name: 'And For My Next Trick',                                                                              description: 'Color pencil with a black ink outline on paper' },
+    { thumb: '/subsections/analog/analog_thumb/analog-20.jpg', full: '/subsections/analog/analog_full/analog-20.jpg', name: 'the Crossroads',                                                                                     description: 'Color pencil with a black ink outline on paper' },
+];
 
 function init() {
 
