@@ -432,9 +432,9 @@ function openGallery(projectIndex) {
     const project = projects[projectIndex];
     if (!project.gallery || project.gallery.length === 0) return;
 
-    const images = project.gallery.map((path, i) => ({
+    const images = project.gallery.map((path) => ({
         full: path,
-        description: `${project.title} — Image ${i + 1}`
+        hideDescription: true
     }));
 
     window.parent.postMessage({

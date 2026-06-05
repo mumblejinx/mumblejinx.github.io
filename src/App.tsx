@@ -159,12 +159,14 @@ export default function App() {
               </div>
 
               {/* Description Column */}
-              <div className="w-full lg:w-72 flex flex-col text-left">
-                <h2 className="text-[#8bc34a] text-lg font-bold mb-3 uppercase tracking-widest">{lightbox.images[lightbox.index].name || 'Description'}</h2>
-                <div className="text-gray-300 text-sm leading-relaxed font-light max-h-[30vh] lg:max-h-none overflow-y-auto">
-                  {lightbox.images[lightbox.index].description || "No description available for this piece."}
+              {!lightbox.images[lightbox.index].hideDescription && (
+                <div className="w-full lg:w-72 flex flex-col text-left">
+                  <h2 className="text-[#8bc34a] text-lg font-bold mb-3 uppercase tracking-widest">{lightbox.images[lightbox.index].name || 'Description'}</h2>
+                  <div className="text-gray-300 text-sm leading-relaxed font-light max-h-[30vh] lg:max-h-none overflow-y-auto">
+                    {lightbox.images[lightbox.index].description || "No description available for this piece."}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </motion.div>
         )}
