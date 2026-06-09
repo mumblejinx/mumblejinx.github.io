@@ -128,6 +128,7 @@ stayed with me—the ones I'm happiest to share.</p>
 </p>
     `,
     listImage: "/subsections/projects/list/overview.jpg",
+    externalLink: null,
     gallery: []
 },
 
@@ -147,6 +148,7 @@ This book is available for purchase <a href="https://a.co/d/02F3nSeV" target="_b
 </p>
     `,
     listImage: "/subsections/projects/list/project-1.jpg",
+    externalLink: "https://a.co/d/02F3nSeV",
     gallery: [
         "/subsections/projects/project-1/IMG_3392.jpeg",
         "/subsections/projects/project-1/IMG_3393.jpeg",
@@ -170,6 +172,7 @@ This book is available for purchase <a href="https://a.co/d/0el3CWyM" target="_b
 </p>
     `,
     listImage: "/subsections/projects/list/project-2.jpg",
+    externalLink: "https://a.co/d/0el3CWyM",
     gallery: [
         "/subsections/projects/project-2/IMG_5267.jpeg",
         "/subsections/projects/project-2/IMG_5270.jpeg",
@@ -194,6 +197,7 @@ This book is available for purchase <a href="https://a.co/d/01QyRih6" target="_b
 </p>
     `,
     listImage: "/subsections/projects/list/project-3.jpg",
+    externalLink: "https://a.co/d/01QyRih6",
     gallery: [
         "/subsections/projects/project-3/IMG_5285.jpeg",
         "/subsections/projects/project-3/IMG_5288.jpeg",
@@ -220,6 +224,7 @@ grateful to have been invited into the project and proud to have contributed to 
 </p>
     `,
     listImage: "/subsections/projects/list/project-4.jpg",
+    externalLink: "https://www.discogs.com/release/15868665-Swampwalk-Kids-Like-Me",
     gallery: [
         "/subsections/projects/project-4/IMG_9560.jpeg",
         "/subsections/projects/project-4/IMG_9585.jpeg",
@@ -245,6 +250,7 @@ YouTube版ではDJ Shadowの『Live at Brixton Academy 2006』の一部を使用
 </p>
     `,
     listImage: "/subsections/projects/list/project-5.jpg",
+    externalLink: "https://www.youtube.com/watch?v=FOSYm6aFqg0",
     gallery: [
         "/subsections/projects/project-5/IMG_3183.png",
         "/subsections/projects/project-5/IMG_3184.png",
@@ -271,6 +277,7 @@ and VLOT, who has been part of my sticker exchange community for years. Being in
 </p>
     `,
     listImage: "/subsections/projects/list/project-6.jpg",
+    externalLink: "https://bridgemoguraeditions.com/products/global-only-slap-stars-trading-cards-tokyo-edition-box-copy",
     gallery: [
         "/subsections/projects/project-6/IMG_4286.jpeg",
         "/subsections/projects/project-6/IMG_4287.jpeg",
@@ -299,6 +306,7 @@ Will Deloney監督とSha-Risse R. Smithによって制作されました。23カ
 </p>
     `,
     listImage: "/subsections/projects/list/project-7.jpg",
+    externalLink: "https://stickermovie.com/",
     gallery: []
 },
 
@@ -317,6 +325,7 @@ The video features music by Pretty Lights, mixed by Ansir. It can be viewed <a h
 </p>
     `,
     listImage: "/subsections/projects/list/project-8.jpg",
+    externalLink: "https://www.youtube.com/watch?v=Bk3z_aKAWtI",
     gallery: [
         "/subsections/projects/project-8/IMG_3198.png",
         "/subsections/projects/project-8/IMG_3201.png",
@@ -339,6 +348,7 @@ encountered it, but I hope it reached at least a few who could experience it in 
 </p>
     `,
     listImage: "/subsections/projects/list/project-9.jpg",
+    externalLink: null,
     gallery: [
         "/subsections/projects/project-9/IMG_6954.jpeg",
         "/subsections/projects/project-9/IMG_6978.jpeg",
@@ -369,6 +379,7 @@ tattoo artist, but between the shaky hands and a tendency to revise too often, I
 </p>
     `,
     listImage: "/subsections/projects/list/project-10.jpg",
+    externalLink: null,
     gallery: [
         "/subsections/projects/project-10/IMG_2624.jpeg",
         "/subsections/projects/project-10/IMG_2629.jpeg"
@@ -456,7 +467,17 @@ function renderMobile() {
         img.src = project.listImage;
         img.className = "w-full h-auto block";
 
-        wrapper.appendChild(img);
+        if (project.externalLink) {
+            const link = document.createElement("a");
+            link.href = project.externalLink;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.appendChild(img);
+            wrapper.appendChild(link);
+        } else {
+            wrapper.appendChild(img);
+        }
+
         container.appendChild(wrapper);
     });
 
