@@ -633,4 +633,4 @@ Both sites deploy via GitHub Actions on every push to `main`.
 
 ---
 
-*Generated: 2026-06-05*
+*LastVerified: 2026-06-05*

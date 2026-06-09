@@ -7,85 +7,86 @@
 # Do not change the filename lines (analog-0.jpg, analog-1.jpg, etc.)
 
 analog-0.jpg
-Title:
-Description:
+Title:Spun Gold
+Description:Color pencil with a black ink outline on paper
 
 analog-1.jpg
-Title:
-Description:
+Title:Cake
+Description:Color pencil with a black ink outline on paper
 
 analog-2.jpg
-Title:
-Description:
+Title:Message in a Bottle
+Description:Color pencil with a black ink outline on paper
 
 analog-3.jpg
-Title:
-Description:
+Title:A Palindrome in the Heart of Pascal's Triangle
+Description:Color pencil with a black ink outline on paper
 
 analog-4.jpg
-Title:
-Description:
+Title:The Two Gypsies
+Description:Color pencil with a black ink outline on paper
 
 analog-5.jpg
-Title:
-Description:
+Title:Where e. e. cummings meets Parliament Funkadelic
+Description:Accent on the One. Color pencil with a black ink outline on paper
 
 analog-6.jpg
-Title:
-Description:
+Title:Follow the Feather
+Description:Color pencil with a black ink outline on paper
 
 analog-7.jpg
-Title:
-Description:
+Title:Candid Camera
+Description:Color pencil with a black ink outline on paper
 
 analog-8.jpg
-Title:
-Description:
+Title:Bout with a Trout II; Rock the Academy
+Description:Color pencil with a black ink outline on paper
 
 analog-9.jpg
-Title:
-Description:
+Title:The Snow White / Wicked Witch Memetic Cycle
+Description:Color pencil with a black ink outline on paper
 
 analog-10.jpg
-Title:
-Description:
+Title:Hey Lady
+Description:Color pencil with a black ink outline on paper
 
 analog-11.jpg
-Title:
-Description:
+Title:Dada Poem
+Description:Color pencil with a black ink outline on paper
 
 analog-12.jpg
-Title:
-Description:
+Title:Judy Canova
+Description:Color pencil with a black ink outline on paper
 
 analog-13.jpg
-Title:
-Description:
+Title:In Tune, On Time
+Description:Color pencil with a black ink outline on paper
 
 analog-14.jpg
-Title:
-Description:
+Title:Audiophile
+Description:Color pencil with a black ink outline on paper
 
 analog-15.jpg
-Title:
-Description:
+Title:At 11 O'Clock is when my MusicBox Jock likes to Rock, She Wakes up the Whole Damn Block
+Description:Color pencil with a black ink outline on paper
 
 analog-16.jpg
-Title:
-Description:
+Title:Freehand to the Clockwork Jukebox
+Description:Color pencil with a black ink outline on paper
 
 analog-17.jpg
-Title:
-Description:
+Title:Valentimes
+Description:Color pencil with a black ink outline on paper
 
 analog-18.jpg
-Title:
-Description:
+Title:Crossing the Croquet Fields
+Description:Color pencil with a black ink outline on paper
 
 analog-19.jpg
-Title:
-Description:
+Title:And For My Next Trick
+Description:Color pencil with a black ink outline on paper
 
 analog-20.jpg
-Title:
-Description:
+Title:the Crossroads
+Description:Color pencil with a black ink outline on paper
+
