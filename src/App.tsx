@@ -92,6 +92,9 @@ export default function App() {
 
     if (newSection === Section.INTRO) {
       setAnimKey(prev => prev + 1);
+    } else if (section === Section.INTRO && window.innerWidth >= 1024) {
+      // Desktop: trigger drip fall before bar descends
+      setAnimKey(prev => prev + 1);
     }
     setSection(newSection);
   };
@@ -220,28 +223,30 @@ export default function App() {
         </div>
 
         {/* Layer 2: Black Content Background (Grows from top down) */}
-        <motion.div 
+        <motion.div
           className="absolute inset-x-0 top-0 bg-black z-20"
           initial={false}
-          animate={{ 
+          animate={{
             height: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)'
           }}
-          transition={{ 
-            duration: section === Section.INTRO ? 0 : 1.5, 
-            ease: "easeInOut"
+          transition={{
+            duration: section === Section.INTRO ? 0 : 1.5,
+            ease: "easeInOut",
+            delay: section !== Section.INTRO && headerHeight === '80px' ? 3.3 : 0
           }}
         />
 
         {/* Layer 3: Drip Bar Container (Moves down, boundary between Black and Intro) */}
-        <motion.div 
+        <motion.div
           className="absolute inset-x-0 z-40"
           initial={false}
-          animate={{ 
-            top: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)' 
+          animate={{
+            top: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)'
           }}
-          transition={{ 
-            duration: section === Section.INTRO ? 0 : 1.5, 
-            ease: "easeInOut" 
+          transition={{
+            duration: section === Section.INTRO ? 0 : 1.5,
+            ease: "easeInOut",
+            delay: section !== Section.INTRO && headerHeight === '80px' ? 3.3 : 0
           }}
         >
           <div className="relative">
@@ -268,7 +273,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
-                className="absolute left-[65%] lg:left-[80%] w-12 lg:w-auto"
+                className="absolute left-[65%] lg:left-[70%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -279,7 +284,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
-                className="absolute left-[82%] lg:left-[88%] w-12 lg:w-auto"
+                className="absolute left-[82%] lg:left-[78%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -297,9 +302,9 @@ export default function App() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 1 }}
-                  transition={{ 
+                  transition={{
                     duration: 0.3,
-                    delay: 1.5 // Wait for descent to finish
+                    delay: headerHeight === '80px' ? 4.8 : 1.5
                   }}
                   className="absolute inset-0 flex flex-col"
                 >

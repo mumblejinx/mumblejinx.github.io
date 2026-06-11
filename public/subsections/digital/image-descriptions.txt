@@ -7,85 +7,86 @@
 # Do not change the filename lines (digital-0.jpg, digital-1.jpg, etc.)
 
 digital-0.jpg
-Title:
-Description:
+Title:Genie in a Shell
+Description:Drawing colored in Photoshop.
 
 digital-1.jpg
-Title:
-Description:
+Title:Wave Twisters
+Description:Drawing colored in Photoshop.
 
 digital-2.jpg
-Title:
-Description:
+Title:Overflow
+Description:Drawing colored in Photoshop.
 
 digital-3.jpg
-Title:
-Description:
+Title:Resistance of Plenary
+Description:Persistance of Memory. Drawing colored in Photoshop.
 
 digital-4.jpg
-Title:
-Description:
+Title:70s Album Art
+Description:Drawing colored in Photoshop.
 
 digital-5.jpg
-Title:
-Description:
+Title:High Stepper
+Description:Drawing colored in Photoshop.
 
 digital-6.jpg
-Title:
-Description:
+Title:Dare
+Description:Drawing colored in Photoshop.
 
 digital-7.jpg
-Title:
-Description:
+Title:MumbleJinx: Mutant or Monster?!
+Description:I tried to do a Jack Kirby drawing based on a description I heard of his work. But, to be clear 
+   I was well versed in Kirby drawings before I attempted this, so it wasn't a pure exercise. Drawing colored in Photoshop.
 
 digital-8.jpg
-Title:
-Description:
+Title:Flower Picker, Dead Meme Hunter
+Description:Drawing colored in Photoshop.
 
 digital-9.jpg
-Title:
-Description:
+Title:Robin Eggs hatched from a Rat's Nest
+Description:State Bird. Drawing colored in Photoshop.
 
 digital-10.jpg
-Title:
-Description:
+Title:Puzzle Logic
+Description:Week 9 in the pregnancy. Drawing colored in Photoshop.
 
 digital-11.jpg
-Title:
-Description:
+Title:Pogo as Charlie Brown, Mister MumbleJinx as Little Nemo, the Katzenjammer Kids as Nancy and Sluggo
+Description:Drawing colored in Photoshop.
 
 digital-12.jpg
-Title:
-Description:
+Title:Your Friendly Neighborhood Boo Radley
+Description:Drawing colored in Photoshop.
 
 digital-13.jpg
-Title:
-Description:
+Title:Night Stroll
+Description:Drawing redrawn and colored in Procreate.
 
 digital-14.jpg
-Title:
-Description:
+Title:Day Tripper
+Description:Drawing colored in Photoshop.
 
 digital-15.jpg
-Title:
-Description:
+Title:Mad Blunted
+Description:Drawing colored in Photoshop.
 
 digital-16.jpg
-Title:
-Description:
+Title:Mr. Piano Pipehead
+Description:Drawing colored in Photoshop.
 
 digital-17.jpg
-Title:
-Description:
+Title:Storybook
+Description:Drawing colored in Photoshop.
 
 digital-18.jpg
-Title:
-Description:
+Title:Roxanne
+Description:Drawing colored in Photoshop.
 
 digital-19.jpg
-Title:
-Description:
+Title:Window Watcher
+Description:Drawing colored in Photoshop.
 
 digital-20.jpg
-Title:
-Description:
+Title:the Mysteries of Pittsburgh
+Description:Drawing colored in Photoshop.
