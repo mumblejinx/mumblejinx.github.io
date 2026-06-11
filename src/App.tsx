@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Section, WorkSubsection, AboutSubsection, Subsection } from './constants';
 import { AssetImage } from './components/AssetImage';
@@ -29,6 +29,7 @@ export default function App() {
   const [isExitingToIntro, setIsExitingToIntro] = useState(false);
   const [headerHeight, setHeaderHeight] = useState('80px');
   const [lightbox, setLightbox] = useState<{ images: any[], index: number } | null>(null);
+  const dripAnimEndRef = useRef<number>(0);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -68,6 +69,10 @@ export default function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    dripAnimEndRef.current = Date.now() + 3300;
+  }, [animKey]);
+
   // Reset subsection when section changes
   useEffect(() => {
     if (section === Section.WORK) {
@@ -92,8 +97,8 @@ export default function App() {
 
     if (newSection === Section.INTRO) {
       setAnimKey(prev => prev + 1);
-    } else if (section === Section.INTRO && window.innerWidth >= 1024) {
-      // Desktop: trigger drip fall before bar descends
+    } else if (section === Section.INTRO && window.innerWidth >= 1024 && Date.now() >= dripAnimEndRef.current) {
+      // Desktop: trigger drip fall only if drips have already settled
       setAnimKey(prev => prev + 1);
     }
     setSection(newSection);
