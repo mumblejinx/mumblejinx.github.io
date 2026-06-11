@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Digital - Work</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444; }
+
+        @keyframes bounce-scroll {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-scroll {
+            animation: bounce-scroll 2s infinite ease-in-out;
+        }
+
+        /* FADE-IN SYSTEM */
+        .thumb-img {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .thumb-img.visible {
+            opacity: 1;
+        }
+
+        .h-dvh-safe { height: 100vh; height: 100dvh; }
+        .min-h-dvh-safe { min-height: 100vh; min-height: 100dvh; }
+    </style>
+</head>
+
+<body class="bg-black">
+
+<!-- DESKTOP -->
+<div id="desktop-layout" class="hidden lg:flex flex-row p-8 pb-0 gap-8 h-dvh-safe max-w-[1600px] mx-auto w-full">
+
+    <!-- FIXED IMAGE GRID -->
+    <div class="w-3/5 h-full flex items-center justify-center">
+        <div id="thumbnail-grid" class="grid grid-cols-9 gap-2 w-full max-w-fit"></div>
+    </div>
+
+    <!-- SCROLLABLE TEXT -->
+    <div class="w-2/5 h-full overflow-y-auto pr-4">
+        <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
+
+        <div id="desktop-description"
+             class="text-gray-300 text-lg leading-relaxed space-y-4 pb-20">
+        </div>
+    </div>
+
+</div>
+
+<!-- MOBILE -->
+<div id="mobile-layout" class="lg:hidden flex flex-col min-h-dvh-safe p-4 pb-24">
+
+    <div id="mobile-image-stack" class="flex flex-col gap-4 mb-12"></div>
+
+    <div class="mt-8 border-t border-gray-800 pt-8">
+        <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
+        <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4"></div>
+    </div>
+
+    <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
+        <div class="flex items-center gap-2 text-white font-bold text-xs tracking-widest animate-bounce-scroll">
+            <span>▼ SCROLL</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+const title = "DIGITAL / デジタル";
+
+const description = `
+    <p>I started working digitally in 1998 with a pirated copy of Photoshop on a computer that wasn’t really powerful enough to run it. I’d make a small change, then go do something else for fifteen minutes while it processed. I didn’t get seriously into digital work until 2003 or 2004, when I started making stickers for street art.</p>
+
+    <p>For the first few years I worked almost exclusively in black and white — partly by circumstance. I had free access to a work xerox machine, but it was black and white. When I eventually started working in color digitally I didn’t like what I was getting. It felt cold. So I started scanning samples from my color pencil work and building patterns from them to color the digital pieces. It gave the work a warmth and texture that the software alone wasn’t producing. I was essentially using my years of hand-made work as a color library.</p>
+
+    <p>I still draw everything on paper first, ink it, scan it, then color it digitally. I work this way partly because it lets me finish pieces faster — I always have more work than I can complete, that’s just the nature of my practice — and because the digital format is more versatile. No scanning, no color correction, ready to go.</p>
+
+    <p>I rarely sell the digital work though. Somehow it doesn’t feel as special as work I’ve physically shaped with my hands.</p>
+
+	<p>デジタル制作を始めたのは1998年でした。使っていたのは海賊版のPhotoshopで、しかもまともに動かすには性能が足りないコンピューターでした。少し変更を加えるたびに、処理が終わるまで15分ほど別のことをして待つような状態でした。デジタル表現に本格的に取り組むようになったのは2003年か2004年頃で、ストリートアート用のステッカーを作り始めたことがきっかけでした。</p>
+
+	<p>最初の数年間は、ほとんど白黒だけで制作していました。それは一部、環境によるものでした。職場のコピー機（ゼロックス）を自由に使えたのですが、白黒しか出力できなかったのです。その後、デジタルでカラー制作を始めても、思うような仕上がりになりませんでした。どこか冷たい印象に感じられたのです。そこで、色鉛筆で描いた作品から色や質感のサンプルをスキャンし、それらを組み合わせてデジタル作品に色をつけるようになりました。そうすることで、ソフトウェアだけでは生まれない温かみや手触りが作品に加わりました。言ってみれば、長年続けてきた手作業の作品群を、自分自身の色見本として使っていたのです。</p>
+
+	<p>今でも、まずすべて紙に描き、ペン入れをして、スキャンし、そのあとデジタルで着彩しています。この方法を続けている理由のひとつは、作品をより早く完成させられるからです。いつも作りたいものの量が、自分が実際に完成できる量を上回っています。それが私の制作スタイルの性質でもあります。そしてもうひとつは、デジタル形式のほうが柔軟だからです。スキャンも不要で、色補正もいらず、そのまま使えるからです。</p>
+
+	<p>ただ、デジタル作品を販売することはほとんどありません。どういうわけか、自分の手で実際に形づくった作品ほど特別なものには感じられないのです。</p>
+
+`;
+
+const images = [
+    { thumb: '/subsections/digital/digital_thumb/digital-0.jpg',  full: '/subsections/digital/digital_full/digital-0.jpg',  name: 'Genie in a Shell',                                                                                                                    description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-1.jpg',  full: '/subsections/digital/digital_full/digital-1.jpg',  name: 'Wave Twisters',                                                                                                                       description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-2.jpg',  full: '/subsections/digital/digital_full/digital-2.jpg',  name: 'Overflow',                                                                                                                            description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-3.jpg',  full: '/subsections/digital/digital_full/digital-3.jpg',  name: 'Resistance of Plenary',                                                                                                               description: 'Persistance of Memory. Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-4.jpg',  full: '/subsections/digital/digital_full/digital-4.jpg',  name: '70s Album Art',                                                                                                                       description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-5.jpg',  full: '/subsections/digital/digital_full/digital-5.jpg',  name: 'High Stepper',                                                                                                                        description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-6.jpg',  full: '/subsections/digital/digital_full/digital-6.jpg',  name: 'Dare',                                                                                                                                description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-7.jpg',  full: '/subsections/digital/digital_full/digital-7.jpg',  name: 'MumbleJinx: Mutant or Monster?!',                                                                                                     description: 'I tried to do a Jack Kirby drawing based on a description I heard of his work. But, to be clear I was well versed in Kirby drawings before I attempted this, so it wasn\'t a pure exercise. Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-8.jpg',  full: '/subsections/digital/digital_full/digital-8.jpg',  name: 'Flower Picker, Dead Meme Hunter',                                                                                                     description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-9.jpg',  full: '/subsections/digital/digital_full/digital-9.jpg',  name: 'Robin Eggs hatched from a Rat\'s Nest',                                                                                               description: 'State Bird. Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-10.jpg', full: '/subsections/digital/digital_full/digital-10.jpg', name: 'Puzzle Logic',                                                                                                                        description: 'Week 9 in the pregnancy. Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-11.jpg', full: '/subsections/digital/digital_full/digital-11.jpg', name: 'Pogo as Charlie Brown, Mister MumbleJinx as Little Nemo, the Katzenjammer Kids as Nancy and Sluggo',                                  description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-12.jpg', full: '/subsections/digital/digital_full/digital-12.jpg', name: 'Your Friendly Neighborhood Boo Radley',                                                                                               description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-13.jpg', full: '/subsections/digital/digital_full/digital-13.jpg', name: 'Night Stroll',                                                                                                                        description: 'Drawing redrawn and colored in Procreate.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-14.jpg', full: '/subsections/digital/digital_full/digital-14.jpg', name: 'Day Tripper',                                                                                                                         description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-15.jpg', full: '/subsections/digital/digital_full/digital-15.jpg', name: 'Mad Blunted',                                                                                                                         description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-16.jpg', full: '/subsections/digital/digital_full/digital-16.jpg', name: 'Mr. Piano Pipehead',                                                                                                                  description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-17.jpg', full: '/subsections/digital/digital_full/digital-17.jpg', name: 'Storybook',                                                                                                                           description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-18.jpg', full: '/subsections/digital/digital_full/digital-18.jpg', name: 'Roxanne',                                                                                                                             description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-19.jpg', full: '/subsections/digital/digital_full/digital-19.jpg', name: 'Window Watcher',                                                                                                                      description: 'Drawing colored in Photoshop.' },
+    { thumb: '/subsections/digital/digital_thumb/digital-20.jpg', full: '/subsections/digital/digital_full/digital-20.jpg', name: 'the Mysteries of Pittsburgh',                                                                                                         description: 'Drawing colored in Photoshop.' },
+];
+
+function init() {
+
+    document.getElementById('desktop-title').innerText = title;
+    document.getElementById('mobile-title').innerText = title;
+
+    document.getElementById('desktop-description').innerHTML = description;
+    document.getElementById('mobile-description').innerHTML = description;
+
+    const grid = document.getElementById('thumbnail-grid');
+
+    images.forEach((img, index) => {
+
+        if (index % 7 === 0) {
+            const emptyStart = document.createElement('div');
+            emptyStart.className = "aspect-[3/4]";
+            grid.appendChild(emptyStart);
+        }
+
+        const thumbDiv = document.createElement('div');
+        thumbDiv.className = "aspect-[3/4] bg-gray-900 cursor-pointer overflow-hidden group border border-transparent hover:border-[#8bc34a]";
+        thumbDiv.onclick = () => openLightbox(index);
+
+        const image = document.createElement('img');
+        image.src = img.thumb;
+
+        image.classList.add("thumb-img");
+        image.onload = () => image.classList.add("visible");
+
+        image.className += " w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100";
+        image.referrerPolicy = "no-referrer";
+
+        thumbDiv.appendChild(image);
+        grid.appendChild(thumbDiv);
+
+        if (index % 7 === 6 || index === images.length - 1) {
+            const emptyEnd = document.createElement('div');
+            emptyEnd.className = "aspect-[3/4]";
+            grid.appendChild(emptyEnd);
+        }
+    });
+
+    const stack = document.getElementById('mobile-image-stack');
+
+    images.forEach((img) => {
+        const container = document.createElement('div');
+        container.className = "w-full bg-gray-900 overflow-hidden";
+
+        const image = document.createElement('img');
+        image.src = img.full;
+
+        image.classList.add("thumb-img");
+        image.onload = () => image.classList.add("visible");
+
+        image.className += " w-full h-auto block";
+        image.referrerPolicy = "no-referrer";
+
+        container.appendChild(image);
+        stack.appendChild(container);
+    });
+
+    window.addEventListener('scroll', () => {
+        const indicator = document.getElementById('scroll-indicator');
+        indicator.style.opacity = window.scrollY > 100 ? '0' : '1';
+    });
+}
+
+function openLightbox(index) {
+    window.parent.postMessage({
+        type: 'OPEN_LIGHTBOX',
+        images: images,
+        index: index
+    }, '*');
+}
+
+window.onload = init;
+
+</script>
+
+</body>
+</html>
