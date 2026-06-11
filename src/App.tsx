@@ -273,7 +273,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
-                className="absolute left-[65%] lg:left-[70%] w-12 lg:w-auto"
+                className="absolute left-[65%] lg:left-[80%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -284,7 +284,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
-                className="absolute left-[82%] lg:left-[78%] w-12 lg:w-auto"
+                className="absolute left-[82%] lg:left-[84%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
               </motion.div>
