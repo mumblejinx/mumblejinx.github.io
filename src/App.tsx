@@ -98,7 +98,9 @@ export default function App() {
     if (newSection === Section.INTRO) {
       setAnimKey(prev => prev + 1);
     } else if (section === Section.INTRO && window.innerWidth >= 1024 && Date.now() >= dripAnimEndRef.current) {
-      // Desktop: trigger drip fall only if drips have already settled
+      // Drips already settled — trigger fresh fall; stamp end time now so the
+      // delay expression in JSX reads the correct value during this render.
+      dripAnimEndRef.current = Date.now() + 3300;
       setAnimKey(prev => prev + 1);
     }
     setSection(newSection);
@@ -237,7 +239,9 @@ export default function App() {
           transition={{
             duration: section === Section.INTRO ? 0 : 1.5,
             ease: "easeInOut",
-            delay: section !== Section.INTRO && headerHeight === '80px' ? 3.3 : 0
+            delay: section !== Section.INTRO && headerHeight === '80px'
+              ? Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000)
+              : 0
           }}
         />
 
@@ -251,7 +255,9 @@ export default function App() {
           transition={{
             duration: section === Section.INTRO ? 0 : 1.5,
             ease: "easeInOut",
-            delay: section !== Section.INTRO && headerHeight === '80px' ? 3.3 : 0
+            delay: section !== Section.INTRO && headerHeight === '80px'
+              ? Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000)
+              : 0
           }}
         >
           <div className="relative">
@@ -309,7 +315,9 @@ export default function App() {
                   exit={{ opacity: 1 }}
                   transition={{
                     duration: 0.3,
-                    delay: headerHeight === '80px' ? 4.8 : 1.5
+                    delay: headerHeight === '80px'
+                      ? Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000) + 1.5
+                      : 1.5
                   }}
                   className="absolute inset-0 flex flex-col"
                 >
