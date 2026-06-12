@@ -97,11 +97,6 @@ export default function App() {
 
     if (newSection === Section.INTRO) {
       setAnimKey(prev => prev + 1);
-    } else if (section === Section.INTRO && window.innerWidth >= 1024 && Date.now() >= dripAnimEndRef.current) {
-      // Drips already settled — trigger fresh fall; stamp end time now so the
-      // delay expression in JSX reads the correct value during this render.
-      dripAnimEndRef.current = Date.now() + 3300;
-      setAnimKey(prev => prev + 1);
     }
     setSection(newSection);
   };
