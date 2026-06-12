@@ -26,6 +26,7 @@ export default function App() {
   const [section, setSection] = useState<Section>(Section.INTRO);
   const [subsection, setSubsection] = useState<Subsection>(null);
   const [animKey, setAnimKey] = useState(0);
+  const [snapDrips, setSnapDrips] = useState(false);
   const [isExitingToIntro, setIsExitingToIntro] = useState(false);
   const [headerHeight, setHeaderHeight] = useState('80px');
   const [lightbox, setLightbox] = useState<{ images: any[], index: number } | null>(null);
@@ -80,17 +81,23 @@ export default function App() {
   }, [section]);
 
   const handleSectionChange = (newSection: Section) => {
+    if (section === Section.INTRO && newSection !== Section.INTRO) {
+      setSnapDrips(true);
+    }
+
     if (newSection === Section.INTRO && section === Section.WORK && window.innerWidth < 1024) {
       setIsExitingToIntro(true);
       setTimeout(() => {
         setSection(Section.INTRO);
         setIsExitingToIntro(false);
+        setSnapDrips(false);
         setAnimKey(prev => prev + 1);
       }, 500);
       return;
     }
 
     if (newSection === Section.INTRO) {
+      setSnapDrips(false);
       setAnimKey(prev => prev + 1);
     }
     setSection(newSection);
@@ -256,7 +263,7 @@ export default function App() {
                 key={`drip-one-${animKey}`}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
-                transition={{ duration: 2.5, ease: "easeOut" }}
+                transition={snapDrips ? { duration: 0 } : { duration: 2.5, ease: "easeOut" }}
                 className="absolute left-[8%] lg:left-[11%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-one.png" fallback="DRIP ONE" textClassName="text-[#8bc34a]" />
@@ -267,7 +274,7 @@ export default function App() {
                 key={`drip-two-${animKey}`}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
-                transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
+                transition={snapDrips ? { duration: 0 } : { duration: 3, ease: "easeOut", delay: 0.2 }}
                 className="absolute left-[65%] lg:left-[80%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
@@ -278,7 +285,7 @@ export default function App() {
                 key={`drip-three-${animKey}`}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
-                transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
+                transition={snapDrips ? { duration: 0 } : { duration: 2.8, ease: "easeOut", delay: 0.4 }}
                 className="absolute left-[82%] lg:left-[86%] xl:left-[84%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
