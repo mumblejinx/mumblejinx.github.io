@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useAnimation } from 'motion/react';
 import { Section, WorkSubsection, AboutSubsection, Subsection } from './constants';
 import { AssetImage } from './components/AssetImage';
 import { OrientationLock } from './components/OrientationLock';
@@ -26,8 +26,10 @@ export default function App() {
   const [section, setSection] = useState<Section>(Section.INTRO);
   const [subsection, setSubsection] = useState<Subsection>(null);
   const [animKey, setAnimKey] = useState(0);
-  const [snapDrips, setSnapDrips] = useState(false);
   const [isExitingToIntro, setIsExitingToIntro] = useState(false);
+  const drip1Controls = useAnimation();
+  const drip2Controls = useAnimation();
+  const drip3Controls = useAnimation();
   const [headerHeight, setHeaderHeight] = useState('80px');
   const [lightbox, setLightbox] = useState<{ images: any[], index: number } | null>(null);
 
@@ -69,6 +71,15 @@ export default function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    drip1Controls.set({ y: -100 });
+    drip2Controls.set({ y: -100 });
+    drip3Controls.set({ y: -100 });
+    drip1Controls.start({ y: 0, transition: { duration: 2.5, ease: "easeOut" } });
+    drip2Controls.start({ y: 0, transition: { duration: 3, ease: "easeOut", delay: 0.2 } });
+    drip3Controls.start({ y: 0, transition: { duration: 2.8, ease: "easeOut", delay: 0.4 } });
+  }, [animKey]);
+
   // Reset subsection when section changes
   useEffect(() => {
     if (section === Section.WORK) {
@@ -82,7 +93,9 @@ export default function App() {
 
   const handleSectionChange = (newSection: Section) => {
     if (section === Section.INTRO && newSection !== Section.INTRO) {
-      setSnapDrips(true);
+      drip1Controls.set({ y: 0 });
+      drip2Controls.set({ y: 0 });
+      drip3Controls.set({ y: 0 });
     }
 
     if (newSection === Section.INTRO && section === Section.WORK && window.innerWidth < 1024) {
@@ -90,14 +103,12 @@ export default function App() {
       setTimeout(() => {
         setSection(Section.INTRO);
         setIsExitingToIntro(false);
-        setSnapDrips(false);
         setAnimKey(prev => prev + 1);
       }, 500);
       return;
     }
 
     if (newSection === Section.INTRO) {
-      setSnapDrips(false);
       setAnimKey(prev => prev + 1);
     }
     setSection(newSection);
@@ -259,33 +270,24 @@ export default function App() {
             {/* Drips Container - Positioned at the top of the light green bar */}
             <div className="absolute top-0 inset-x-0 h-16 z-20">
               {/* Drip One */}
-              <motion.div 
-                key={`drip-one-${animKey}`}
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={snapDrips ? { duration: 0 } : { duration: 2.5, ease: "easeOut" }}
+              <motion.div
+                animate={drip1Controls}
                 className="absolute left-[8%] lg:left-[11%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-one.png" fallback="DRIP ONE" textClassName="text-[#8bc34a]" />
               </motion.div>
-              
+
               {/* Drip Two */}
-              <motion.div 
-                key={`drip-two-${animKey}`}
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={snapDrips ? { duration: 0 } : { duration: 3, ease: "easeOut", delay: 0.2 }}
+              <motion.div
+                animate={drip2Controls}
                 className="absolute left-[65%] lg:left-[80%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
               </motion.div>
-              
+
               {/* Drip Three */}
-              <motion.div 
-                key={`drip-three-${animKey}`}
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={snapDrips ? { duration: 0 } : { duration: 2.8, ease: "easeOut", delay: 0.4 }}
+              <motion.div
+                animate={drip3Controls}
                 className="absolute left-[82%] lg:left-[86%] xl:left-[84%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
