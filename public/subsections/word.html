@@ -13,12 +13,12 @@
         body {
             background-color: black;
             color: white;
+            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
 
-        /* Scrollbar styling */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
@@ -37,14 +37,14 @@
     </style>
 </head>
 
-<body>
+<body class="bg-black">
 
 <!-- DESKTOP -->
 <div class="hidden lg:flex h-dvh-safe w-full max-w-[1600px] mx-auto">
 
     <!-- LEFT: IMAGE -->
     <div class="w-[40%] h-full flex items-center justify-center bg-black">
-        <img 
+        <img
             src="/subsections/word/wordup.jpg"
             alt="Word Up"
             class="max-w-[90%] max-h-[90%] object-contain"
@@ -53,31 +53,10 @@
 
     <!-- RIGHT: SCROLLABLE TEXT -->
     <div class="w-[60%] h-full overflow-y-auto pr-4">
-
-        <h1 class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter">
-            Word Up / コンセプト
-        </h1>
-
-        <div class=”text-gray-300 text-lg leading-relaxed space-y-4 pb-20”>
-
-            <p>I am originally from a one-stoplight town in rural Michigan. I moved out at eighteen and haven’t stopped yet — I’ve lived in St. Louis, Los Angeles, Seattle, Pittsburgh, South Carolina, the Netherlands, and Japan, and travelled through England, France, and Peru. I’m currently in Fukuoka. I’m still not entirely sure how I ended up so far from the small town I grew up in.</p>
-
-            <p>I started developing this style in 1997. The underlying idea came from how I was reading Michael Parkes — characters experiencing spiritual ecstasy inside a storybook world. I wanted that same tension but applied to my own visual vocabulary: cartoons, comics, OMNI magazine covers, anime, Van Gogh, Picasso, Modigliani all running together. And I wanted to try to capture what spiritual ecstasy actually is — which is a bliss, but also a horror. I was calling the work “Bubblegum Cubist Surrealism” before I had ever heard the term Pop Surrealism or seen anyone else working in that territory.</p>
-
-            <p>Thirty years later the style is still recognizably mine, but what drives it has shifted. I’m not chasing a concept anymore. I’m making art that is an emotional reflection of what’s going on in my life — joy and grief living in the same frame, which is the most honest thing I know how to say about being alive. I think of the work now as Psychedelic Rhythm and Blues.</p>
-
-            <p>The imagery that keeps returning — figures with mixed up styles, masks, clocks, keys, hearts, skulls — isn’t symbolic in the code-breaking sense. It’s open to your own interpretation. The encounter between the work and whoever is standing in front of it is the part I can’t control, and it’s the part I find most interesting. You bring your losses and associations to it. What you experience is the work in collision with your life. That collision is the point.</p>
-
-            <p>私はミシガン州の田舎町、信号機が一つしかない小さな町の出身です。十八歳で故郷を離れ、それ以来ずっと動き続けています——セントルイス、ロサンゼルス、シアトル、ピッツバーグ、サウスカロライナ、オランダ、そして日本に住み、イギリス、フランス、ペルーにも足を運びました。今は福岡にいます。あの小さな町で育った自分が、どうしてこんなに遠くまで来たのか、今もよくわかりません。</p>
-
-            <p>このスタイルを発展させ始めたのは1997年のことです。きっかけとなったのは、マイケル・パークスの作品との出会いでした——おとぎ話のような世界の中で、登場人物たちが精神的な法悦を体験しているように見えました。私も同じテーマを、自分自身の視覚的な世界で表現したいと思いました。カートゥーン、コミック、アニメ、ヴァン・ゴッホ、ピカソ、モディリアーニ——自分が影響を受けてきたものすべてを混ぜ合わせて。そして本当の意味での精神的法悦——それは至福であると同時に、恐怖でもある——を捉えようとしました。ポップ・シュルレアリスムという言葉も、同じスタイルで活動するアーティストも知らなかった頃から、私はこの作品を「バブルガム・キュビスト・シュルレアリスム」と呼んでいました。</p>
-
-            <p>三十年が経ち、スタイルは今も自分のものとして認識できますが、制作の動機は変わりました。もうコンセプトを追いかけてはいません。今の自分の人生で感じていることの感情的な反映として作品を作っています——喜びと悲しみが同じ画面の中に共存している、それが生きることについて私が言える最も正直なことです。今は自分の作品を「サイケデリック・リズム・アンド・ブルース」と呼んでいます。</p>
-
-            <p>繰り返し現れるイメージ——狭間にいる人物、仮面、時計、鍵、ハート、頭蓋骨——は、解読すべき記号ではありません。見る人それぞれの解釈に開かれています。作品と、その前に立つ人との出会い——それは私にはコントロールできない部分であり、同時に最も興味深い部分でもあります。あなた自身の喪失や記憶を、作品に重ねてください。あなたが体験するのは、作品とあなたの人生との衝突です。その衝突こそが、すべてです。</p>
-
-        </div>
+        <h1 id="desktop-title" class="text-[#8bc34a] text-4xl font-bold mb-6 uppercase tracking-tighter"></h1>
+        <div id="desktop-description" class="text-gray-300 text-lg leading-relaxed space-y-4 pb-20"></div>
     </div>
+
 </div>
 
 <!-- MOBILE -->
@@ -85,7 +64,7 @@
 
     <!-- IMAGE ON TOP -->
     <div class="w-full flex justify-center items-center p-4">
-        <img 
+        <img
             src="/subsections/word/wordup.jpg"
             alt="Word Up"
             class="w-full max-w-md object-contain"
@@ -94,30 +73,8 @@
 
     <!-- TEXT BELOW -->
     <div class="mt-8 border-t border-gray-800 pt-8">
-
-        <h1 class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter">
-            Word Up / コンセプト
-        </h1>
-
-        <div class=”text-gray-400 text-base leading-relaxed space-y-4”>
-
-            <p>I am originally from a one-stoplight town in rural Michigan. I moved out at eighteen and haven’t stopped yet — I’ve lived in St. Louis, Los Angeles, Seattle, Pittsburgh, South Carolina, the Netherlands, and Japan, and travelled through England, France, and Peru. I’m currently in Fukuoka. I’m still not entirely sure how I ended up so far from the small town I grew up in.</p>
-
-            <p>I started developing this style in 1997. The underlying idea came from how I was reading Michael Parkes — characters experiencing spiritual ecstasy inside a storybook world. I wanted that same tension but applied to my own visual vocabulary: cartoons, comics, OMNI magazine covers, anime, Van Gogh, Picasso, Modigliani all running together. And I wanted to try to capture what spiritual ecstasy actually is — which is a bliss, but also a horror. I was calling the work “Bubblegum Cubist Surrealism” before I had ever heard the term Pop Surrealism or seen anyone else working in that territory.</p>
-
-            <p>Thirty years later the style is still recognizably mine, but what drives it has shifted. I’m not chasing a concept anymore. I’m making art that is an emotional reflection of what’s going on in my life — joy and grief living in the same frame, which is the most honest thing I know how to say about being alive. I think of the work now as Psychedelic Rhythm and Blues.</p>
-
-            <p>The imagery that keeps returning — figures with mixed up styles, masks, clocks, keys, hearts, skulls — isn’t symbolic in the code-breaking sense. It’s open to your own interpretation. The encounter between the work and whoever is standing in front of it is the part I can’t control, and it’s the part I find most interesting. You bring your losses and associations to it. What you experience is the work in collision with your life. That collision is the point.</p>
-
-            <p>私はミシガン州の田舎町、信号機が一つしかない小さな町の出身です。十八歳で故郷を離れ、それ以来ずっと動き続けています——セントルイス、ロサンゼルス、シアトル、ピッツバーグ、サウスカロライナ、オランダ、そして日本に住み、イギリス、フランス、ペルーにも足を運びました。今は福岡にいます。あの小さな町で育った自分が、どうしてこんなに遠くまで来たのか、今もよくわかりません。</p>
-
-            <p>このスタイルを発展させ始めたのは1997年のことです。きっかけとなったのは、マイケル・パークスの作品との出会いでした——おとぎ話のような世界の中で、登場人物たちが精神的な法悦を体験しているように見えました。私も同じテーマを、自分自身の視覚的な世界で表現したいと思いました。カートゥーン、コミック、アニメ、ヴァン・ゴッホ、ピカソ、モディリアーニ——自分が影響を受けてきたものすべてを混ぜ合わせて。そして本当の意味での精神的法悦——それは至福であると同時に、恐怖でもある——を捉えようとしました。ポップ・シュルレアリスムという言葉も、同じスタイルで活動するアーティストも知らなかった頃から、私はこの作品を「バブルガム・キュビスト・シュルレアリスム」と呼んでいました。</p>
-
-            <p>三十年が経ち、スタイルは今も自分のものとして認識できますが、制作の動機は変わりました。もうコンセプトを追いかけてはいません。今の自分の人生で感じていることの感情的な反映として作品を作っています——喜びと悲しみが同じ画面の中に共存している、それが生きることについて私が言える最も正直なことです。今は自分の作品を「サイケデリック・リズム・アンド・ブルース」と呼んでいます。</p>
-
-            <p>繰り返し現れるイメージ——狭間にいる人物、仮面、時計、鍵、ハート、頭蓋骨——は、解読すべき記号ではありません。見る人それぞれの解釈に開かれています。作品と、その前に立つ人との出会い——それは私にはコントロールできない部分であり、同時に最も興味深い部分でもあります。あなた自身の喪失や記憶を、作品に重ねてください。あなたが体験するのは、作品とあなたの人生との衝突です。その衝突こそが、すべてです。</p>
-
-        </div>
+        <h1 id="mobile-title" class="text-[#8bc34a] text-3xl font-bold mb-4 uppercase tracking-tighter"></h1>
+        <div id="mobile-description" class="text-gray-400 text-base leading-relaxed space-y-4"></div>
     </div>
 
     <div id="scroll-indicator" class="fixed bottom-4 left-6 z-40 pointer-events-none">
@@ -129,10 +86,41 @@
 </div>
 
 <script>
+
+const title = "Word Up / コンセプト";
+
+const description = `
+    <p>I am originally from a one-stoplight town in rural Michigan. I moved out at eighteen and haven't stopped yet — I've lived in St. Louis, Los Angeles, Seattle, Pittsburgh, South Carolina, the Netherlands, and Japan, and travelled through England, France, and Peru. I'm currently in Fukuoka. I'm still not entirely sure how I ended up so far from the small town I grew up in.</p>
+
+    <p>I started developing this style in 1997. The underlying idea came from how I was reading Michael Parkes — characters experiencing spiritual ecstasy inside a storybook world. I wanted that same tension but applied to my own visual vocabulary: cartoons, comics, OMNI magazine covers, anime, Van Gogh, Picasso, Modigliani all running together. And I wanted to try to capture what spiritual ecstasy actually is — which is a bliss, but also a horror. I was calling the work "Bubblegum Cubist Surrealism" before I had ever heard the term Pop Surrealism or seen anyone else working in that territory.</p>
+
+    <p>Thirty years later the style is still recognizably mine, but what drives it has shifted. I'm not chasing a concept anymore. I'm making art that is an emotional reflection of what's going on in my life — joy and grief living in the same frame, which is the most honest thing I know how to say about being alive. I think of the work now as Psychedelic Rhythm and Blues.</p>
+
+    <p>The imagery that keeps returning — figures with mixed up styles, masks, clocks, keys, hearts, skulls — isn't symbolic in the code-breaking sense. It's open to your own interpretation. The encounter between the work and whoever is standing in front of it is the part I can't control, and it's the part I find most interesting. You bring your losses and associations to it. What you experience is the work in collision with your life. That collision is the point.</p>
+
+    <p>私はミシガン州の田舎町、信号機が一つしかない小さな町の出身です。十八歳で故郷を離れ、それ以来ずっと動き続けています——セントルイス、ロサンゼルス、シアトル、ピッツバーグ、サウスカロライナ、オランダ、そして日本に住み、イギリス、フランス、ペルーにも足を運びました。今は福岡にいます。あの小さな町で育った自分が、どうしてこんなに遠くまで来たのか、今もよくわかりません。</p>
+
+    <p>このスタイルを発展させ始めたのは1997年のことです。きっかけとなったのは、マイケル・パークスの作品との出会いでした——おとぎ話のような世界の中で、登場人物たちが精神的な法悦を体験しているように見えました。私も同じテーマを、自分自身の視覚的な世界で表現したいと思いました。カートゥーン、コミック、アニメ、ヴァン・ゴッホ、ピカソ、モディリアーニ——自分が影響を受けてきたものすべてを混ぜ合わせて。そして本当の意味での精神的法悦——それは至福であると同時に、恐怖でもある——を捉えようとしました。ポップ・シュルレアリスムという言葉も、同じスタイルで活動するアーティストも知らなかった頃から、私はこの作品を「バブルガム・キュビスト・シュルレアリスム」と呼んでいました。</p>
+
+    <p>三十年が経ち、スタイルは今も自分のものとして認識できますが、制作の動機は変わりました。もうコンセプトを追いかけてはいません。今の自分の人生で感じていることの感情的な反映として作品を作っています——喜びと悲しみが同じ画面の中に共存している、それが生きることについて私が言える最も正直なことです。今は自分の作品を「サイケデリック・リズム・アンド・ブルース」と呼んでいます。</p>
+
+    <p>繰り返し現れるイメージ——狭間にいる人物、仮面、時計、鍵、ハート、頭蓋骨——は、解読すべき記号ではありません。見る人それぞれの解釈に開かれています。作品と、その前に立つ人との出会い——それは私にはコントロールできない部分であり、同時に最も興味深い部分でもあります。あなた自身の喪失や記憶を、作品に重ねてください。あなたが体験するのは、作品とあなたの人生との衝突です。その衝突こそが、すべてです。</p>
+`;
+
+function init() {
+    document.getElementById('desktop-title').innerText = title;
+    document.getElementById('mobile-title').innerText = title;
+    document.getElementById('desktop-description').innerHTML = description;
+    document.getElementById('mobile-description').innerHTML = description;
+}
+
 window.addEventListener('scroll', () => {
     const indicator = document.getElementById('scroll-indicator');
     if (indicator) indicator.style.opacity = window.scrollY > 100 ? '0' : '1';
 });
+
+window.onload = init;
+
 </script>
 
 </body>
