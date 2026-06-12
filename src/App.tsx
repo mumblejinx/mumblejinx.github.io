@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, animate } from 'motion/react';
 import { Section, WorkSubsection, AboutSubsection, Subsection } from './constants';
 import { AssetImage } from './components/AssetImage';
@@ -30,6 +30,9 @@ export default function App() {
   const drip1Y = useMotionValue(-100);
   const drip2Y = useMotionValue(-100);
   const drip3Y = useMotionValue(-100);
+  const drip1Anim = useRef<any>(null);
+  const drip2Anim = useRef<any>(null);
+  const drip3Anim = useRef<any>(null);
   const [headerHeight, setHeaderHeight] = useState('80px');
   const [lightbox, setLightbox] = useState<{ images: any[], index: number } | null>(null);
 
@@ -75,9 +78,9 @@ export default function App() {
     drip1Y.set(-100);
     drip2Y.set(-100);
     drip3Y.set(-100);
-    animate(drip1Y, 0, { duration: 2.5, ease: "easeOut" });
-    animate(drip2Y, 0, { duration: 3, ease: "easeOut", delay: 0.2 });
-    animate(drip3Y, 0, { duration: 2.8, ease: "easeOut", delay: 0.4 });
+    drip1Anim.current = animate(drip1Y, 0, { duration: 2.5, ease: "easeOut" });
+    drip2Anim.current = animate(drip2Y, 0, { duration: 3, ease: "easeOut", delay: 0.2 });
+    drip3Anim.current = animate(drip3Y, 0, { duration: 2.8, ease: "easeOut", delay: 0.4 });
   }, [animKey]);
 
   // Reset subsection when section changes
@@ -93,6 +96,9 @@ export default function App() {
 
   const handleSectionChange = (newSection: Section) => {
     if (section === Section.INTRO && newSection !== Section.INTRO) {
+      drip1Anim.current?.stop();
+      drip2Anim.current?.stop();
+      drip3Anim.current?.stop();
       drip1Y.set(0);
       drip2Y.set(0);
       drip3Y.set(0);
