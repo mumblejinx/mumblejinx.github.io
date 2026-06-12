@@ -234,7 +234,7 @@ export default function App() {
           transition={{
             duration: section === Section.INTRO ? 0 : 1.5,
             ease: "easeInOut",
-            delay: section !== Section.INTRO && headerHeight === '80px'
+            delay: section !== Section.INTRO
               ? Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000)
               : 0
           }}
@@ -250,7 +250,7 @@ export default function App() {
           transition={{
             duration: section === Section.INTRO ? 0 : 1.5,
             ease: "easeInOut",
-            delay: section !== Section.INTRO && headerHeight === '80px'
+            delay: section !== Section.INTRO
               ? Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000)
               : 0
           }}
@@ -310,9 +310,7 @@ export default function App() {
                   exit={{ opacity: 1 }}
                   transition={{
                     duration: 0.3,
-                    delay: headerHeight === '80px'
-                      ? Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000) + 1.5
-                      : 1.5
+                    delay: Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000) + 1.5
                   }}
                   className="absolute inset-0 flex flex-col"
                 >
