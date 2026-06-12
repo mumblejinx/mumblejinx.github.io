@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Section, WorkSubsection, AboutSubsection, Subsection } from './constants';
 import { AssetImage } from './components/AssetImage';
@@ -29,7 +29,6 @@ export default function App() {
   const [isExitingToIntro, setIsExitingToIntro] = useState(false);
   const [headerHeight, setHeaderHeight] = useState('80px');
   const [lightbox, setLightbox] = useState<{ images: any[], index: number } | null>(null);
-  const dripAnimEndRef = useRef<number>(0);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -68,10 +67,6 @@ export default function App() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  useEffect(() => {
-    dripAnimEndRef.current = Date.now() + 3300;
-  }, [animKey]);
 
   // Reset subsection when section changes
   useEffect(() => {
@@ -225,34 +220,28 @@ export default function App() {
         </div>
 
         {/* Layer 2: Black Content Background (Grows from top down) */}
-        <motion.div
+        <motion.div 
           className="absolute inset-x-0 top-0 bg-black z-20"
           initial={false}
-          animate={{
+          animate={{ 
             height: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)'
           }}
-          transition={{
-            duration: section === Section.INTRO ? 0 : 1.5,
-            ease: "easeInOut",
-            delay: section !== Section.INTRO
-              ? Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000)
-              : 0
+          transition={{ 
+            duration: section === Section.INTRO ? 0 : 1.5, 
+            ease: "easeInOut"
           }}
         />
 
         {/* Layer 3: Drip Bar Container (Moves down, boundary between Black and Intro) */}
-        <motion.div
+        <motion.div 
           className="absolute inset-x-0 z-40"
           initial={false}
-          animate={{
-            top: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)'
+          animate={{ 
+            top: section === Section.INTRO ? headerHeight : 'calc(100% - 120px)' 
           }}
-          transition={{
-            duration: section === Section.INTRO ? 0 : 1.5,
-            ease: "easeInOut",
-            delay: section !== Section.INTRO
-              ? Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000)
-              : 0
+          transition={{ 
+            duration: section === Section.INTRO ? 0 : 1.5, 
+            ease: "easeInOut" 
           }}
         >
           <div className="relative">
@@ -290,7 +279,7 @@ export default function App() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 2.8, ease: "easeOut", delay: 0.4 }}
-                className="absolute left-[82%] lg:left-[84%] w-12 lg:w-auto"
+                className="absolute left-[82%] lg:left-[88%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
               </motion.div>
@@ -308,9 +297,9 @@ export default function App() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 1 }}
-                  transition={{
+                  transition={{ 
                     duration: 0.3,
-                    delay: Math.max(0, (dripAnimEndRef.current - Date.now()) / 1000) + 1.5
+                    delay: 1.5 // Wait for descent to finish
                   }}
                   className="absolute inset-0 flex flex-col"
                 >
