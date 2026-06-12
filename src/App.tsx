@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'motion/react';
+import { motion, AnimatePresence, useMotionValue, animate } from 'motion/react';
 import { Section, WorkSubsection, AboutSubsection, Subsection } from './constants';
 import { AssetImage } from './components/AssetImage';
 import { OrientationLock } from './components/OrientationLock';
@@ -27,9 +27,9 @@ export default function App() {
   const [subsection, setSubsection] = useState<Subsection>(null);
   const [animKey, setAnimKey] = useState(0);
   const [isExitingToIntro, setIsExitingToIntro] = useState(false);
-  const drip1Controls = useAnimation();
-  const drip2Controls = useAnimation();
-  const drip3Controls = useAnimation();
+  const drip1Y = useMotionValue(-100);
+  const drip2Y = useMotionValue(-100);
+  const drip3Y = useMotionValue(-100);
   const [headerHeight, setHeaderHeight] = useState('80px');
   const [lightbox, setLightbox] = useState<{ images: any[], index: number } | null>(null);
 
@@ -72,12 +72,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    drip1Controls.set({ y: -100 });
-    drip2Controls.set({ y: -100 });
-    drip3Controls.set({ y: -100 });
-    drip1Controls.start({ y: 0, transition: { duration: 2.5, ease: "easeOut" } });
-    drip2Controls.start({ y: 0, transition: { duration: 3, ease: "easeOut", delay: 0.2 } });
-    drip3Controls.start({ y: 0, transition: { duration: 2.8, ease: "easeOut", delay: 0.4 } });
+    drip1Y.set(-100);
+    drip2Y.set(-100);
+    drip3Y.set(-100);
+    animate(drip1Y, 0, { duration: 2.5, ease: "easeOut" });
+    animate(drip2Y, 0, { duration: 3, ease: "easeOut", delay: 0.2 });
+    animate(drip3Y, 0, { duration: 2.8, ease: "easeOut", delay: 0.4 });
   }, [animKey]);
 
   // Reset subsection when section changes
@@ -93,9 +93,9 @@ export default function App() {
 
   const handleSectionChange = (newSection: Section) => {
     if (section === Section.INTRO && newSection !== Section.INTRO) {
-      drip1Controls.set({ y: 0 });
-      drip2Controls.set({ y: 0 });
-      drip3Controls.set({ y: 0 });
+      drip1Y.set(0);
+      drip2Y.set(0);
+      drip3Y.set(0);
     }
 
     if (newSection === Section.INTRO && section === Section.WORK && window.innerWidth < 1024) {
@@ -271,7 +271,7 @@ export default function App() {
             <div className="absolute top-0 inset-x-0 h-16 z-20">
               {/* Drip One */}
               <motion.div
-                animate={drip1Controls}
+                style={{ y: drip1Y }}
                 className="absolute left-[8%] lg:left-[11%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-one.png" fallback="DRIP ONE" textClassName="text-[#8bc34a]" />
@@ -279,7 +279,7 @@ export default function App() {
 
               {/* Drip Two */}
               <motion.div
-                animate={drip2Controls}
+                style={{ y: drip2Y }}
                 className="absolute left-[65%] lg:left-[80%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-two.png" fallback="DRIP TWO" textClassName="text-[#8bc34a]" />
@@ -287,7 +287,7 @@ export default function App() {
 
               {/* Drip Three */}
               <motion.div
-                animate={drip3Controls}
+                style={{ y: drip3Y }}
                 className="absolute left-[82%] lg:left-[86%] xl:left-[84%] w-12 lg:w-auto"
               >
                 <AssetImage src="/drip-three.png" fallback="DRIP THREE" textClassName="text-[#8bc34a]" />
