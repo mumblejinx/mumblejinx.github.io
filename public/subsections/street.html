@@ -107,11 +107,29 @@ const description = `
     <p>そこで、長年にわたって送ってもらったステッカーでコラージュを作り始めました。今では、素晴らしいと思う作品を作るアーティストたちと知り合い、彼らも私の活動を理解して、使用する作品を送ってくれています。制作は主に非破壊的な方法で、マグネットを多用しています。気に入った人が作品を持ち帰れるようにしたいからです。他のアーティストの作品を多く含むこれらの作品は、販売するつもりはありません。誰かが気に入って自宅に持ち帰りたいなら、それを勧めています。屋外の作品は、いずれ色あせてしまうからです。</p>
 `;
 
-const images = Array.from({ length: 21 }, (_, i) => ({
-    thumb: `/subsections/street/street_thumb/street-${i}.jpg`,
-    full: `/subsections/street/street_full/street-${i}.jpg`,
-    description: `Street piece #${i + 1}`
-}));
+const images = [
+    { thumb: '/subsections/street/street_thumb/street-0.jpg',  full: '/subsections/street/street_full/street-0.jpg',  name: 'Fukuoka, Japan',           description: 'Street Art hunting in Fukuoka, Japan' },
+    { thumb: '/subsections/street/street_thumb/street-1.jpg',  full: '/subsections/street/street_full/street-1.jpg',  name: 'Fukuoka, Japan',           description: 'Street Art hunting in Fukuoka, Japan' },
+    { thumb: '/subsections/street/street_thumb/street-2.jpg',  full: '/subsections/street/street_full/street-2.jpg',  name: 'Fukuoka, Japan',           description: 'Street Art hunting in Fukuoka, Japan' },
+    { thumb: '/subsections/street/street_thumb/street-3.jpg',  full: '/subsections/street/street_full/street-3.jpg',  name: 'Tokyo, Japan',             description: 'Street Art hunting in Tokyo, Japan' },
+    { thumb: '/subsections/street/street_thumb/street-4.jpg',  full: '/subsections/street/street_full/street-4.jpg',  name: 'Fukuoka, Japan',           description: 'Street Art hunting in Fukuoka, Japan' },
+    { thumb: '/subsections/street/street_thumb/street-5.jpg',  full: '/subsections/street/street_full/street-5.jpg',  name: 'Fukuoka, Japan',           description: 'Street Art hunting in Fukuoka, Japan' },
+    { thumb: '/subsections/street/street_thumb/street-6.jpg',  full: '/subsections/street/street_full/street-6.jpg',  name: 'Fukuoka, Japan',           description: 'Street Art hunting in Fukuoka, Japan' },
+    { thumb: '/subsections/street/street_thumb/street-7.jpg',  full: '/subsections/street/street_full/street-7.jpg',  name: 'Seattle, Washington',      description: 'Street Art hunting in Seattle, Washington' },
+    { thumb: '/subsections/street/street_thumb/street-8.jpg',  full: '/subsections/street/street_full/street-8.jpg',  name: 'Pittsburgh, Pennsylvania', description: 'Street Art hunting in Pittsburgh, Pennsylvania' },
+    { thumb: '/subsections/street/street_thumb/street-9.jpg',  full: '/subsections/street/street_full/street-9.jpg',  name: 'Fukuoka, Japan',           description: 'Street Art hunting in Fukuoka, Japan' },
+    { thumb: '/subsections/street/street_thumb/street-10.jpg', full: '/subsections/street/street_full/street-10.jpg', name: 'Pittsburgh, Pennsylvania', description: 'Street Art hunting in Pittsburgh, Pennsylvania' },
+    { thumb: '/subsections/street/street_thumb/street-11.jpg', full: '/subsections/street/street_full/street-11.jpg', name: 'Anderson, South Carolina',  description: 'Street Art hunting in Anderson, South Carolina' },
+    { thumb: '/subsections/street/street_thumb/street-12.jpg', full: '/subsections/street/street_full/street-12.jpg', name: 'Pittsburgh, Pennsylvania', description: 'Street Art hunting in Pittsburgh, Pennsylvania' },
+    { thumb: '/subsections/street/street_thumb/street-13.jpg', full: '/subsections/street/street_full/street-13.jpg', name: 'Pendleton, South Carolina', description: 'Street Art hunting in Pendleton, South Carolina' },
+    { thumb: '/subsections/street/street_thumb/street-14.jpg', full: '/subsections/street/street_full/street-14.jpg', name: 'Pittsburgh, Pennsylvania', description: 'Street Art hunting in Pittsburgh, Pennsylvania' },
+    { thumb: '/subsections/street/street_thumb/street-15.jpg', full: '/subsections/street/street_full/street-15.jpg', name: 'Anderson, South Carolina',  description: 'Street Art hunting in Anderson, South Carolina' },
+    { thumb: '/subsections/street/street_thumb/street-16.jpg', full: '/subsections/street/street_full/street-16.jpg', name: 'Pittsburgh, Pennsylvania', description: 'Street Art hunting in Pittsburgh, Pennsylvania' },
+    { thumb: '/subsections/street/street_thumb/street-17.jpg', full: '/subsections/street/street_full/street-17.jpg', name: 'Anderson, South Carolina',  description: 'Street Art hunting in Anderson, South Carolina' },
+    { thumb: '/subsections/street/street_thumb/street-18.jpg', full: '/subsections/street/street_full/street-18.jpg', name: 'Pittsburgh, Pennsylvania', description: 'Street Art hunting in Pittsburgh, Pennsylvania' },
+    { thumb: '/subsections/street/street_thumb/street-19.jpg', full: '/subsections/street/street_full/street-19.jpg', name: 'Anderson, South Carolina',  description: 'Street Art hunting in Anderson, South Carolina' },
+    { thumb: '/subsections/street/street_thumb/street-20.jpg', full: '/subsections/street/street_full/street-20.jpg', name: 'Anderson, South Carolina',  description: 'Street Art hunting in Anderson, South Carolina' },
+];
 
 function init() {
 
