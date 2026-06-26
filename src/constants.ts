@@ -20,4 +20,10 @@ export enum AboutSubsection {
   CONTACT = 'CONTACT',
 }
 
-export type Subsection = WorkSubsection | AboutSubsection | null;
+export enum SupportSubsection {
+  STORE = 'STORE',
+  PORTAL = 'PORTAL',
+  COMMISSIONS = 'COMMISSIONS',
+}
+
+export type Subsection = WorkSubsection | AboutSubsection | SupportSubsection | null;

@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, animate } from 'motion/react';
-import { Section, WorkSubsection, AboutSubsection, Subsection } from './constants';
+import { Section, WorkSubsection, AboutSubsection, SupportSubsection, Subsection } from './constants';
 import { AssetImage } from './components/AssetImage';
 import { OrientationLock } from './components/OrientationLock';
 
@@ -89,6 +89,8 @@ export default function App() {
       setSubsection(WorkSubsection.ANALOG);
     } else if (section === Section.ABOUT) {
       setSubsection(AboutSubsection.WORD);
+    } else if (section === Section.SUPPORT) {
+      setSubsection(SupportSubsection.STORE);
     } else {
       setSubsection(null);
     }
@@ -125,7 +127,6 @@ export default function App() {
   };
 
   const getSubsectionFile = () => {
-    if (section === Section.SUPPORT) return '/subsections/support.html';
     if (!subsection) return null;
     return `/subsections/${subsection.toLowerCase()}.html`;
   };
@@ -385,6 +386,19 @@ export default function App() {
                   {section === Section.ABOUT && (
                     <div className="flex flex-wrap justify-center gap-2 lg:gap-8 w-full">
                       {Object.values(AboutSubsection).map((sub) => (
+                        <button
+                          key={sub}
+                          onClick={() => handleSubsectionChange(sub)}
+                          className={`hover:opacity-70 transition-opacity ${subsection === sub ? 'ring-2 ring-[#8bc34a]' : ''}`}
+                        >
+                          <AssetImage src={`/${sub.toLowerCase()}.jpg`} fallback={sub} className="h-5 lg:h-8" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {section === Section.SUPPORT && (
+                    <div className="flex flex-wrap justify-center gap-2 lg:gap-8 w-full">
+                      {Object.values(SupportSubsection).map((sub) => (
                         <button
                           key={sub}
                           onClick={() => handleSubsectionChange(sub)}

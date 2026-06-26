@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Store - Jake Galm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body { background: black; color: white; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+        .h-dvh-safe { height: 100vh; height: 100dvh; }
+        .min-h-dvh-safe { min-height: 100vh; min-height: 100dvh; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        #catalog-view, #detail-view { animation: fadeIn 0.3s ease; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444; }
+    </style>
+</head>
+<body class="bg-black">
+
+<div class="min-h-dvh-safe px-6 lg:px-12 py-8 max-w-[1600px] mx-auto">
+
+    <!-- ===== CATALOG VIEW ===== -->
+    <div id="catalog-view">
+        <h1 class="text-[#8bc34a] text-4xl font-bold mb-8 uppercase tracking-tighter">Store / ストア</h1>
+        <div id="catalog-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-16"></div>
+    </div>
+
+    <!-- ===== DETAIL VIEW (hidden by default) ===== -->
+    <div id="detail-view" class="hidden">
+        <div class="mb-8">
+            <button id="back-btn" class="text-gray-400 hover:text-[#8bc34a] transition-colors text-sm tracking-widest uppercase">
+                &larr; Back to Store
+            </button>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-16 pb-16">
+            <div id="detail-gallery" class="w-full lg:w-1/2"></div>
+            <div id="detail-info" class="w-full lg:w-1/2 flex flex-col"></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+// =====================================================================
+// PIECE DATA
+// To add photos: drop image files into the folder for each piece at
+//   public/subsections/store/for-sale/<id>/
+// then add the filenames to that piece's images array below.
+// Example: images: ['front.jpg', 'back.jpg', 'detail.jpg']
+// The first filename is used as the catalog card cover image.
+// =====================================================================
+
+var pieces = [
+    {
+        id: 'neon-mind',
+        title: 'Neon Mind',
+        price: '$125',
+        medium: 'Mixed media, postal sticker, A4',
+        description: 'Mixed media on USPS postal stickers, watercolor, acrylic, and ink across four stickers. Influenced by hip hop, psychedelic art, alchemy, retro-futurism, comics, and street and graffiti sticker culture.',
+        order: 1,
+        stripeProductId: 'prod_Ulzg9e5MurOtdY',
+        stripePriceId: 'price_1TmRhaEEmu8yWc6RVHo1ZTP8',
+        images: []
+    },
+    {
+        id: 'daybroke',
+        title: 'Daybroke',
+        price: '$125',
+        medium: 'Mixed media, postal sticker, A4',
+        description: 'Mixed media on USPS postal stickers, watercolor, acrylic, and ink across four stickers. Influenced by hip hop, psychedelic art, alchemy, retro-futurism, comics, and street and graffiti sticker culture.',
+        order: 2,
+        stripeProductId: 'prod_UlzflMFFowug31',
+        stripePriceId: 'price_1TmRfnEEmu8yWc6Rs5ka4siW',
+        images: []
+    },
+    {
+        id: 'selective-hearing',
+        title: 'Selective Hearing',
+        price: '$125',
+        medium: 'Mixed media, postal sticker, A4',
+        description: 'Mixed media on USPS postal stickers, watercolor, acrylic, and ink across four stickers. Influenced by hip hop, psychedelic art, alchemy, retro-futurism, comics, and street and graffiti sticker culture.',
+        order: 3,
+        stripeProductId: 'prod_UlzdeoUNUMYumn',
+        stripePriceId: 'price_1TmReDEEmu8yWc6RNCLIFpMD',
+        images: []
+    },
+    {
+        id: 'rolling-stone',
+        title: 'Rolling Stone',
+        price: '$125',
+        medium: 'Mixed media, postal sticker, A4',
+        description: 'Mixed media on USPS postal stickers, watercolor, acrylic, and ink across four stickers. Influenced by hip hop, psychedelic art, alchemy, retro-futurism, comics, and street and graffiti sticker culture.',
+        order: 4,
+        stripeProductId: 'prod_Ulzbo1rbQxHLqn',
+        stripePriceId: 'price_1TmRbsEEmu8yWc6RWpbvTBth',
+        images: []
+    },
+    {
+        id: 'trial-run',
+        title: 'Trial Run',
+        price: '$125',
+        medium: 'Mixed media, postal sticker, A4',
+        description: 'Mixed media on USPS postal stickers, watercolor, acrylic, and ink across four stickers. Influenced by hip hop, psychedelic art, alchemy, retro-futurism, comics, and street and graffiti sticker culture.',
+        order: 5,
+        stripeProductId: 'prod_UlzXdLMQNM9BPk',
+        stripePriceId: 'price_1TmRYmEEmu8yWc6RgjyvIwyU',
+        images: []
+    }
+];
+
+var inventory = {};
+
+function init() {
+    document.getElementById('back-btn').addEventListener('click', showCatalog);
+
+    fetch('/subsections/store-inventory.json')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            inventory = data;
+            showCatalog();
+        })
+        .catch(function() {
+            pieces.forEach(function(p) { inventory[p.id] = 'available'; });
+            showCatalog();
+        });
+}
+
+function getStatus(id) {
+    return inventory[id] || 'available';
+}
+
+function showCatalog() {
+    document.getElementById('catalog-view').classList.remove('hidden');
+    document.getElementById('detail-view').classList.add('hidden');
+    window.scrollTo(0, 0);
+
+    var sorted = pieces.slice().sort(function(a, b) { return a.order - b.order; });
+    var grid = document.getElementById('catalog-grid');
+    grid.innerHTML = '';
+
+    sorted.forEach(function(piece) {
+        var status = getStatus(piece.id);
+        var sold = status === 'sold';
+
+        var card = document.createElement('div');
+        card.className = 'cursor-pointer border border-gray-800 hover:border-[#8bc34a] transition-colors';
+        if (sold) card.style.opacity = '0.4';
+        card.addEventListener('click', (function(id) {
+            return function() { showDetail(id); };
+        })(piece.id));
+
+        if (piece.images.length > 0) {
+            var img = document.createElement('img');
+            img.src = '/subsections/store/for-sale/' + piece.id + '/' + piece.images[0];
+            img.className = 'w-full object-cover';
+            img.style.height = '256px';
+            card.appendChild(img);
+        } else {
+            var placeholder = document.createElement('div');
+            placeholder.className = 'w-full flex items-center justify-center bg-gray-900 text-gray-600 text-xs tracking-widest';
+            placeholder.style.height = '256px';
+            placeholder.textContent = 'PHOTO COMING SOON';
+            card.appendChild(placeholder);
+        }
+
+        var info = document.createElement('div');
+        info.className = 'p-4';
+
+        var title = document.createElement('h2');
+        title.className = 'text-white font-bold text-lg uppercase tracking-tight mb-2';
+        title.textContent = piece.title;
+
+        var row = document.createElement('div');
+        row.className = 'flex justify-between items-center';
+
+        var priceEl = document.createElement('span');
+        priceEl.className = 'text-gray-400 text-sm';
+        priceEl.textContent = piece.price;
+
+        var badge = document.createElement('span');
+        badge.className = 'text-xs tracking-widest px-2 py-1';
+        if (sold) {
+            badge.style.cssText = 'border: 1px solid #4b5563; color: #4b5563;';
+            badge.textContent = 'SOLD';
+        } else {
+            badge.style.cssText = 'border: 1px solid #8bc34a; color: #8bc34a;';
+            badge.textContent = 'AVAILABLE';
+        }
+
+        row.appendChild(priceEl);
+        row.appendChild(badge);
+        info.appendChild(title);
+        info.appendChild(row);
+        card.appendChild(info);
+        grid.appendChild(card);
+    });
+}
+
+function showDetail(id) {
+    var piece = pieces.find(function(p) { return p.id === id; });
+    if (!piece) return;
+
+    var status = getStatus(id);
+    var sold = status === 'sold';
+
+    document.getElementById('catalog-view').classList.add('hidden');
+    document.getElementById('detail-view').classList.remove('hidden');
+    window.scrollTo(0, 0);
+
+    // Gallery
+    var galleryEl = document.getElementById('detail-gallery');
+    galleryEl.innerHTML = '';
+
+    if (piece.images.length === 0) {
+        var ph = document.createElement('div');
+        ph.className = 'w-full flex items-center justify-center bg-gray-900 text-gray-600 text-xs tracking-widest';
+        ph.style.height = '400px';
+        ph.textContent = 'PHOTO COMING SOON';
+        galleryEl.appendChild(ph);
+    } else {
+        var mainWrap = document.createElement('div');
+        mainWrap.className = 'cursor-pointer mb-3';
+        var mainImg = document.createElement('img');
+        mainImg.src = '/subsections/store/for-sale/' + id + '/' + piece.images[0];
+        mainImg.className = 'w-full object-contain';
+        mainImg.style.maxHeight = '60vh';
+        mainWrap.appendChild(mainImg);
+        mainWrap.addEventListener('click', function() { openLightbox(id, 0); });
+        galleryEl.appendChild(mainWrap);
+
+        if (piece.images.length > 1) {
+            var thumbGrid = document.createElement('div');
+            thumbGrid.className = 'grid grid-cols-4 gap-2 mt-2';
+            piece.images.forEach(function(imgFile, i) {
+                var thumbWrap = document.createElement('div');
+                thumbWrap.className = 'overflow-hidden cursor-pointer bg-gray-900';
+                thumbWrap.style.cssText = 'aspect-ratio: 1; border: 1px solid transparent;';
+                var thumbImg = document.createElement('img');
+                thumbImg.src = '/subsections/store/for-sale/' + id + '/' + imgFile;
+                thumbImg.className = 'w-full h-full object-cover';
+                thumbWrap.appendChild(thumbImg);
+                thumbWrap.addEventListener('click', (function(idx) {
+                    return function() { openLightbox(id, idx); };
+                })(i));
+                thumbGrid.appendChild(thumbWrap);
+            });
+            galleryEl.appendChild(thumbGrid);
+        }
+    }
+
+    // Info
+    var infoEl = document.getElementById('detail-info');
+    infoEl.innerHTML = '';
+
+    var h1 = document.createElement('h1');
+    h1.className = 'text-[#8bc34a] text-4xl font-bold mb-2 uppercase tracking-tighter';
+    h1.textContent = piece.title;
+
+    var medium = document.createElement('p');
+    medium.className = 'text-gray-500 text-sm mb-6 tracking-widest uppercase';
+    medium.textContent = piece.medium;
+
+    var desc = document.createElement('div');
+    desc.className = 'text-gray-300 text-base leading-relaxed mb-6';
+    desc.textContent = piece.description;
+
+    var price = document.createElement('p');
+    price.className = 'text-white text-2xl font-bold mb-2';
+    price.textContent = piece.price;
+
+    infoEl.appendChild(h1);
+    infoEl.appendChild(medium);
+    infoEl.appendChild(desc);
+    infoEl.appendChild(price);
+
+    if (sold) {
+        var soldNotice = document.createElement('div');
+        soldNotice.className = 'mt-4 py-3 text-center text-sm tracking-widest text-gray-500';
+        soldNotice.style.border = '1px solid #374151';
+        soldNotice.textContent = 'SOLD';
+        infoEl.appendChild(soldNotice);
+    } else {
+        var btn = document.createElement('button');
+        btn.className = 'mt-4 w-full bg-[#8bc34a] text-black font-bold py-3 hover:opacity-80 transition tracking-widest';
+        btn.textContent = 'PURCHASE';
+        btn.addEventListener('click', function() { handlePurchase(id); });
+        infoEl.appendChild(btn);
+    }
+}
+
+function openLightbox(pieceId, index) {
+    var piece = pieces.find(function(p) { return p.id === pieceId; });
+    var images = piece.images.map(function(img) {
+        return {
+            full: '/subsections/store/for-sale/' + pieceId + '/' + img,
+            name: piece.title,
+            description: piece.description
+        };
+    });
+    window.parent.postMessage({ type: 'OPEN_LIGHTBOX', images: images, index: index }, '*');
+}
+
+function handlePurchase(id) {
+    // SPEC-002: Stripe Checkout integration pending
+    console.log('Purchase clicked:', id);
+}
+
+window.onload = init;
+
+</script>
+
+</body>
+</html>

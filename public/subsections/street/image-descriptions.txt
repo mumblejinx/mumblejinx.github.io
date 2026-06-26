@@ -7,85 +7,85 @@
 # Do not change the filename lines (street-0.jpg, street-1.jpg, etc.)
 
 street-0.jpg
-Title:
-Description:
+Title:Fukuoka, Japan
+Description:Street Art hunting in Fukuoka, Japan
 
 street-1.jpg
-Title:
-Description:
+Title:Fukuoka, Japan
+Description:Street Art hunting in Fukuoka, Japan
 
 street-2.jpg
-Title:
-Description:
+Title:Fukuoka, Japan
+Description:Street Art hunting in Fukuoka, Japan
 
 street-3.jpg
-Title:
-Description:
+Title:Tokyo, Japan
+Description:Street Art hunting in Tokyo, Japan
 
 street-4.jpg
-Title:
-Description:
+Title:Fukuoka, Japan
+Description:Street Art hunting in Fukuoka, Japan
 
 street-5.jpg
-Title:
-Description:
+Title:Fukuoka, Japan
+Description:Street Art hunting in Fukuoka, Japan
 
 street-6.jpg
-Title:
-Description:
+Title:Fukuoka, Japan
+Description:Street Art hunting in Fukuoka, Japan
 
 street-7.jpg
-Title:
-Description:
+Title:Seattle, Washington
+Description:Street Art hunting in Seattle, Washington
 
 street-8.jpg
-Title:
-Description:
+Title:Pittsburgh, Pennsylvania
+Description:Street Art hunting in Pittsburgh, Pennsylvania
 
 street-9.jpg
-Title:
-Description:
+Title:Fukuoka, Japan
+Description:Street Art hunting in Fukuoka, Japan
 
 street-10.jpg
-Title:
-Description:
+Title:Pittsburgh, Pennsylvania
+Description:Street Art hunting in Pittsburgh, Pennsylvania
 
 street-11.jpg
-Title:
-Description:
+Title:Anderson, South Carolina
+Description:Street Art hunting in Anderson, South Carolina
 
 street-12.jpg
-Title:
-Description:
+Title:Pittsburgh, Pennsylvania
+Description:Street Art hunting in Pittsburgh, Pennsylvania
 
 street-13.jpg
-Title:
-Description:
+Title:Pendleton, South Carolina
+Description:Street Art hunting in Pendleton, South Carolina
 
 street-14.jpg
-Title:
-Description:
+Title:Pittsburgh, Pennsylvania
+Description:Street Art hunting in Pittsburgh, Pennsylvania
 
 street-15.jpg
-Title:
-Description:
+Title:Anderson, South Carolina
+Description:Street Art hunting in Anderson, South Carolina
 
 street-16.jpg
-Title:
-Description:
+Title:Pittsburgh, Pennsylvania
+Description:Street Art hunting in Pittsburgh, Pennsylvania
 
 street-17.jpg
-Title:
-Description:
+Title:Anderson, South Carolina
+Description:Street Art hunting in Anderson, South Carolina
 
 street-18.jpg
-Title:
-Description:
+Title:Pittsburgh, Pennsylvania
+Description:Street Art hunting in Pittsburgh, Pennsylvania
 
 street-19.jpg
-Title:
-Description:
+Title:Anderson, South Carolina
+Description:Street Art hunting in Anderson, South Carolina
 
 street-20.jpg
-Title:
-Description:
+Title:Anderson, South Carolina
+Description:Street Art hunting in Anderson, South Carolina

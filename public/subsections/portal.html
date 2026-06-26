@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Support</title>
+
+<style>
+:root {
+  --brand-black: #000;
+  --brand-lime: #8bc34a;
+  --text-white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--brand-black);
+  color: var(--text-white);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* remove link styling globally */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* --- MODULE GRID --- */
+.modules {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 50px;
+}
+
+@media (min-width: 1024px) {
+  .modules {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.module {
+  position: relative;
+  height: 260px;
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  overflow: hidden;
+  background: black;
+}
+
+@media (min-width: 1024px) {
+  .module {
+    height: 72vh;
+  }
+}
+
+/* LABEL (top-left) */
+.module-label {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.25); /* ✅ back to subtle grey */
+}
+
+/* ICON */
+.module svg {
+  width: 90px;
+  height: 90px;
+  stroke: var(--brand-lime);
+  stroke-width: 1.5;
+  fill: none;
+  margin-bottom: 20px;
+  transition: all 0.4s ease;
+}
+
+/* TITLE */
+.module h2 {
+  font-size: 26px;
+  letter-spacing: 3px;
+  color: white; /* ✅ white by default */
+}
+
+/* HOVER STATE — desktop/mouse only */
+@media (hover: hover) and (pointer: fine) {
+  .module:hover {
+    background: var(--brand-lime);
+    color: black;
+  }
+
+  .module:hover h2 {
+    color: black;
+  }
+
+  .module:hover svg {
+    stroke: black;
+    transform: scale(1.1);
+  }
+
+  .module:hover .module-action {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- HIDDEN ACTION TEXT --- */
+.module-action {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+  font-weight: bold;
+}
+
+/* subtle dots */
+.module::before,
+.module::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  opacity: 0.2;
+}
+
+.module::before {
+  left: 20px;
+  top: 50%;
+}
+
+.module::after {
+  right: 20px;
+  top: 50%;
+}
+
+/* --- SUPPORT SECTION --- */
+.support {
+  padding: 90px 20px 120px; /* ✅ reduced top padding (moves content up ~30px) */
+  text-align: center;
+  border-top: 1px solid white;
+}
+
+.support-tag {
+  display: inline-block;
+  border: 1px solid var(--brand-lime);
+  color: var(--brand-lime);
+  padding: 6px 12px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.support h1 {
+  color: var(--brand-lime);
+  font-size: 48px;
+  letter-spacing: 6px;
+  margin-bottom: 20px;
+}
+
+.support p {
+  max-width: 700px;
+  margin: auto;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="modules">
+
+  <!-- ETSY -->
+  <a href="https://www.etsy.com/shop/jakegalm/" target="_blank" class="module">
+    <div class="module-label">MODULE_01 // SHOP</div>
+
+    <svg viewBox="0 0 24 24">
+      <path d="M3 9l1-5h16l1 5"></path>
+      <path d="M4 9h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+      <path d="M9 22V12h6v10"></path>
+    </svg>
+
+    <h2>ETSY</h2>
+    <div class="module-action">ACCESS_REPOSITORY →</div>
+  </a>
+
+  <!-- AMAZON -->
+  <a href="https://www.amazon.com/s?k=jake+galm&i=stripbooks-intl-ship&crid=1R69K57MHW0ED&sprefix=jake+galm%2Cstripbooks-intl-ship%2C284&ref=nb_sb_noss" target="_blank" class="module">
+    <div class="module-label">MODULE_02 // LOGISTICS</div>
+
+    <svg viewBox="0 0 24 24">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+      <path d="M3.3 7l8.7 5 8.7-5"></path>
+      <path d="M12 22V12"></path>
+    </svg>
+
+    <h2>AMAZON</h2>
+    <div class="module-action">VIEW_CATALOG →</div>
+  </a>
+
+  <!-- THREADLESS -->
+  <a href="https://mumblejinx.threadless.com/" target="_blank" class="module">
+    <div class="module-label">MODULE_03 // APPAREL</div>
+
+    <svg viewBox="0 0 24 24">
+      <path d="M20 7l-4-3-2 2h-4l-2-2-4 3v3h2v10h12V10h2z"></path>
+    </svg>
+
+    <h2>THREADLESS</h2>
+    <div class="module-action">BROWSE_COLLECTION →</div>
+  </a>
+
+</div>
+
+<section class="support">
+  <div class="support-tag">EAT UP // DIGITAL MARKETPLACE</div>
+  <h1>SUPPORT</h1>
+  <p>
+    "While the creation of art remains a deeply spiritual and conceptual journey,
+    the mechanics of existence are far more practical. Every purchase fuels the next evolution."
+  </p>
+</section>
+
+</body>
+</html>
