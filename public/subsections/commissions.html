@@ -8,6 +8,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body { background: black; color: white; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+        .h-dvh-safe { height: 100vh; height: 100dvh; }
         .min-h-dvh-safe { min-height: 100vh; min-height: 100dvh; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
@@ -17,54 +18,155 @@
 </head>
 <body class="bg-black">
 
-<div class="min-h-dvh-safe px-6 lg:px-16 py-10 max-w-[860px] mx-auto pb-20">
+<!-- DESKTOP -->
+<div class="hidden lg:flex h-dvh-safe w-full overflow-x-hidden max-w-[1600px] mx-auto">
+
+    <!-- LEFT IMAGE (40%) -->
+    <div class="w-2/5 flex items-center justify-center bg-black flex-shrink-0">
+        <img src="/subsections/commissions/commissions.jpg"
+             class="max-w-full max-h-[80vh] object-contain" />
+    </div>
+
+    <!-- RIGHT CONTENT (60%) -->
+    <div class="w-3/5 overflow-y-auto p-12 flex flex-col">
+
+        <h1 class="text-[#8bc34a] text-4xl font-bold mb-8 uppercase tracking-tighter">Commissions / 依頼</h1>
+
+        <div class="text-gray-300 text-lg leading-relaxed space-y-10 pb-16">
+
+            <div class="space-y-4">
+                <p>Open to select commission inquiries. Each piece is made to order &mdash; reach out with your idea and I'll work with you on size, medium, and price.</p>
+                <p>コミッションのご依頼を受け付けています。すべての作品は受注制作です。サイズ、素材、価格については、アイデアをお聞きしながらご相談させていただきます。</p>
+            </div>
+
+            <div>
+                <h2 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Starting Prices / 料金目安</h2>
+                <ul class="space-y-0">
+                    <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
+                        <span>Mixed media, USPS four-sticker piece<br><span class="text-gray-500 text-sm">ミックスメディア、USPSステッカー4枚作品</span></span>
+                        <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $150</span>
+                    </li>
+                    <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
+                        <span>8x10" epoxy<br><span class="text-gray-500 text-sm">8x10インチ エポキシ</span></span>
+                        <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $400</span>
+                    </li>
+                    <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
+                        <span>8.5x11" epoxy<br><span class="text-gray-500 text-sm">8.5x11インチ エポキシ</span></span>
+                        <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $500</span>
+                    </li>
+                    <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
+                        <span>8.5x22" epoxy glitch collage<br><span class="text-gray-500 text-sm">8.5x22インチ エポキシ・グリッチコラージュ</span></span>
+                        <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $1,000</span>
+                    </li>
+                    <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
+                        <span>16x20" epoxy<br><span class="text-gray-500 text-sm">16x20インチ エポキシ</span></span>
+                        <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $1,800</span>
+                    </li>
+                    <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
+                        <span>14x17" colored pencil drawing<br><span class="text-gray-500 text-sm">14x17インチ 色鉛筆ドローイング</span></span>
+                        <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $10,000</span>
+                    </li>
+                </ul>
+                <div class="space-y-2 mt-4">
+                    <p class="text-gray-500 text-sm leading-relaxed">Pricing reflects medium, size, and time invested &mdash; colored pencil work in particular is far more time-intensive per square inch than epoxy pieces, which is reflected in the price.</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">料金は素材、サイズ、制作にかかる時間を反映しています。特に色鉛筆の作品は、エポキシ作品と比べて単位面積あたりの制作時間がはるかに長く、その分が価格に反映されています。</p>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Process / プロセス</h2>
+                <div class="space-y-4">
+                    <p>A non-refundable retainer of 33% is required to begin work and hold your commission slot. This covers initial planning and reserves my time. The remaining balance is due on completion, before shipping &mdash; payment schedules can be arranged if needed, just ask. If I'm ever unable to complete a commissioned piece, the retainer is fully refunded.</p>
+                    <p>制作を開始し、コミッション枠を確保するために、33%の着手金（返金不可）が必要です。これは初期の計画とお時間の確保に充てられます。残りの金額は完成後、発送前にお支払いいただきます。必要であれば分割払いのご相談も可能ですので、気軽にお声がけください。万が一、何らかの理由でご依頼いただいた作品を完成させることができない場合は、着手金を全額返金いたします。</p>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <p class="text-gray-400">Turnaround time varies by piece and will be discussed individually.</p>
+                <p class="text-gray-400">納期は作品によって異なりますので、個別にご相談のうえ決定いたします。</p>
+            </div>
+
+            <div class="space-y-2">
+                <p>Interested? Visit the Contact page under About to start the conversation.</p>
+                <p>ご興味のある方は、ABOUTセクションのContactページよりお気軽にご連絡ください。</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MOBILE -->
+<div class="lg:hidden flex flex-col min-h-dvh-safe px-6 py-10 w-full overflow-x-hidden">
 
     <h1 class="text-[#8bc34a] text-4xl font-bold mb-8 uppercase tracking-tighter">Commissions / 依頼</h1>
 
-    <div class="text-gray-300 text-lg leading-relaxed space-y-10">
+    <div class="text-gray-300 text-lg leading-relaxed space-y-10 pb-10">
 
-        <p>Open to select commission inquiries. Each piece is made to order &mdash; reach out with your idea and I'll work with you on size, medium, and price.</p>
+        <div class="space-y-4">
+            <p>Open to select commission inquiries. Each piece is made to order &mdash; reach out with your idea and I'll work with you on size, medium, and price.</p>
+            <p>コミッションのご依頼を受け付けています。すべての作品は受注制作です。サイズ、素材、価格については、アイデアをお聞きしながらご相談させていただきます。</p>
+        </div>
 
         <div>
-            <h2 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Starting Prices</h2>
+            <h2 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Starting Prices / 料金目安</h2>
             <ul class="space-y-0">
                 <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
-                    <span>Mixed media, USPS four-stamp piece</span>
-                    <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $150</span>
+                    <span>Mixed media, USPS four-sticker piece<br><span class="text-gray-500 text-sm">ミックスメディア、USPSステッカー4枚作品</span></span>
+                    <span class="text-[#8bc34a] font-bold ml-4 whitespace-nowrap">from $150</span>
                 </li>
                 <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
-                    <span>8x10" epoxy</span>
-                    <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $400</span>
+                    <span>8x10" epoxy<br><span class="text-gray-500 text-sm">8x10インチ エポキシ</span></span>
+                    <span class="text-[#8bc34a] font-bold ml-4 whitespace-nowrap">from $400</span>
                 </li>
                 <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
-                    <span>8.5x11" epoxy</span>
-                    <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $500</span>
+                    <span>8.5x11" epoxy<br><span class="text-gray-500 text-sm">8.5x11インチ エポキシ</span></span>
+                    <span class="text-[#8bc34a] font-bold ml-4 whitespace-nowrap">from $500</span>
                 </li>
                 <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
-                    <span>8.5x22" epoxy glitch collage</span>
-                    <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $1,000</span>
+                    <span>8.5x22" epoxy glitch collage<br><span class="text-gray-500 text-sm">8.5x22インチ エポキシ・グリッチコラージュ</span></span>
+                    <span class="text-[#8bc34a] font-bold ml-4 whitespace-nowrap">from $1,000</span>
                 </li>
                 <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
-                    <span>16x20" epoxy</span>
-                    <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $1,800</span>
+                    <span>16x20" epoxy<br><span class="text-gray-500 text-sm">16x20インチ エポキシ</span></span>
+                    <span class="text-[#8bc34a] font-bold ml-4 whitespace-nowrap">from $1,800</span>
                 </li>
                 <li class="flex justify-between items-baseline border-b border-gray-800 py-3">
-                    <span>14x17" colored pencil drawing</span>
-                    <span class="text-[#8bc34a] font-bold ml-8 whitespace-nowrap">from $10,000</span>
+                    <span>14x17" colored pencil drawing<br><span class="text-gray-500 text-sm">14x17インチ 色鉛筆ドローイング</span></span>
+                    <span class="text-[#8bc34a] font-bold ml-4 whitespace-nowrap">from $10,000</span>
                 </li>
             </ul>
-            <p class="text-gray-500 text-sm mt-4 leading-relaxed">Pricing reflects medium, size, and time invested &mdash; colored pencil work in particular is far more time-intensive per square inch than epoxy pieces, which is reflected in the price.</p>
+            <div class="space-y-2 mt-4">
+                <p class="text-gray-500 text-sm leading-relaxed">Pricing reflects medium, size, and time invested &mdash; colored pencil work in particular is far more time-intensive per square inch than epoxy pieces, which is reflected in the price.</p>
+                <p class="text-gray-500 text-sm leading-relaxed">料金は素材、サイズ、制作にかかる時間を反映しています。特に色鉛筆の作品は、エポキシ作品と比べて単位面積あたりの制作時間がはるかに長く、その分が価格に反映されています。</p>
+            </div>
         </div>
 
         <div>
-            <h2 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Process</h2>
-            <p>A non-refundable retainer of 33% is required to begin work and hold your commission slot. This covers initial planning and reserves my time. The remaining balance is due on completion, before shipping &mdash; payment schedules can be arranged if needed, just ask. If I'm ever unable to complete a commissioned piece, the retainer is fully refunded.</p>
+            <h2 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Process / プロセス</h2>
+            <div class="space-y-4">
+                <p>A non-refundable retainer of 33% is required to begin work and hold your commission slot. This covers initial planning and reserves my time. The remaining balance is due on completion, before shipping &mdash; payment schedules can be arranged if needed, just ask. If I'm ever unable to complete a commissioned piece, the retainer is fully refunded.</p>
+                <p>制作を開始し、コミッション枠を確保するために、33%の着手金（返金不可）が必要です。これは初期の計画とお時間の確保に充てられます。残りの金額は完成後、発送前にお支払いいただきます。必要であれば分割払いのご相談も可能ですので、気軽にお声がけください。万が一、何らかの理由でご依頼いただいた作品を完成させることができない場合は、着手金を全額返金いたします。</p>
+            </div>
         </div>
 
-        <p class="text-gray-400">Turnaround time varies by piece and will be discussed individually.</p>
+        <div class="space-y-2">
+            <p class="text-gray-400">Turnaround time varies by piece and will be discussed individually.</p>
+            <p class="text-gray-400">納期は作品によって異なりますので、個別にご相談のうえ決定いたします。</p>
+        </div>
 
-        <p>Interested? Visit the Contact page under About to start the conversation.</p>
+        <div class="space-y-2">
+            <p>Interested? Visit the Contact page under About to start the conversation.</p>
+            <p>ご興味のある方は、ABOUTセクションのContactページよりお気軽にご連絡ください。</p>
+        </div>
 
+    </div>
+
+    <!-- IMAGE AT BOTTOM (MOBILE) -->
+    <div class="mt-4 pb-10 flex justify-center w-full">
+        <img src="/subsections/commissions/commissions.jpg"
+             class="max-w-full object-contain" />
     </div>
 
 </div>
