@@ -285,6 +285,7 @@ function showDetail(id) {
         infoEl.appendChild(soldNotice);
     } else {
         var btn = document.createElement('button');
+        btn.id = 'purchase-btn';
         btn.className = 'mt-4 w-full bg-[#8bc34a] text-black font-bold py-3 hover:opacity-80 transition tracking-widest';
         btn.textContent = 'PURCHASE';
         btn.addEventListener('click', function() { handlePurchase(id); });
@@ -305,8 +306,44 @@ function openLightbox(pieceId, index) {
 }
 
 function handlePurchase(id) {
-    // SPEC-002: Stripe Checkout integration pending
-    console.log('Purchase clicked:', id);
+    var btn = document.getElementById('purchase-btn');
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'LOADING...';
+        btn.style.opacity = '0.6';
+    }
+
+    fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: id }),
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+        if (data.url) {
+            window.location.href = data.url;
+        } else {
+            throw new Error(data.error || 'No URL returned');
+        }
+    })
+    .catch(function(err) {
+        console.error('Purchase error:', err);
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = 'PURCHASE';
+            btn.style.opacity = '';
+        }
+        var infoEl = document.getElementById('detail-info');
+        var errMsg = infoEl ? infoEl.querySelector('.purchase-error') : null;
+        if (infoEl && !errMsg) {
+            errMsg = document.createElement('p');
+            errMsg.className = 'purchase-error text-red-400 text-sm mt-3';
+            infoEl.appendChild(errMsg);
+        }
+        if (errMsg) {
+            errMsg.textContent = 'Something went wrong — please try again or contact Jake directly.';
+        }
+    });
 }
 
 window.onload = init;
